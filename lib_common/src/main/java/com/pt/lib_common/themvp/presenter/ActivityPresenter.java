@@ -70,7 +70,7 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }else if(Build.VERSION.SDK_INT >= 19){
+        } else if (Build.VERSION.SDK_INT >= 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
@@ -82,18 +82,18 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
     }
 
     private void initActionbar() {
-        typeface= Typeface.createFromAsset(this.getAssets(),
+        typeface = Typeface.createFromAsset(this.getAssets(),
                 "iconfont/iconfont.ttf");
         LinearLayout view = (LinearLayout) findViewById(R.id.ll_action_bar);
-        if (view!=null){
-            tv_left = (TextView)findViewById(R.id.tv_left);
-            tv_title = (TextView)findViewById(R.id.tv_title);
-            tv_right = (TextView)findViewById(R.id.tv_right);
-            tv_right_text = (TextView)findViewById(R.id.tv_right_text);
-            if (tv_left!=null){
+        if (view != null) {
+            tv_left = (TextView) findViewById(R.id.tv_left);
+            tv_title = (TextView) findViewById(R.id.tv_title);
+            tv_right = (TextView) findViewById(R.id.tv_right);
+            tv_right_text = (TextView) findViewById(R.id.tv_right_text);
+            if (tv_left != null) {
                 tv_left.setOnClickListener(clickListener);
             }
-            if (tv_right!=null){
+            if (tv_right != null) {
                 tv_right.setOnClickListener(clickListener);
             }
         }
@@ -104,15 +104,15 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
         tv_left.setText(unicodeText);
     }
 
-    public void setLeftTextColor(int color){
+    public void setLeftTextColor(int color) {
         tv_left.setTextColor(color);
     }
 
-    public void setRightTextColor(int color){
+    public void setRightTextColor(int color) {
         tv_right.setTextColor(color);
     }
 
-    public void setTitleTextColor(int color){
+    public void setTitleTextColor(int color) {
         tv_title.setTextColor(color);
     }
 
@@ -124,9 +124,11 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
         tv_right.setTypeface(typeface);
         tv_right.setText(unicodeText);
     }
+
     public void setRightText(String text) {
         tv_right.setText(text);
     }
+
     public void setRightTextSize(float textSize) {
         tv_right.setTextSize(textSize);
     }
@@ -134,6 +136,7 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
 
     public void onLeftClick(View v) {
     }
+
     public void onRightClick(View v) {
 
     }
@@ -141,14 +144,13 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.tv_left){
+            if (v.getId() == R.id.tv_left) {
                 onLeftClick(v);
-            }else if (v.getId() == R.id.tv_right){
+            } else if (v.getId() == R.id.tv_right) {
                 onRightClick(v);
             }
         }
     };
-
 
 
     protected void bindEventListener() {
@@ -194,7 +196,7 @@ public abstract class ActivityPresenter<T extends IDelegate> extends BaseActivit
 
     private void initStatusbar() {
         View view = findViewById(R.id.v_status_bar);
-        if (view!=null){
+        if (view != null) {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             param.height = Utils.getStatusBarHeight(this);
             view.setLayoutParams(param);

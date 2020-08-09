@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/ll_action_bar"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:id="@+id/ll_action_bar">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        >
+        android:layout_height="40dp">
+
         <RelativeLayout
             android:id="@+id/rl_left"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="40dp">
 
-            >
-        <TextView
-            android:id="@+id/tv_left"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:background="@drawable/lib_com_slt_bt_click_bg"
-            />
+            <TextView
+                android:id="@+id/tv_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/lib_com_slt_bt_click_bg"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
@@ -31,54 +30,51 @@
             android:id="@+id/tv_title1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_toRightOf="@+id/rl_left"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_50dp"
             android:layout_marginRight="@dimen/size_50dp"
-            android:maxLines="1"
+            android:layout_toRightOf="@+id/rl_left"
             android:ellipsize="end"
-            />
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             android:layout_centerInParent="true"
-            />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
 
         <RelativeLayout
             android:id="@+id/rl_right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            >
+            android:layout_alignParentRight="true">
+
             <TextView
                 android:id="@+id/tv_right"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:gravity="center"
                 android:background="@drawable/lib_com_slt_bt_click_bg"
-                />
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/tv_right_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/white_70"
-                android:textSize="@dimen/text_size_15sp"
-                android:gravity="center"
                 android:layout_centerInParent="true"
                 android:background="@drawable/lib_com_slt_bt_click_bg"
+                android:gravity="center"
                 android:paddingLeft="@dimen/size_15dp"
                 android:paddingRight="@dimen/size_15dp"
-                android:visibility="gone"
-                />
+                android:textColor="@color/white_70"
+                android:textSize="@dimen/text_size_15sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </RelativeLayout>
