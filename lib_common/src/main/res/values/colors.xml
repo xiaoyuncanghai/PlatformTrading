@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!--APP的主题色-->
+    <color name="colorPrimary">#FC6306</color>
+    <color name="colorPrimaryDark">#FC5205</color>
+    <color name="colorAccent">#FF5722</color>
+    <color name="lightPrimaryColor">#aaFC6306</color>
+
+
+    <color name="zhihu_primary">#FC6306</color>
+    <color name="zhihu_primary_dark">#FC5205</color>
+
+    <color name="tv_official_test_bg">#8010BB7A</color>
+    <color name="color_long_term_activity_bg">#FAEDAC</color>
+
+    <!--APP公用的一些颜色-->
+    <color name="common_bg">#fff7f7f7</color>
+    <color name="common_text">@android:color/primary_text_light</color>
+    <color name="common_hint_text">@color/gray_AD</color>
+    <color name="divider_color">@color/gray_cc</color>
+    <color name="black_overlay">@color/black_alpha40</color>
+    <color name="common_title_bg">#569948</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="transparent_color">#00ffffff</color>
+    <color name="text_black_4d">#4d4d4d</color>
+    <color name="text_908f94">#908f94</color>
+    <color name="bg_999999">#999999</color>
+    <color name="bg_gray">#dedede</color>
+    <color name="text_color_404040">#404040</color>
+    <color name="color_map_grid_selected">#F9686D</color>
+    <color name="transparent_10">#10000000</color>
+    <color name="transparent_20">#20000000</color>
+    <color name="transparent_30">#30000000</color>
+    <color name="transparent_50">#50000000</color>
+    <color name="transparent_80">#80000000</color>
+
+    <!--actionbar 背景渐变三个颜色-->
+    <color name="color_actionbar_end">#F37401</color>
+    <color name="color_actionbar_mid">#F98C00</color>
+    <color name="color_actionbar_start">#FE9E00</color>
+
+    <!--注册页面用户协议字体颜色-->
+    <color name="color_agreement_reg">#00aaff</color>
+
+    <color name="gender_man_color">#00bbff</color>
+    <color name="gender_women_color">#ff99aa</color>
+
+    <color name="color_tv_reg_or_login">#FDAD66</color>
+    <color name="color_favo_tip">#F94C2E</color>
+
+    <color name="color_guide_start_bg">#FFF943</color>
+    <color name="color_homepage_label1">#FD6B6B</color>
+    <color name="color_homepage_label2">#7EADFB</color>
+    <color name="color_homepage_label3">#9FDC51</color>
+    <color name="color_homepage_label4">#FEAF46</color>
+    <color name="color_homepage_label5">#9BDD55</color>
+    <color name="color_homepage_label6">#FFCE57</color>
+    <color name="color_homepage_label7">#7EADFB</color>
+    <color name="color_homepage_label8">#FA7070</color>
+    <color name="color_homepage_label9">#FEAF46</color>
+    <color name="color_homepage_label10">#7EADFB</color>
+
+
+    <!--首页搜索背景色-->
+    <color name="colorInitFloatBackground">#b0ffffff</color>
+    <color name="colorCollapsedFloatBackground">#e4e4e4</color>
+
+    <!--文本字体颜色-->
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#808080</color>
+    <color name="thirdText">#C4C4C4</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="white_10">#1affffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_30">#4dffffff</color>
+    <color name="white_40">#5dffffff</color>
+    <color name="white_50">#6dffffff</color>
+    <color name="white_70">#8dffffff</color>
+    <color name="white_90">#9fffffff</color>
+    <color name="white_bb">#bbffffff</color>
+    <color name="white_ee">#e1ffffff</color>
+
+    <!--黑色-各种等级透明度-->
+    <color name="black">#ff000000</color>
+    <color name="black_alpha10">#1a000000</color>
+    <color name="black_alpha15">#26000000</color>
+    <color name="black_alpha20">#33000000</color>
+    <color name="black_alpha30">#4d000000</color>
+    <color name="black_alpha32">#52000000</color>
+    <color name="black_alpha40">#66000000</color>
+    <color name="black_alpha5">#0d000000</color>
+    <color name="black_alpha50">#80000000</color>
+    <color name="black_alpha54">#89000000</color>
+    <color name="black_alpha60">#99000000</color>
+    <color name="black_alpha80">#cc000000</color>
+
+    <!--灰色-各种等级透明度-->
+    <color name="gray_32">#ff323232</color>
+    <color name="gray_33">#ff333333</color>
+    <color name="gray_35">#ff353535</color>
+    <color name="gray_66">#ff666666</color>
+    <color name="gray_7f">#ff7f7f7f</color>
+    <color name="gray_80">#ff808080</color>
+    <color name="gray_88">#ff888888</color>
+    <color name="gray_8832">#88323232</color>
+    <color name="gray_AD">#ffadadad</color>
+    <color name="gray_C8">#ffc8c8c8</color>
+    <color name="gray_D5">#ffd5d5d5</color>
+    <color name="gray_E6">#ffe6e6e6</color>
+    <color name="gray_cc">#ffcccccc</color>
+    <color name="gray_d9">#ffd9d9d9</color>
+    <color name="gray_f0">#fff0f0f0</color>
+    <color name="gray_f2">#fff2f2f2</color>
+    <color name="gray_f3">#fff3f3f3</color>
+    <color name="gray_f4">#fff4f4f4</color>
+    <color name="gray_f6">#fff6f6f6</color>
+    <color name="gray_fc">#fffcfcfc</color>
+    <color name="gray_e0">#e0e0e0</color>
+
 </resources>

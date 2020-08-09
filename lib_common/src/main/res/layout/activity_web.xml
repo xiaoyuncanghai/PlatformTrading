@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shape_actionbar"
+        >
+        <include layout="@layout/layout_status_bar"></include>
+        <include layout="@layout/layout_actionbar"></include>
+    </LinearLayout>
+
+
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:srlEnablePureScrollMode="true"
+            >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <FrameLayout
+                    android:id="@+id/fl_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                </FrameLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/pb_webview_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:max="100"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/shape_loading_progressbar_color"/>
+            </RelativeLayout>
+
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>
