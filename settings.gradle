@@ -1,2 +1,2 @@
-include ':app'
+include ':lib_oponsource',':lib_common',':app'
 rootProject.name = "PlatformTrading"

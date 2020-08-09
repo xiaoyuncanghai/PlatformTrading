@@ -1,0 +1,6 @@
+    /**
+    * Shared file between builds so that they can all use the same dependencies and
+    * maven repositories.
+    **/
+    ext.deps = [:]
+    def versions = [:]
