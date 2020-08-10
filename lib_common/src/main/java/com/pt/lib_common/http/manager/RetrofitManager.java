@@ -54,12 +54,9 @@ public class RetrofitManager {
             // 添加缓存拦截器
             builder.addInterceptor(new EnhancedCacheInterceptor(params[0]));
         }
-
-
-
-        builder.connectTimeout(10, TimeUnit.SECONDS);
-        builder.readTimeout(10, TimeUnit.SECONDS);
-        builder.writeTimeout(10, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(30, TimeUnit.SECONDS);
+        builder.writeTimeout(30, TimeUnit.SECONDS);
         builder.retryOnConnectionFailure(true);
         client = builder.build();
         return client;

@@ -6,7 +6,7 @@
     android:background="@color/common_bg"
     android:orientation="vertical">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         <include layout="@layout/layout_status_bar"></include>
 
         <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_login_acc"
@@ -116,15 +116,6 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tv_show_pwd"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:background="@drawable/lib_com_slt_bt_click_bg"
-                            android:gravity="center"
-                            android:textColor="@color/thirdText"
-                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_send_code"
