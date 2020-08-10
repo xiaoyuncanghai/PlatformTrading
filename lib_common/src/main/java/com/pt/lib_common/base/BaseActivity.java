@@ -4,7 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.pt.lib_common.http.utils.LogUtil;
+
+import org.xutils.common.util.LogUtil;
 
 import me.yokeyword.fragmentation.SupportActivity;
 

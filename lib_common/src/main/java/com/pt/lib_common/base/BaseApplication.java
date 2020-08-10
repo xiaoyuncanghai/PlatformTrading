@@ -3,18 +3,18 @@ package com.pt.lib_common.base;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.text.TextUtils;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.apkfuns.logutils.LogUtils;
-import com.pt.lib_common.http.utils.LogUtil;
 import com.pt.lib_common.util.Utils;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.tencent.smtt.sdk.QbSdk;
+
+import org.xutils.common.util.LogUtil;
 
 import java.io.File;
 import java.util.List;

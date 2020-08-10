@@ -7,6 +7,7 @@ package com.pt.lib_common.constants;
  */
 
 public interface Constant {
+/*
 
     String QQ_SERVICE = "2850901587";
     String PHONE_SERVICE = "027-85353772";
@@ -143,6 +144,7 @@ public interface Constant {
     String API_MSG_MAKE_READ = "flapp/AppApi/messageSomeStatus";
 
 
+*/
 
 
 }

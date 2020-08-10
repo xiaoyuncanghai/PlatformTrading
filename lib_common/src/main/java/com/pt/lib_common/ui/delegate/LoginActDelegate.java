@@ -1,8 +1,9 @@
 package com.pt.lib_common.ui.delegate;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -12,13 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.apkfuns.logutils.LogUtils;
 import com.pt.lib_common.R;
-import com.pt.lib_common.constants.Constant;
-import com.pt.lib_common.http.exception.CommonException;
-import com.pt.lib_common.http.router.Mango;
 import com.pt.lib_common.themvp.view.AppDelegate;
-import com.pt.lib_common.util.RSAUtil;
+import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -27,9 +25,8 @@ import com.xw.repo.XEditText;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LoginActDelegate extends AppDelegate {
 
@@ -57,7 +54,7 @@ public class LoginActDelegate extends AppDelegate {
     }
 
     private void initView() {
-        typeface = Typeface.createFromAsset(getActivity().getAssets(),"iconfont/iconfont.ttf");
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf");
         srl_login_acc = get(R.id.srl_login_acc);
         tv_acc = get(R.id.tv_acc);
         et_acc = get(R.id.et_acc);
@@ -68,7 +65,7 @@ public class LoginActDelegate extends AppDelegate {
         bt_login = get(R.id.bt_login);
 
         //手机号码 按照3 4 4切割排列
-        et_acc.setPattern(new int[]{3,4,4} , " ");
+        et_acc.setPattern(new int[]{3, 4, 4}, " ");
 
         tv_del_acc.setTypeface(typeface);
         tv_del_acc.setText("\ue7bf");
@@ -81,8 +78,8 @@ public class LoginActDelegate extends AppDelegate {
         et_acc.setHint("请输入手机号");
         et_pwd.setHint("请输入验证码");
 
-        String phoneText = SPHelper.getString("phone","",true);
-        if (!TextUtils.isEmpty(phoneText)){
+        String phoneText = SPHelper.getString("phone", "", true);
+        if (!TextUtils.isEmpty(phoneText)) {
             et_acc.setText(phoneText);
         }
     }
@@ -115,9 +112,9 @@ public class LoginActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_acc.getText().toString().length()>0 && et_pwd.getText().toString().length()>0){
+                if (et_acc.getText().toString().length() > 0 && et_pwd.getText().toString().length() > 0) {
                     bt_login.setEnabled(true);
-                }else{
+                } else {
                     bt_login.setEnabled(false);
                 }
             }
@@ -136,9 +133,9 @@ public class LoginActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_acc.getText().toString().length()>0&&et_pwd.getText().toString().length()>0){
+                if (et_acc.getText().toString().length() > 0 && et_pwd.getText().toString().length() > 0) {
                     bt_login.setEnabled(true);
-                }else{
+                } else {
                     bt_login.setEnabled(false);
                 }
             }
@@ -150,6 +147,103 @@ public class LoginActDelegate extends AppDelegate {
                 et_acc.setText("");
             }
         });
+
+        tv_send_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String param = "phone=" + et_acc.getText().toString().replace(" ", "")
+                        + "&machineCode=" + new DeviceUuidFactory(getActivity()).getUuid().toString();
+                LogUtils.d("chao, phone = " + et_acc.getText().toString() + "machineCode = " + new DeviceUuidFactory(getActivity()).getUuid().toString());
+                Map<String, Object> params = new LinkedHashMap<String, Object>();
+                params.put("param", param);
+                /*Mango.getInstance().baseUrl(HttpConstant.BASE_URL).pohttpst(getActivity(), HttpConstant.API_SEND_SMS_URL, params, SendSmsJsonBean.class, new NetCallback<SendSmsJsonBean>() {
+                    @Override
+                    public void onBefore(Activity activity) {
+                        super.onBefore(activity);
+                    }
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, SendSmsJsonBean data) {
+                        super.onResponse(call, data);
+                        if (data.getCode() == 0) {
+                            LogUtil.d("chao, sendSms success");
+                            //成功
+                            Snackbar.make(srl_login_acc, "验证码发送成功，请注意查收！", Snackbar.LENGTH_SHORT).show();
+                            startTime();
+                        } else {
+                            LogUtil.d("chao, sendSms error");
+                            //失败
+                            Snackbar.make(srl_login_acc, data.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, CommonException exception) {
+                        super.onFailure(call, exception);
+                        LogUtil.d("chao, sendSms onFailure");
+                        Snackbar.make(srl_login_acc, exception.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });*/
+
+            }
+        });
+
     }
 
+    public static final int MAX_TIME = 120;
+    private int count = MAX_TIME;
+    private TimerTask task;
+    private Timer timer;
+    /**
+     * 验证码计时
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    if (msg.arg1 == 0) {
+                        stopLoop();
+                        count = MAX_TIME;
+                        tv_send_code.setEnabled(true);
+                        tv_send_code.setText("获取验证码");
+                    } else {
+                        tv_send_code.setEnabled(false);
+                        tv_send_code.setText("" + msg.arg1 + "秒后重试");
+                    }
+                    break;
+            }
+        }
+    };
+    private void startTime() {
+        stopLoop();
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                msg.what = 0;
+                msg.arg1 = count--;
+                handler.sendMessage(msg);
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(task, 0, 1000);
+    }
+
+    private void stopLoop() {
+        if (timer != null) {
+            timer.purge();
+            timer.cancel();
+        }
+        timer = null;
+        task = null;
+    }
 }

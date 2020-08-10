@@ -359,7 +359,7 @@ public class RSAUtil {
     }
 
 
-    public static String encryptByPublicKeyWithBase64ForSplit(String data){
+    /*public static String encryptByPublicKeyWithBase64ForSplit(String data){
         byte[] ed = new byte[0];
         String eData = "";
         try {
@@ -372,9 +372,9 @@ public class RSAUtil {
         }
 
         return eData;
-    }
+    }*/
 
-    public static String decryptByPrivateKeyWithBase64ForSplit(String data){
+   /* public static String decryptByPrivateKeyWithBase64ForSplit(String data){
         byte[] dd = new byte[0];
         try {
             dd = RSAUtil.decryptByPrivateKeyForSplit(Base64.decode(data, Base64.DEFAULT), Base64.decode(Constant.privateKey, Base64.DEFAULT));
@@ -384,6 +384,6 @@ public class RSAUtil {
         }
         String dData = new String(dd);
         return dData;
-    }
+    }*/
 
 }

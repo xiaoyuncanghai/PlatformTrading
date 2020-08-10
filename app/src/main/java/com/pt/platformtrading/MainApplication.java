@@ -7,8 +7,7 @@ import android.os.Process;
 
 import com.facebook.fresco.helper.Phoenix;
 import com.pt.lib_common.base.BaseApplication;
-import com.pt.lib_common.http.router.Mango;
-import com.pt.lib_common.util.Utils;
+import com.pt.lib_common.http.EasyHttpClient;
 
 import java.util.List;
 
@@ -34,17 +33,9 @@ public class MainApplication extends BaseApplication {
         super.onCreate();
         //  Fresco 初始化
         Phoenix.init(this);
-        //  初始化mango
-        //初始化mango
-        Mango.getInstance().init(this);
-        Mango.getInstance().setDebug(true);
-        if (Utils.isAppDebug()) {
-            //开启InstantRun之后，一定要在ARouter.init之前调用openDebug
-            //ARouter.openDebug();
-            //ARouter.openLog();
-        }
-        //ARouter.init(this);
-        // Fragmentation 初始化
+        EasyHttpClient.init(this);
+        // 初始化下载环境.optional.
+        EasyHttpClient.initDownloadEnvironment(2);
         Fragmentation.builder()
                 // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
                 .stackViewMode(Fragmentation.NONE)
@@ -59,27 +50,6 @@ public class MainApplication extends BaseApplication {
                     }
                 })
                 .install();
-        String currentProcessName = getCurrentProcessName();
-        /*if (BuildConfig.APPLICATION_ID.equals(currentProcessName) || BuildConfig.APPLICATION_ID.concat(":channel").equals(currentProcessName)) {
-            OnePush.init(this, ((platformCode, platformName) -> {
-                //platformCode和platformName就是在<meta/>标签中，对应的"平台标识码"和平台名称
-              *//*  else if (RomUtils.isHuaweiRom()) {
-                    //return platformCode == 103;
-                    return false;
-                } else if (RomUtils.isFlymeRom()) {
-                    //return platformCode == 102;
-                    return false;
-                }*//*
-                LogUtil.e(platformName + "  " + platformCode);
-                if (RomUtils.isMiuiRom()) {
-                    return platformCode == 101;
-                } else {
-                    return platformCode == 106;
-                }
-
-            }));
-            OnePush.register();
-        }*/
     }
 
     /**
