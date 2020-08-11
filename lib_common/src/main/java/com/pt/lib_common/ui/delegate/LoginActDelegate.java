@@ -14,7 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.apkfuns.logutils.LogUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.R;
+import com.pt.lib_common.bean.SendSmsJsonBean;
+import com.pt.lib_common.constants.HttpConstant;
+import com.pt.lib_common.http.EasyHttpClient;
+import com.pt.lib_common.http.callback.EasyCustomCallback;
+import com.pt.lib_common.http.manager.EasyHttpClientManager;
+import com.pt.lib_common.http.request.EasyRequestParams;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
@@ -151,48 +158,28 @@ public class LoginActDelegate extends AppDelegate {
         tv_send_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String param = "phone=" + et_acc.getText().toString().replace(" ", "")
-                        + "&machineCode=" + new DeviceUuidFactory(getActivity()).getUuid().toString();
-                LogUtils.d("chao, phone = " + et_acc.getText().toString() + "machineCode = " + new DeviceUuidFactory(getActivity()).getUuid().toString());
-                Map<String, Object> params = new LinkedHashMap<String, Object>();
-                params.put("param", param);
-                /*Mango.getInstance().baseUrl(HttpConstant.BASE_URL).pohttpst(getActivity(), HttpConstant.API_SEND_SMS_URL, params, SendSmsJsonBean.class, new NetCallback<SendSmsJsonBean>() {
+                EasyRequestParams params = new EasyRequestParams();
+                params.put("phone", et_acc.getText().toString().replace(" ", ""));
+                params.put("machineCode", new DeviceUuidFactory(getActivity()).getUuid().toString());
+                LogUtils.d("machineCode = " + new DeviceUuidFactory(getActivity()).getUuid().toString());
+                EasyHttpClient.post(HttpConstant.API_SEND_SMS_URL, params, new EasyCustomCallback<SendSmsJsonBean>(){
                     @Override
-                    public void onBefore(Activity activity) {
-                        super.onBefore(activity);
-                    }
-
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, SendSmsJsonBean data) {
-                        super.onResponse(call, data);
-                        if (data.getCode() == 0) {
-                            LogUtil.d("chao, sendSms success");
-                            //成功
-                            Snackbar.make(srl_login_acc, "验证码发送成功，请注意查收！", Snackbar.LENGTH_SHORT).show();
+                    public void onSuccess(SendSmsJsonBean content) {
+                        if (content.getCode() == 0) {
+                            Snackbar.make(srl_login_acc,"验证码发送成功，请注意查收！",Snackbar.LENGTH_SHORT).show();
                             startTime();
                         } else {
-                            LogUtil.d("chao, sendSms error");
-                            //失败
-                            Snackbar.make(srl_login_acc, data.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(srl_login_acc,content.getMessage(),Snackbar.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, CommonException exception) {
-                        super.onFailure(call, exception);
-                        LogUtil.d("chao, sendSms onFailure");
-                        Snackbar.make(srl_login_acc, exception.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    public void onFailure(Throwable error, String content) {
+                        Snackbar.make(srl_login_acc, error.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                    }
-                });*/
-
+                });
             }
         });
-
     }
 
     public static final int MAX_TIME = 120;

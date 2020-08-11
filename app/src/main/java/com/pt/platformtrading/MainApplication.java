@@ -36,6 +36,7 @@ public class MainApplication extends BaseApplication {
         EasyHttpClient.init(this);
         // 初始化下载环境.optional.
         EasyHttpClient.initDownloadEnvironment(2);
+        EasyHttpClient.setDebug(true);
         Fragmentation.builder()
                 // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
                 .stackViewMode(Fragmentation.NONE)
@@ -73,6 +74,4 @@ public class MainApplication extends BaseApplication {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
-
 }

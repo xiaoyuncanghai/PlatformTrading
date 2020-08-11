@@ -25,6 +25,7 @@ public class EasyHttpConfig {
 		this.cacheLongMaxSize = builder.cacheLongMaxSize;
 		this.globalCacheType = builder.globalCacheType;
 		this.userAgent = builder.userAgent;
+
 	}
 
 	public void setCacheDir(String cacheDir) {
