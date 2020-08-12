@@ -15,12 +15,21 @@ import android.widget.TextView;
 
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pt.lib_common.R;
-import com.pt.lib_common.bean.SendSmsJsonBean;
+import com.pt.lib_common.bean.databean.SendSmsParasDataBean;
+import com.pt.lib_common.bean.databean.SmsLoginParasDataBean;
+import com.pt.lib_common.bean.jsonbean.SendSmsJsonBean;
+import com.pt.lib_common.bean.jsonbean.SmsLoginJsonBean;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.easyhttp.EasyHttpClient;
 import com.pt.lib_common.easyhttp.callback.EasyCustomCallback;
 import com.pt.lib_common.easyhttp.request.EasyRequestParams;
+import com.pt.lib_common.rxEasyhttp.EasyHttp;
+import com.pt.lib_common.rxEasyhttp.callback.CallBack;
+import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
+import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
@@ -29,8 +38,13 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.xw.repo.XEditText;
 
+import org.json.JSONObject;
+import org.xutils.common.util.LogUtil;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActDelegate extends AppDelegate {
 
@@ -155,29 +169,57 @@ public class LoginActDelegate extends AppDelegate {
         tv_send_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EasyRequestParams params = new EasyRequestParams();
-                params.put("phone", et_acc.getText().toString().replace(" ", ""));
-                params.put("machineCode", new DeviceUuidFactory(getActivity()).getUuid().toString());
-                LogUtils.d("machineCode = " + new DeviceUuidFactory(getActivity()).getUuid().toString());
-                EasyHttpClient.setDebug(true);
-                EasyHttpClient.post(HttpConstant.API_SEND_SMS_URL, params, new EasyCustomCallback<SendSmsJsonBean>(){
-                    @Override
-                    public void onSuccess(SendSmsJsonBean content) {
-                        if (content.getCode() == 0) {
-                            Snackbar.make(srl_login_acc,"验证码发送成功，请注意查收！",Snackbar.LENGTH_SHORT).show();
-                            startTime();
-                        } else {
-                            Snackbar.make(srl_login_acc,content.getMessage(),Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
+                SendSmsParasDataBean dataBean = new SendSmsParasDataBean();
+                dataBean.setMachineCode(new DeviceUuidFactory(getActivity()).getUuid().toString());
+                dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
+                EasyHttp.post(HttpConstant.API_SEND_SMS_URL).headers("User-Agent", "application/json")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .upObject(dataBean)
+                        .execute(new SimpleCallBack<String>() {
+                            @Override
+                            public void onError(ApiException e) {
+                                Snackbar.make(srl_login_acc, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            }
 
-                    @Override
-                    public void onFailure(Throwable error, String content) {
-                        Snackbar.make(srl_login_acc, error.getMessage(), Snackbar.LENGTH_SHORT).show();
-                    }
-                });
+                            @Override
+                            public void onSuccess(String sendSmsJsonBean) {
+                                LogUtils.d("Send Sms: " + sendSmsJsonBean);
+                                SendSmsJsonBean dataBean = new Gson().fromJson(sendSmsJsonBean, SendSmsJsonBean.class);
+                                if (dataBean.getCode() == 0) {
+                                    Snackbar.make(srl_login_acc, "验证码发送成功，请注意查收！", Snackbar.LENGTH_SHORT).show();
+                                    startTime();
+                                } else {
+                                    Snackbar.make(srl_login_acc, dataBean.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
+
+        bt_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
+                dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
+                dataBean.setSmsCode(et_pwd.getText().toString().replace(" ", ""));
+                EasyHttp.post(HttpConstant.API_LOGIN_SMS_URL).headers("User-Agent", "application/json")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .upObject(dataBean)
+                        .execute(new SimpleCallBack<String>() {
+                            @Override
+                            public void onError(ApiException e) {
+                                Snackbar.make(srl_login_acc, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess(String loginMsgJsonBean) {
+                                SmsLoginJsonBean smsLoginJsonBean = new Gson().fromJson(loginMsgJsonBean, SmsLoginJsonBean.class);
+                                //需要保存 用户
+                            }
+                        });
+            }
+        });
+
     }
 
     public static final int MAX_TIME = 120;
@@ -206,6 +248,7 @@ public class LoginActDelegate extends AppDelegate {
             }
         }
     };
+
     private void startTime() {
         stopLoop();
 

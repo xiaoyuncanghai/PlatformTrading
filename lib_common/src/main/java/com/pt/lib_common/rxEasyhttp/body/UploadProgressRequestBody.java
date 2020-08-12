@@ -16,8 +16,7 @@
 
 package com.pt.lib_common.rxEasyhttp.body;
 
-
-import com.zhouyou.http.utils.HttpLog;
+import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
 
 import java.io.IOException;
 

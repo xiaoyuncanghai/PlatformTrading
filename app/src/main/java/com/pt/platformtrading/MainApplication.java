@@ -8,8 +8,17 @@ import android.os.Process;
 import com.facebook.fresco.helper.Phoenix;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.easyhttp.EasyHttpClient;
+import com.pt.lib_common.rxEasyhttp.EasyHttp;
+import com.pt.lib_common.rxEasyhttp.cache.converter.SerializableDiskConverter;
+import com.pt.lib_common.rxEasyhttp.interceptor.BaseDynamicInterceptor;
+import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
+import com.pt.lib_common.rxEasyhttp.model.HttpParams;
+import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
 
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
@@ -27,16 +36,32 @@ public class MainApplication extends BaseApplication {
         super.attachBaseContext(base);
     }
 
+    private final static String BASE_URL = "http://120.76.137.162:18081";
 
     @Override
     public void onCreate() {
         super.onCreate();
         //  Fresco 初始化
         Phoenix.init(this);
-        EasyHttpClient.init(this);
-        // 初始化下载环境.optional.
-        EasyHttpClient.initDownloadEnvironment(2);
-        EasyHttpClient.setDebug(true);
+        EasyHttp.init(this);
+        //设置请求头
+        /*HttpHeaders headers = new HttpHeaders();
+        headers.put("User-Agent", "application/json");*/
+        EasyHttp.getInstance()
+                .debug("Lion", BuildConfig.DEBUG)
+                .setReadTimeOut(60 * 1000)
+                .setWriteTimeOut(60 * 1000)
+                .setConnectTimeout(60 * 1000)
+                .setRetryCount(3)//默认网络不好自动重试3次
+                .setRetryDelay(500)//每次延时500ms重试
+                .setRetryIncreaseDelay(500)//每次延时叠加500ms
+                .setBaseUrl(BASE_URL)
+                .setCacheDiskConverter(new SerializableDiskConverter())//默认缓存使用序列化转化
+                .setCacheMaxSize(50 * 1024 * 1024)//设置缓存大小为50M
+                .setCacheVersion(1)//缓存版本为1
+                //.addCommonHeaders(headers)
+                .setHostnameVerifier(new UnSafeHostnameVerifier(BASE_URL));
+
         Fragmentation.builder()
                 // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
                 .stackViewMode(Fragmentation.NONE)
@@ -51,6 +76,23 @@ public class MainApplication extends BaseApplication {
                     }
                 })
                 .install();
+    }
+
+    public class UnSafeHostnameVerifier implements HostnameVerifier {
+        private String host;
+
+        public UnSafeHostnameVerifier(String host) {
+            this.host = host;
+            HttpLog.i("###############　UnSafeHostnameVerifier " + host);
+        }
+
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            HttpLog.i("############### verify " + hostname + " " + this.host);
+            if (this.host == null || "".equals(this.host) || !this.host.contains(hostname))
+                return false;
+            return true;
+        }
     }
 
     /**

@@ -98,7 +98,7 @@ public class BaseApplication extends MultiDexApplication {
 
         LogUtils.getLogConfig()
                 .configAllowLog(true)
-                .configTagPrefix("Jeffer")
+                .configTagPrefix("Lion")
                 .configShowBorders(true)
                 .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}");
         initCyanPlugin();
