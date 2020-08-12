@@ -18,10 +18,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.R;
 import com.pt.lib_common.bean.SendSmsJsonBean;
 import com.pt.lib_common.constants.HttpConstant;
-import com.pt.lib_common.http.EasyHttpClient;
-import com.pt.lib_common.http.callback.EasyCustomCallback;
-import com.pt.lib_common.http.manager.EasyHttpClientManager;
-import com.pt.lib_common.http.request.EasyRequestParams;
+import com.pt.lib_common.easyhttp.EasyHttpClient;
+import com.pt.lib_common.easyhttp.callback.EasyCustomCallback;
+import com.pt.lib_common.easyhttp.request.EasyRequestParams;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
@@ -30,8 +29,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.xw.repo.XEditText;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -162,6 +159,7 @@ public class LoginActDelegate extends AppDelegate {
                 params.put("phone", et_acc.getText().toString().replace(" ", ""));
                 params.put("machineCode", new DeviceUuidFactory(getActivity()).getUuid().toString());
                 LogUtils.d("machineCode = " + new DeviceUuidFactory(getActivity()).getUuid().toString());
+                EasyHttpClient.setDebug(true);
                 EasyHttpClient.post(HttpConstant.API_SEND_SMS_URL, params, new EasyCustomCallback<SendSmsJsonBean>(){
                     @Override
                     public void onSuccess(SendSmsJsonBean content) {

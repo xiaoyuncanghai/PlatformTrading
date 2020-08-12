@@ -7,7 +7,7 @@ import android.os.Process;
 
 import com.facebook.fresco.helper.Phoenix;
 import com.pt.lib_common.base.BaseApplication;
-import com.pt.lib_common.http.EasyHttpClient;
+import com.pt.lib_common.easyhttp.EasyHttpClient;
 
 import java.util.List;
 
