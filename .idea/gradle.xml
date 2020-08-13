@@ -14,6 +14,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lib_common" />
             <option value="$PROJECT_DIR$/lib_oponsource" />
+            <option value="$PROJECT_DIR$/module_homepage" />
+            <option value="$PROJECT_DIR$/module_mine" />
+            <option value="$PROJECT_DIR$/module_near" />
+            <option value="$PROJECT_DIR$/module_order" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

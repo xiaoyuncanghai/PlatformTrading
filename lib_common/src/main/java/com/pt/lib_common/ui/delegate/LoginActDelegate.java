@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pt.lib_common.R;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.SendSmsParasDataBean;
 import com.pt.lib_common.bean.databean.SmsLoginParasDataBean;
@@ -191,6 +193,10 @@ public class LoginActDelegate extends AppDelegate {
                                 if (dataBean.getCode() == 0) {
                                     Snackbar.make(srl_login_acc, "验证码发送成功，请注意查收！", Snackbar.LENGTH_SHORT).show();
                                     startTime();
+                                } else if (dataBean.getCode() == 500) {
+                                    //已经发送, 请使用之前的验证码
+                                    Snackbar.make(srl_login_acc, "验证码已发送", Snackbar.LENGTH_SHORT).show();
+                                    startTime();
                                 } else {
                                     Snackbar.make(srl_login_acc, dataBean.getMessage(), Snackbar.LENGTH_SHORT).show();
                                 }
@@ -217,22 +223,17 @@ public class LoginActDelegate extends AppDelegate {
                             @Override
                             public void onSuccess(String loginMsgJsonBean) {
                                 SmsLoginJsonBean smsLoginJsonBean = new Gson().fromJson(loginMsgJsonBean, SmsLoginJsonBean.class);
-                                //需要保存用户信息
                                 if (smsLoginJsonBean.getCode() == 0 && !smsLoginJsonBean.getData().isEmpty()) {
-                                    UserInfo info = new UserInfo();
-                                    info.setPhone(et_acc.getText().toString().replace(" ", ""));
-                                    info.setAccessToken(smsLoginJsonBean.getData());
-                                    BaseApplication.getInstance().setUser(info);
                                     SPHelper.putString("token", smsLoginJsonBean.getData(), true);
                                     SPHelper.putString("phone", et_acc.getText().toString().replace(" ", ""), true);
 
                                     HttpHeaders headers = new HttpHeaders();
                                     headers.put("Authorization", smsLoginJsonBean.getData());
                                     EasyHttp.getInstance().addCommonHeaders(headers);
-
-                                    //跳转到MainActivity
+                                    ARouter.getInstance().build(ARouterPath.MAIN_PATH)
+                                            .navigation();
                                 } else {
-                                    Snackbar.make(srl_login_acc,smsLoginJsonBean.getMessage(),Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(srl_login_acc, smsLoginJsonBean.getData(), Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                         });

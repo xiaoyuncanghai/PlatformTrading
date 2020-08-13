@@ -10,8 +10,12 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -24,5 +28,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(':lib_common')
+    implementation project(':module_mine')
+    implementation project(':module_homepage')
+    implementation project(':module_near')
+    implementation project(':module_order')
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 }

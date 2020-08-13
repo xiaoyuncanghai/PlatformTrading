@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Process;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.fresco.helper.Phoenix;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.easyhttp.EasyHttpClient;
@@ -14,6 +15,7 @@ import com.pt.lib_common.rxEasyhttp.interceptor.BaseDynamicInterceptor;
 import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.rxEasyhttp.model.HttpParams;
 import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
+import com.pt.lib_common.util.Utils;
 
 import java.util.List;
 
@@ -44,9 +46,6 @@ public class MainApplication extends BaseApplication {
         //  Fresco 初始化
         Phoenix.init(this);
         EasyHttp.init(this);
-        //设置请求头
-        /*HttpHeaders headers = new HttpHeaders();
-        headers.put("User-Agent", "application/json");*/
         EasyHttp.getInstance()
                 .debug("Lion", BuildConfig.DEBUG)
                 .setReadTimeOut(60 * 1000)
@@ -59,9 +58,13 @@ public class MainApplication extends BaseApplication {
                 .setCacheDiskConverter(new SerializableDiskConverter())//默认缓存使用序列化转化
                 .setCacheMaxSize(50 * 1024 * 1024)//设置缓存大小为50M
                 .setCacheVersion(1)//缓存版本为1
-                //.addCommonHeaders(headers)
                 .setHostnameVerifier(new UnSafeHostnameVerifier(BASE_URL));
-
+        if (Utils.isAppDebug()) {
+            //开启InstantRun之后，一定要在ARouter.init之前调用openDebug
+            ARouter.openDebug();
+            ARouter.openLog();
+        }
+        ARouter.init(this);
         Fragmentation.builder()
                 // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
                 .stackViewMode(Fragmentation.NONE)

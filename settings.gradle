@@ -1,2 +1,2 @@
-include ':lib_oponsource',':lib_common',':app'
+include ':lib_oponsource',':lib_common',':app',':module_homepage',':module_near',':module_order',':module_mine'
 rootProject.name = "PlatformTrading"

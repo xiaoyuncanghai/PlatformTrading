@@ -11,6 +11,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -28,4 +34,5 @@ greendao {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api  project(':lib_oponsource')
+    annotationProcessor'com.alibaba:arouter-compiler:1.1.4'
 }
