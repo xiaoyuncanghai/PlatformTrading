@@ -8,6 +8,8 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.apkfuns.logutils.LogUtils;
+import com.pt.lib_common.bean.UserBean;
+import com.pt.lib_common.bean.databean.UserInfo;
 import com.pt.lib_common.util.Utils;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -35,6 +37,15 @@ public class BaseApplication extends MultiDexApplication {
 
     private List<ApplicationDelegate> mAppDelegateList;
 
+    private UserInfo user;
+
+    public UserInfo getUser() {
+        return user;
+    }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
+    }
 
 
     public static BaseApplication getInstance() {

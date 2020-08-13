@@ -18,8 +18,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pt.lib_common.R;
+import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.SendSmsParasDataBean;
 import com.pt.lib_common.bean.databean.SmsLoginParasDataBean;
+import com.pt.lib_common.bean.databean.UserInfo;
 import com.pt.lib_common.bean.jsonbean.SendSmsJsonBean;
 import com.pt.lib_common.bean.jsonbean.SmsLoginJsonBean;
 import com.pt.lib_common.constants.HttpConstant;
@@ -30,6 +32,7 @@ import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.CallBack;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
+import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
@@ -199,7 +202,7 @@ public class LoginActDelegate extends AppDelegate {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
+                final SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
                 dataBean.setSmsCode(et_pwd.getText().toString().replace(" ", ""));
                 EasyHttp.post(HttpConstant.API_LOGIN_SMS_URL).headers("User-Agent", "application/json")
@@ -214,7 +217,23 @@ public class LoginActDelegate extends AppDelegate {
                             @Override
                             public void onSuccess(String loginMsgJsonBean) {
                                 SmsLoginJsonBean smsLoginJsonBean = new Gson().fromJson(loginMsgJsonBean, SmsLoginJsonBean.class);
-                                //需要保存 用户
+                                //需要保存用户信息
+                                if (smsLoginJsonBean.getCode() == 0 && !smsLoginJsonBean.getData().isEmpty()) {
+                                    UserInfo info = new UserInfo();
+                                    info.setPhone(et_acc.getText().toString().replace(" ", ""));
+                                    info.setAccessToken(smsLoginJsonBean.getData());
+                                    BaseApplication.getInstance().setUser(info);
+                                    SPHelper.putString("token", smsLoginJsonBean.getData(), true);
+                                    SPHelper.putString("phone", et_acc.getText().toString().replace(" ", ""), true);
+
+                                    HttpHeaders headers = new HttpHeaders();
+                                    headers.put("Authorization", smsLoginJsonBean.getData());
+                                    EasyHttp.getInstance().addCommonHeaders(headers);
+
+                                    //跳转到MainActivity
+                                } else {
+                                    Snackbar.make(srl_login_acc,smsLoginJsonBean.getMessage(),Snackbar.LENGTH_SHORT).show();
+                                }
                             }
                         });
             }
