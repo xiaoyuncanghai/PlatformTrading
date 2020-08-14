@@ -7,21 +7,25 @@
             <solid android:color="@color/transparent_10" />
             <corners android:radius="4dp" />
             <padding android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp" />
-</shape></item>
+        </shape>
+    </item>
 
-    <item android:state_enabled="false"><shape>
+    <item android:state_enabled="false">
+        <shape>
             <stroke android:width="1.5px" android:color="@color/thirdText" />
             <solid android:color="@color/thirdText" />
             <corners android:radius="4dp" />
             <padding android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp" />
-        </shape></item>
-        
-    <item><shape>
+        </shape>
+    </item>
+
+    <item>
+        <shape>
             <stroke android:width="1.5px" android:color="@color/colorPrimary" />
             <corners android:radius="4dp" />
             <padding android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp" />
-            <solid   android:color="@android:color/transparent" />
+            <solid android:color="@android:color/transparent" />
 
-    </shape></item>
-
+        </shape>
+    </item>
 </selector>
