@@ -5,4 +5,5 @@ public interface HttpConstant {
     String API_LOGIN_SMS_URL = "/login/login_sms";
     String API_LOGOUT_URL = "/login/logout";
     String API_SEND_SMS_URL = "/login/send_sms_code";
+    String API_GET_AD = "/ad/get_ad";
 }

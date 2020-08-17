@@ -38,7 +38,7 @@ dependencies {
 
     api 'com.apkfuns.logutils:library:1.5.1.1'
     api 'com.google.android.material:material:1.2.0'
-    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'com.android.support:multidex:1.0.3'
 
     //fresco

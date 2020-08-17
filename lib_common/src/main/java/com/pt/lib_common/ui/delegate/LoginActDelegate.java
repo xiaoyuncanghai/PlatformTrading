@@ -177,7 +177,7 @@ public class LoginActDelegate extends AppDelegate {
                 SendSmsParasDataBean dataBean = new SendSmsParasDataBean();
                 dataBean.setMachineCode(new DeviceUuidFactory(getActivity()).getUuid().toString());
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
-                EasyHttp.post(HttpConstant.API_SEND_SMS_URL).headers("User-Agent", "application/json")
+                EasyHttp.post(HttpConstant.API_SEND_SMS_URL)/*.headers("Content-Type", "application/json")*/
                         .addConverterFactory(GsonConverterFactory.create())
                         .upObject(dataBean)
                         .execute(new SimpleCallBack<String>() {
@@ -211,7 +211,7 @@ public class LoginActDelegate extends AppDelegate {
                 final SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
                 dataBean.setSmsCode(et_pwd.getText().toString().replace(" ", ""));
-                EasyHttp.post(HttpConstant.API_LOGIN_SMS_URL).headers("User-Agent", "application/json")
+                EasyHttp.post(HttpConstant.API_LOGIN_SMS_URL).headers("Content-Type", "application/json")
                         .addConverterFactory(GsonConverterFactory.create())
                         .upObject(dataBean)
                         .execute(new SimpleCallBack<String>() {

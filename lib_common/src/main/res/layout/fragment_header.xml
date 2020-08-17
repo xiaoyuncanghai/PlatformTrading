@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+
+    <com.pt.lib_common.view.circle.CircleImageView
+        android:id="@+id/iv_location"
+        android:layout_width="@dimen/size_32dp"
+        android:layout_height="@dimen/size_32dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:src="@drawable/badge_appt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5dp"
+        android:text="地点"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_location"
+        app:layout_constraintStart_toStartOf="@+id/iv_location"
+        app:layout_constraintTop_toBottomOf="@+id/iv_location" />
+
+
+    <LinearLayout
+        android:id="@+id/edit_search"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginLeft="@dimen/size_75dp"
+        android:layout_marginRight="@dimen/size_75dp"
+        android:background="@drawable/share_background_shape"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/size_15dp"
+        android:paddingRight="@dimen/size_15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_icon_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/size_10dp"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/text_size_12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="搜索热门商品"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/text_size_12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:src="@drawable/abc_vector_test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
