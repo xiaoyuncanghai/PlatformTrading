@@ -31,4 +31,11 @@ dependencies {
     api project(':lib_common')
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 
+    //3D地图so及jar
+    implementation 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+    //搜索功能
+    implementation 'com.amap.api:search:latest.integration'
+
 }

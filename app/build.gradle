@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\workspace\\Project\\code_android\\practice\\PlatformTrading\\pft.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'pft_key'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -16,6 +24,11 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
