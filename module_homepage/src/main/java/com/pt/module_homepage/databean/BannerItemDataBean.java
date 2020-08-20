@@ -1,22 +1,24 @@
 package com.pt.module_homepage.databean;
 
-public class BannerItemDataBean {
+import com.stx.xhb.androidx.entity.BaseBannerInfo;
+
+public class BannerItemDataBean implements BaseBannerInfo {
     private String title;
     private String imageUrl;
     private String linkUrl;
     private String reMark;
 
-    public String getTitle() {
+    /*public String getTitle() {
         return title;
-    }
+    }*/
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getImageUrl() {
+    /*public String getImageUrl() {
         return imageUrl;
-    }
+    }*/
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -36,5 +38,15 @@ public class BannerItemDataBean {
 
     public void setReMark(String reMark) {
         this.reMark = reMark;
+    }
+
+    @Override
+    public String getXBannerUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public String getXBannerTitle() {
+        return title;
     }
 }
