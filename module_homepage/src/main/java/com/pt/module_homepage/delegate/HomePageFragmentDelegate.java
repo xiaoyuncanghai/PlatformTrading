@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apkfuns.logutils.LogUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -85,6 +86,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 cpage++;
+                requestGoodIndex();
             }
 
             @Override
@@ -146,6 +148,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
+                        Snackbar.make(srl_home_page, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -179,7 +182,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        Snackbar.make(srl_home_page, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -195,6 +198,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     homepagePromoteDataBean.setPromote_pic(promoteJsonBean.getData().getRecords().get(i).getPic1());
                                     homepagePromoteDataBean.setPromote_price(promoteJsonBean.getData().getRecords().get(i).getPrice());
                                     homepagePromoteDataBean.setPromote_type(promoteJsonBean.getData().getRecords().get(i).getGoodsType());
+                                    homepagePromoteDataBean.setPromote_title(promoteJsonBean.getData().getRecords().get(i).getTitle());
                                     homePageItemListTemp.add(homepagePromoteDataBean);
                                 }
                                 if (srl_home_page.isRefreshing()) {
@@ -218,6 +222,11 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     srl_home_page.finishLoadmoreWithNoMoreData();
                                 }
                             }
+                        } else if (promoteJsonBean.getCode() == 500) {
+                            //请求参数有误
+                            Snackbar.make(srl_home_page, "服务端返回数据有误", Snackbar.LENGTH_SHORT).show();
+                        } else if (promoteJsonBean.getCode() == 401) {
+                            //accesstoekn过期
                         }
                     }
                 });
