@@ -37,6 +37,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -46,4 +52,5 @@ dependencies {
     implementation project(':module_near')
     implementation project(':module_order')
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    implementation files('libs/BaiduLBS_Android.jar')
 }

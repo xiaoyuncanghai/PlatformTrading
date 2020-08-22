@@ -1,11 +1,15 @@
 package com.pt.platformtrading_location;
 
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Process;
+import android.os.Vibrator;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.fresco.helper.Phoenix;
 import com.pt.lib_common.BuildConfig;
 import com.pt.lib_common.base.BaseApplication;
@@ -13,6 +17,7 @@ import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.cache.converter.SerializableDiskConverter;
 import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
 import com.pt.lib_common.util.Utils;
+import com.pt.platformtrading_location.service.LocationService;
 
 import java.util.List;
 
@@ -36,12 +41,17 @@ public class MainApplication extends BaseApplication {
     }
 
     private final static String BASE_URL = "http://120.76.137.162:18081";
-
+    public LocationService locationService;
+    public Vibrator mVibrator;
     @Override
     public void onCreate() {
         super.onCreate();
         //  Fresco 初始化
         Phoenix.init(this);
+        locationService = new LocationService(getApplicationContext());
+        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.setCoordType(CoordType.BD09LL);
         EasyHttp.init(this);
         EasyHttp.getInstance()
                 .debug("Lion", BuildConfig.DEBUG)
