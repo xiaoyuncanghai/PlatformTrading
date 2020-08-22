@@ -10,18 +10,22 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
+import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
+import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.circle.CircleImageView;
-import com.pt.module_homepage.adapter.HomePageAdapter;
 import com.pt.module_homepage.R;
+import com.pt.module_homepage.adapter.HomePageAdapter;
 import com.pt.module_homepage.databean.BannerItemDataBean;
 import com.pt.module_homepage.databean.HomePageDataBean;
 import com.pt.module_homepage.jsonbean.BannerJsonBean;
@@ -227,6 +231,9 @@ public class HomePageFragmentDelegate extends AppDelegate {
                             Snackbar.make(srl_home_page, "服务端返回数据有误", Snackbar.LENGTH_SHORT).show();
                         } else if (promoteJsonBean.getCode() == 401) {
                             //accesstoekn过期
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
                         }
                     }
                 });

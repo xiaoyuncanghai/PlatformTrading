@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-
 import org.xutils.common.util.LogUtil;
 
 import me.yokeyword.fragmentation.SupportActivity;

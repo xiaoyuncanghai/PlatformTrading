@@ -1,9 +1,5 @@
 package com.pt.lib_common.util;
 
-import android.util.Base64;
-
-import com.pt.lib_common.constants.Constant;
-
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

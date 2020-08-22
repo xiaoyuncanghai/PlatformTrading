@@ -8,7 +8,6 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.apkfuns.logutils.LogUtils;
-import com.pt.lib_common.bean.UserBean;
 import com.pt.lib_common.bean.databean.UserInfo;
 import com.pt.lib_common.util.Utils;
 import com.sohu.cyan.android.sdk.api.Config;
