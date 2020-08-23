@@ -18,8 +18,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.apkfuns.logutils.LogUtils;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.Poi;
-import com.baidu.location.PoiRegion;
 import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
@@ -30,6 +28,7 @@ import com.pt.platformtrading_location.delegate.MainActDelegate;
 import com.pt.platformtrading_location.service.LocationService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.util.LogUtil;
 
 import java.io.File;
@@ -48,11 +47,12 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
     }
 
     private AlertDialog.Builder builder;
+    private String permissionInfo;
+    private final int SDK_PERMISSION_REQUEST = 127;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //请求权限
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -112,38 +112,61 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                     public void onComplete() {
                     }
                 });
-
         getPersimmions();
-        //开始定位
         startLocation();
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (locationService != null) {
+            locationService.unregisterListener(mListener);
+            locationService.stop();
+        }
+    }
+
     private LocationService locationService;
+    private int start = 0;
     private void startLocation() {
-        LocationService locationService = ((MainApplication) getApplication()).locationService;
+        locationService = ((MainApplication) getApplication()).locationService;
         locationService.registerListener(mListener);
         locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         locationService.start();
     }
 
-    private BDAbstractLocationListener mListener = new BDAbstractLocationListener() {
+    public BDAbstractLocationListener mListener = new BDAbstractLocationListener() {
         /**
          * 定位请求回调函数
          * @param location 定位结果
          */
         @Override
         public void onReceiveLocation(BDLocation location) {
-            // TODO Auto-generated method stub
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                start ++ ;
+                LogUtils.d("type = "+location.getLocType());
+                LogUtils.d("city = "+location.getCity());
+                LogUtils.d("code = "+location.getAdCode());
                 CityInfo cityInfo = new CityInfo();
                 cityInfo.setCityName(location.getCity());
                 cityInfo.setCityCode(location.getAdCode());
                 BaseApplication.getInstance().setCity(cityInfo);
-                LogUtils.d("current type = "+location.getLocType());
-                LogUtils.d("current city = "+location.getCity());
-                LogUtils.d("current citycode = "+location.getCityCode());
-                LogUtils.d("current Ad = "+location.getAdCode());
-                LogUtils.d("current Country = "+location.getCountryCode());
+                if (location.getCity() != null && !location.getCity().equals("")) {
+                    //说明获取到了城市信息
+                    locationService.unregisterListener(mListener); //注销掉监听
+                    locationService.stop(); //停止定位服务
+                    start = 0;
+                    //传递cityInfo
+                    EventBus.getDefault().post(cityInfo);
+                } else {
+                    //说明没有定位到
+                    LogUtils.d("定位失败");
+                    if (start > 15) {
+                        //重试15次
+                        locationService.unregisterListener(mListener); //注销掉监听
+                        locationService.stop(); //停止定位服务
+                    }
+                }
             }
         }
 
@@ -161,41 +184,10 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         @Override
         public void onLocDiagnosticMessage(int locType, int diagnosticType, String diagnosticMessage) {
             super.onLocDiagnosticMessage(locType, diagnosticType, diagnosticMessage);
-            /*LogUtils.d("locType = "+locType);
-            if (locType == BDLocation.TypeNetWorkLocation) {
-                if (diagnosticType == 1) {
-                    //sb.append("网络定位成功，没有开启GPS，建议打开GPS会更好");
-                } else if (diagnosticType == 2) {
-                    //sb.append("网络定位成功，没有开启Wi-Fi，建议打开Wi-Fi会更好");
-                }
-            } else if (locType == BDLocation.TypeOffLineLocationFail) {
-                if (diagnosticType == 3) {
-                    //sb.append("定位失败，请您检查您的网络状态");
-                }
-            } else if (locType == BDLocation.TypeCriteriaException) {
-                if (diagnosticType == 4) {
-                    //sb.append("定位失败，无法获取任何有效定位依据");
-
-                } else if (diagnosticType == 5) {
-                    //sb.append("定位失败，无法获取有效定位依据，请检查运营商网络或者Wi-Fi网络是否正常开启，尝试重新请求定位");
-
-                } else if (diagnosticType == 6) {
-                    //sb.append("定位失败，无法获取有效定位依据，请尝试插入一张sim卡或打开Wi-Fi重试");
-                } else if (diagnosticType == 7) {
-                    //sb.append("定位失败，飞行模式下无法获取有效定位依据，请关闭飞行模式重试");
-                } else if (diagnosticType == 9) {
-                    //sb.append("定位失败，无法获取任何有效定位依据");
-                }
-            } else if (locType == BDLocation.TypeServerError) {
-                if (diagnosticType == 8) {
-                    //sb.append("定位失败，请确认您定位的开关打开状态，是否赋予APP定位权限");
-                }
-            }*/
         }
     };
 
-    private String permissionInfo;
-    private final int SDK_PERMISSION_REQUEST = 127;
+
     @TargetApi(23)
     private void getPersimmions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

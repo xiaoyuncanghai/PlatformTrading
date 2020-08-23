@@ -1,11 +1,14 @@
 package com.pt.module_homepage.delegate;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,15 +18,23 @@ import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
-import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.circle.CircleImageView;
+import com.pt.lib_common.view.citychoose.CityPicker;
+import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
+import com.pt.lib_common.view.citychoose.model.City;
+import com.pt.lib_common.view.citychoose.model.HotCity;
+import com.pt.lib_common.view.citychoose.model.LocateState;
+import com.pt.lib_common.view.citychoose.model.LocatedCity;
+import com.pt.module_homepage.HomePageFragment;
 import com.pt.module_homepage.R;
 import com.pt.module_homepage.adapter.HomePageAdapter;
 import com.pt.module_homepage.databean.BannerItemDataBean;
@@ -36,7 +47,12 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -51,6 +67,14 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private RecyclerView rcv_home_page;
     private int cpage = 1;
     private ConstraintLayout fragment_header_layout;
+    private ConstraintLayout coo_location;
+
+    private ArrayList<BannerItemDataBean> bannerItemList = new ArrayList<BannerItemDataBean>();
+    private ArrayList<HomePageDataBean> homePageItemList = new ArrayList<HomePageDataBean>();
+    private ArrayList<HomePageDataBean> homePageItemListTemp = new ArrayList<HomePageDataBean>();
+    private HomePageAdapter homePageAdapter;
+    private List<HotCity> hotCities;
+
 
     @Override
     public int getRootLayoutId() {
@@ -60,7 +84,16 @@ public class HomePageFragmentDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
+        EventBus.getDefault().register(this);
+        initCityData();
         initView();
+    }
+
+    private void initCityData() {
+        hotCities = new ArrayList<>();
+        hotCities.add(new HotCity("北京市", "110100"));
+        hotCities.add(new HotCity("天津市", "120100"));
+        hotCities.add(new HotCity("武汉市", "101280101"));
     }
 
     private void initView() {
@@ -70,16 +103,13 @@ public class HomePageFragmentDelegate extends AppDelegate {
         edit_search = get(R.id.edit_search);
         tv_icon_search = get(R.id.tv_icon_search);
         iv_user_info = get(R.id.iv_user_info);
-
+        coo_location = get(R.id.coo_location);
         srl_home_page = get(R.id.srl_home_page);
         rcv_home_page = get(R.id.rcv_home_page);
 
         fragment_header_layout.setPadding(0,
                 Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
                 0, Utils.dip2px(this.getActivity(), 10f));
-
-
-
         rcv_home_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 4,
                 GridLayoutManager.VERTICAL, false));
         homePageAdapter = new HomePageAdapter(getActivity(), homePageItemList);
@@ -99,12 +129,48 @@ public class HomePageFragmentDelegate extends AppDelegate {
             }
         });
         srl_home_page.autoRefresh();
-    }
 
-    private ArrayList<BannerItemDataBean> bannerItemList = new ArrayList<BannerItemDataBean>();
-    private ArrayList<HomePageDataBean> homePageItemList = new ArrayList<HomePageDataBean>();
-    private ArrayList<HomePageDataBean> homePageItemListTemp = new ArrayList<HomePageDataBean>();
-    private HomePageAdapter homePageAdapter;
+        //定位点击
+        coo_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final LocatedCity locatedCity;
+                if (BaseApplication.getInstance().getCity().getCityName().equals("")) {
+                    //表示没有定位到
+                    locatedCity = null;
+                } else {
+                    locatedCity = new LocatedCity(BaseApplication.getInstance().getCity().getCityName(),
+                            BaseApplication.getInstance().getCity().getCityCode());
+                }
+                CityPicker.from(getCurrentActivity())
+                        .enableAnimation(false)
+                        .setLocatedCity(locatedCity).setHotCities(hotCities)
+                        .setOnPickListener(new OnPickListener() {
+                            @Override
+                            public void onPick(int position, City data) {
+                                //手动切换城市, 重新刷新数据
+                            }
+
+                            @Override
+                            public void onLocate() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CityPicker.from(getCurrentActivity())
+                                                .locateComplete(
+                                                        locatedCity, LocateState.SUCCESS);
+                                    }
+                                }, 3000);
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+            }
+        });
+    }
 
     //请求轮播图数据
     private void requestBanner() {
@@ -237,6 +303,11 @@ public class HomePageFragmentDelegate extends AppDelegate {
                         }
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateCityName(CityInfo cityInfo) {
+        tv_location.setText(cityInfo.getCityName());
     }
 
 }

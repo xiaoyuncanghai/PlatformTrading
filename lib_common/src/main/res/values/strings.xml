@@ -23,5 +23,9 @@
     <string name="permission_request_denied">抱歉，您拒绝了权限申请，请系统设置中开启权限</string>
     <string name="permission_request_denied_result">抱歉，您拒绝了权限申请，应用的部分功能将不可用，请在系统设置中对此应用开启权限</string>
     <string name="error_gif">x or y bound size should be at least %1$dpx and file size should be no more than %2$sM</string>
-
+    <string name="cp_search_hint_text">城市中文名或拼音</string>
+    <string name="cp_cancel">取消</string>
+    <string name="cp_no_result">没有找到，换个词试试~</string>
+    <string name="cp_locate_failed">定位失败</string>
+    <string name="cp_locating">正在定位…</string>
 </resources>
