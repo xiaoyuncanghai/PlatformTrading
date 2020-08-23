@@ -8,6 +8,7 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.apkfuns.logutils.LogUtils;
+import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.bean.databean.UserInfo;
 import com.pt.lib_common.util.Utils;
 import com.sohu.cyan.android.sdk.api.Config;
@@ -35,6 +36,16 @@ public class BaseApplication extends MultiDexApplication {
     private static BaseApplication sInstance;
 
     private List<ApplicationDelegate> mAppDelegateList;
+
+    private CityInfo city;
+
+    public CityInfo getCity() {
+        return city;
+    }
+
+    public void setCity(CityInfo city) {
+        this.city = city;
+    }
 
     private UserInfo user;
 

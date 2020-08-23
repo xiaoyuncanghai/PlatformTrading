@@ -22,6 +22,8 @@ import com.baidu.location.Poi;
 import com.baidu.location.PoiRegion;
 import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.lib_common.util.Utils;
 import com.pt.platformtrading_location.delegate.MainActDelegate;
@@ -133,7 +135,10 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         public void onReceiveLocation(BDLocation location) {
             // TODO Auto-generated method stub
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
-
+                CityInfo cityInfo = new CityInfo();
+                cityInfo.setCityName(location.getCity());
+                cityInfo.setCityCode(location.getAdCode());
+                BaseApplication.getInstance().setCity(cityInfo);
                 LogUtils.d("current type = "+location.getLocType());
                 LogUtils.d("current city = "+location.getCity());
                 LogUtils.d("current citycode = "+location.getCityCode());
@@ -156,7 +161,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         @Override
         public void onLocDiagnosticMessage(int locType, int diagnosticType, String diagnosticMessage) {
             super.onLocDiagnosticMessage(locType, diagnosticType, diagnosticMessage);
-            LogUtils.d("locType = "+locType);
+            /*LogUtils.d("locType = "+locType);
             if (locType == BDLocation.TypeNetWorkLocation) {
                 if (diagnosticType == 1) {
                     //sb.append("网络定位成功，没有开启GPS，建议打开GPS会更好");
@@ -185,7 +190,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                 if (diagnosticType == 8) {
                     //sb.append("定位失败，请确认您定位的开关打开状态，是否赋予APP定位权限");
                 }
-            }
+            }*/
         }
     };
 
