@@ -11,7 +11,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
@@ -29,6 +32,7 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
+import com.pt.lib_common.ui.component.LoginActivity;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -53,6 +57,8 @@ public class LoginActDelegate extends AppDelegate {
     private TextView tv_send_code;
     private Button bt_login;
     private Typeface typeface;
+    private LinearLayout login_real_layout;
+    private ConstraintLayout loading_layout;
 
     @Override
     public int getRootLayoutId() {
@@ -68,6 +74,23 @@ public class LoginActDelegate extends AppDelegate {
 
     private void initView() {
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf");
+        login_real_layout = get(R.id.login_real_layout);
+        loading_layout  = get(R.id.loading_layout);
+        if (SPHelper.getString("token", "", true).equals("")) {
+            //没有accessToken
+            login_real_layout.setVisibility(View.VISIBLE);
+            loading_layout.setVisibility(View.GONE);
+            ((LoginActivity)getActivity()).initHeader();
+        } else {
+            HttpHeaders headers = new HttpHeaders();
+            headers.put("Authorization", SPHelper.getString("token", "", true));
+            EasyHttp.getInstance().addCommonHeaders(headers);
+            ARouter.getInstance().build(ARouterPath.MAIN_PATH).navigation();
+            getActivity().finish();
+        }
+
+
+
         srl_login_acc = get(R.id.srl_login_acc);
         tv_acc = get(R.id.tv_acc);
         et_acc = get(R.id.et_acc);
@@ -77,7 +100,6 @@ public class LoginActDelegate extends AppDelegate {
         tv_send_code = get(R.id.tv_send_code);
         bt_login = get(R.id.bt_login);
 
-        //手机号码 按照3 4 4切割排列
         et_acc.setPattern(new int[]{3, 4, 4}, " ");
 
         tv_del_acc.setTypeface(typeface);
@@ -222,6 +244,7 @@ public class LoginActDelegate extends AppDelegate {
                                     EasyHttp.getInstance().addCommonHeaders(headers);
                                     ARouter.getInstance().build(ARouterPath.MAIN_PATH)
                                             .navigation();
+                                    getActivity().finish();
                                 } else {
                                     Snackbar.make(srl_login_acc, smsLoginJsonBean.getData(), Snackbar.LENGTH_SHORT).show();
                                 }

@@ -21,18 +21,10 @@ public class LoginActivity extends ActivityPresenter<LoginActDelegate> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (SPHelper.getString("token", "", true).equals("")) {
-            //没有accessToken
-            initHeader();
-        } else {
-            HttpHeaders headers = new HttpHeaders();
-            headers.put("Authorization", SPHelper.getString("token", "", true));
-            EasyHttp.getInstance().addCommonHeaders(headers);
-            ARouter.getInstance().build(ARouterPath.MAIN_PATH).navigation();
-        }
+
     }
 
-    private void initHeader() {
+    public void initHeader() {
         setTitle("登录");
     }
 }

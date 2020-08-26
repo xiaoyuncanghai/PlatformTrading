@@ -161,7 +161,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                 } else {
                     //说明没有定位到
                     LogUtils.d("定位失败");
-                    if (start > 15) {
+                    if (start > 50) {
                         //重试15次
                         locationService.unregisterListener(mListener); //注销掉监听
                         locationService.stop(); //停止定位服务

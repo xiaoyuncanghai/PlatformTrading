@@ -329,6 +329,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(CityInfo cityInfo) {
         tv_location.setText(cityInfo.getCityName());
+        //自动定位到的地方
+        //BaseApplication.getInstance().setCity(cityInfo);
     }
 
 }
