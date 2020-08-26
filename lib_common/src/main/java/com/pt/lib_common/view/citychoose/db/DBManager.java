@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
+import com.apkfuns.logutils.LogUtils;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.pt.lib_common.view.citychoose.model.City;
 
@@ -88,6 +89,7 @@ public class DBManager {
         cursor.close();
         db.close();
         Collections.sort(result, new CityComparator());
+        LogUtils.d("result = "+result.size());
         return result;
     }
 

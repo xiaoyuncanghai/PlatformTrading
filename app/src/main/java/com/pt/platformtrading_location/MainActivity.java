@@ -128,7 +128,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
 
     private LocationService locationService;
     private int start = 0;
-    private void startLocation() {
+    public void startLocation() {
         locationService = ((MainApplication) getApplication()).locationService;
         locationService.registerListener(mListener);
         locationService.setLocationOption(locationService.getDefaultLocationClientOption());

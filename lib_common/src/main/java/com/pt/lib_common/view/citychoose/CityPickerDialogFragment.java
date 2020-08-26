@@ -176,15 +176,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         //初始化热门城市
         if (mHotCities == null || mHotCities.isEmpty()) {
             mHotCities = new ArrayList<>();
-            mHotCities.add(new HotCity("北京", "101010100"));
-            mHotCities.add(new HotCity("上海", "101020100"));
-            mHotCities.add(new HotCity("广州", "101280101"));
-            mHotCities.add(new HotCity("深圳", "101280601"));
-            mHotCities.add(new HotCity("天津", "101030100"));
-            mHotCities.add(new HotCity("杭州", "101210101"));
-            mHotCities.add(new HotCity("南京", "101190101"));
-            mHotCities.add(new HotCity("成都", "101270101"));
-            mHotCities.add(new HotCity("武汉", "101200101"));
+            mHotCities.add(new HotCity("北京市", "110100"));
+            mHotCities.add(new HotCity("天津市", "120100"));
+            mHotCities.add(new HotCity("武汉市", "420111"));
         }
         //初始化定位城市，默认为空时会自动回调定位
         if (mLocatedCity == null) {

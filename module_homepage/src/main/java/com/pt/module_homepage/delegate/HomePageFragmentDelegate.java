@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +75,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private ArrayList<HomePageDataBean> homePageItemListTemp = new ArrayList<HomePageDataBean>();
     private HomePageAdapter homePageAdapter;
     private List<HotCity> hotCities;
+    private String code = "";
 
 
     @Override
@@ -94,7 +95,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         hotCities = new ArrayList<>();
         hotCities.add(new HotCity("北京市", "110100"));
         hotCities.add(new HotCity("天津市", "120100"));
-        hotCities.add(new HotCity("武汉市", "101280101"));
+        hotCities.add(new HotCity("武汉市", "420111"));
     }
 
     private void initView() {
@@ -136,12 +137,13 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 final LocatedCity locatedCity;
-                if (BaseApplication.getInstance().getCity().getCityName().equals("")) {
-                    //表示没有定位到
-                    locatedCity = null;
-                } else {
+                if (BaseApplication.getInstance().getCity() != null
+                        && BaseApplication.getInstance().getCity().getCityName() != null
+                        && !BaseApplication.getInstance().getCity().getCityName().equals("")) {
                     locatedCity = new LocatedCity(BaseApplication.getInstance().getCity().getCityName(),
                             BaseApplication.getInstance().getCity().getCityCode());
+                } else {
+                    locatedCity = null;
                 }
                 CityPicker.from((SupportActivity) HomePageFragmentDelegate.this.getActivity())
                         .enableAnimation(false)
@@ -149,9 +151,18 @@ public class HomePageFragmentDelegate extends AppDelegate {
                         .setLocatedCity(locatedCity)
                         .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
+                            //手动切换城市
                             @Override
                             public void onPick(int position, City data) {
-                                //手动切换城市, 重新刷新数据
+                                tv_location.setText(data.getName());
+                                //TODO:对数据citycode进行处理
+                                code = data.getCode();
+                                Toast.makeText(
+                                        HomePageFragmentDelegate.this.getActivity(),
+                                        String.format("点击的数据：%s，%s", data.getName(), data.getCode()),
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                                srl_home_page.autoRefresh();
                             }
 
                             @Override
@@ -159,13 +170,20 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        CityPicker.from(getCurrentActivity())
-                                                .locateComplete(
-                                                        locatedCity, LocateState.SUCCESS);
+                                        if (locatedCity != null) {
+                                            CityPicker.from((SupportActivity) HomePageFragmentDelegate.this.getActivity())
+                                                    .locateComplete(
+                                                            locatedCity, LocateState.SUCCESS);
+                                        } else {
+                                            CityPicker.from((SupportActivity) HomePageFragmentDelegate.this.getActivity())
+                                                    .locateComplete(
+                                                            null, LocateState.FAILURE);
+                                        }
                                     }
                                 }, 3000);
                             }
 
+                            //取消定位
                             @Override
                             public void onCancel() {
 
@@ -247,7 +265,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     private void requestGoodIndex() {
         HomePageIndexRequestBean homePageIndexRequestBean = new HomePageIndexRequestBean();
-        homePageIndexRequestBean.setCityCode("");
+        homePageIndexRequestBean.setCityCode(code);
         homePageIndexRequestBean.setCurrent(cpage);
         EasyHttp.post(HttpConstant.API_HOME_PAGE).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
