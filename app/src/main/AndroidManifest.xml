@@ -44,7 +44,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.pt.platformtrading_location.MainActivity" />
+        <activity android:name="com.pt.platformtrading_location.MainActivity"
+            android:theme="@style/DefaultCityPickerTheme"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ek3ByHmF5nb2xNR6T5bF3wBQqouMbWvD"></meta-data>

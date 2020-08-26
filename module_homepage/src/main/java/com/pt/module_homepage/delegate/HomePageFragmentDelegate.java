@@ -54,6 +54,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yokeyword.fragmentation.SupportActivity;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomePageFragmentDelegate extends AppDelegate {
@@ -142,9 +143,11 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     locatedCity = new LocatedCity(BaseApplication.getInstance().getCity().getCityName(),
                             BaseApplication.getInstance().getCity().getCityCode());
                 }
-                CityPicker.from(getCurrentActivity())
+                CityPicker.from((SupportActivity) HomePageFragmentDelegate.this.getActivity())
                         .enableAnimation(false)
-                        .setLocatedCity(locatedCity).setHotCities(hotCities)
+                        .setAnimationStyle(R.style.DefaultCityPickerAnimation)
+                        .setLocatedCity(locatedCity)
+                        .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
                             @Override
                             public void onPick(int position, City data) {
@@ -167,7 +170,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                             public void onCancel() {
 
                             }
-                        });
+                        }).show();
             }
         });
     }

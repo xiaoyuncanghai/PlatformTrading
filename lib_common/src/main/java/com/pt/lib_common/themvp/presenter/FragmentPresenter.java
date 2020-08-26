@@ -182,8 +182,6 @@ public abstract class FragmentPresenter<T extends IDelegate> extends BaseFragmen
         LogUtils.d(getClass().getName().toString()+"onViewCreated");
         isViewCreated = true;
         lazyLoad();
-
-
     }
 
     @Override
@@ -192,7 +190,6 @@ public abstract class FragmentPresenter<T extends IDelegate> extends BaseFragmen
         //页面销毁,恢复标记
         isViewCreated = false;
         isUIVisible = false;
-
         LogUtils.d(getClass().getName() + "页面销毁了");
     }
 
