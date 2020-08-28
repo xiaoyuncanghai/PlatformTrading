@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -50,14 +51,17 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
     private String permissionInfo;
     private final int SDK_PERMISSION_REQUEST = 127;
 
+    /*
+    * ,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+                Manifest.permission.READ_PHONE_STATE)
                 .subscribe(new Observer<Boolean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -93,7 +97,6 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                         } else {
                             Snackbar.make(viewDelegate.getRootView(), R.string.permission_request_denied_result, Snackbar.LENGTH_LONG).show();
                         }
-
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
                             boolean areNotificationsEnabled = notificationManagerCompat.areNotificationsEnabled();
@@ -112,8 +115,15 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                     public void onComplete() {
                     }
                 });
-        getPersimmions();
-        startLocation();
+        //先检查权限, 有直接定位
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocation();
+        } else {
+            getPersimmions();
+        }
     }
 
 
@@ -128,6 +138,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
 
     private LocationService locationService;
     private int start = 0;
+
     public void startLocation() {
         locationService = ((MainApplication) getApplication()).locationService;
         locationService.registerListener(mListener);
@@ -143,10 +154,10 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
-                start ++ ;
-                LogUtils.d("type = "+location.getLocType());
-                LogUtils.d("city = "+location.getCity());
-                LogUtils.d("code = "+location.getAdCode());
+                start++;
+                LogUtils.d("type = " + location.getLocType());
+                LogUtils.d("city = " + location.getCity());
+                LogUtils.d("code = " + location.getAdCode());
                 CityInfo cityInfo = new CityInfo();
                 cityInfo.setCityName(location.getCity());
                 cityInfo.setCityCode(location.getAdCode());
@@ -202,13 +213,6 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
-            /*
-             * 读写权限和电话状态权限非必要权限(建议授予)只会申请一次，用户同意或者禁止，只会弹一次
-             */
-            // 读写权限
-            if (addPermission(permissions, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                permissionInfo += "Manifest.permission.WRITE_EXTERNAL_STORAGE Deny \n";
-            }
             if (permissions.size() > 0) {
                 requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
             }
@@ -234,8 +238,20 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
     @TargetApi(23)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        // TODO Auto-generated method stub
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SDK_PERMISSION_REQUEST) {
+            if (permissions.length == 2 && grantResults.length == 2) {
+                if (permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION)
+                        && permissions[1].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        startLocation();
+                    } else {
+                        //TODO:可以做弹框
+                        //handleNoPermission()
+                    }
+                }
+            }
+        }
     }
 
     private void showOpenNoticeDialog() {
