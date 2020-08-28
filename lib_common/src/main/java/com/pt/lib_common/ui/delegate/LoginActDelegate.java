@@ -57,8 +57,6 @@ public class LoginActDelegate extends AppDelegate {
     private TextView tv_send_code;
     private Button bt_login;
     private Typeface typeface;
-    private LinearLayout login_real_layout;
-    private ConstraintLayout loading_layout;
 
     @Override
     public int getRootLayoutId() {
@@ -74,9 +72,7 @@ public class LoginActDelegate extends AppDelegate {
 
     private void initView() {
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf");
-        login_real_layout = get(R.id.login_real_layout);
-        loading_layout  = get(R.id.loading_layout);
-        if (SPHelper.getString("token", "", true).equals("")) {
+        /*if (SPHelper.getString("token", "", true).equals("")) {
             //没有accessToken
             login_real_layout.setVisibility(View.VISIBLE);
             loading_layout.setVisibility(View.GONE);
@@ -87,10 +83,7 @@ public class LoginActDelegate extends AppDelegate {
             EasyHttp.getInstance().addCommonHeaders(headers);
             ARouter.getInstance().build(ARouterPath.MAIN_PATH).navigation();
             getActivity().finish();
-        }
-
-
-
+        }*/
         srl_login_acc = get(R.id.srl_login_acc);
         tv_acc = get(R.id.tv_acc);
         et_acc = get(R.id.et_acc);

@@ -26,6 +26,9 @@
 
     <application>
         <activity android:name=".ui.component.LoginActivity">
+        </activity>
+
+        <activity android:name=".ui.component.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
