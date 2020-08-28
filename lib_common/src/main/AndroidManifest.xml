@@ -25,15 +25,17 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
-        <activity android:name=".ui.component.LoginActivity">
-        </activity>
+        <activity android:name=".ui.component.LoginActivity"></activity>
 
-        <activity android:name=".ui.component.SplashActivity" >
+        <activity android:name=".ui.component.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.component.SearchActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
     </application>
 
 </manifest>

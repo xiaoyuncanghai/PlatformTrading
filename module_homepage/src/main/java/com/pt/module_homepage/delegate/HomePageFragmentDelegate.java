@@ -191,6 +191,13 @@ public class HomePageFragmentDelegate extends AppDelegate {
                         }).show();
             }
         });
+
+        edit_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).navigation();
+            }
+        });
     }
 
     //请求轮播图数据

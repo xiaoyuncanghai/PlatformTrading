@@ -58,9 +58,9 @@ public class MainApplication extends BaseApplication {
                 .setReadTimeOut(60 * 1000)
                 .setWriteTimeOut(60 * 1000)
                 .setConnectTimeout(60 * 1000)
-                .setRetryCount(3)//默认网络不好自动重试3次
-                .setRetryDelay(500)//每次延时500ms重试
-                .setRetryIncreaseDelay(500)//每次延时叠加500ms
+                .setRetryCount(5)//默认网络不好自动重试3次
+                .setRetryDelay(1500)//每次延时500ms重试
+                .setRetryIncreaseDelay(1500)//每次延时叠加500ms
                 .setBaseUrl(BASE_URL)
                 .setCacheDiskConverter(new SerializableDiskConverter())//默认缓存使用序列化转化
                 .setCacheMaxSize(50 * 1024 * 1024)//设置缓存大小为50M
