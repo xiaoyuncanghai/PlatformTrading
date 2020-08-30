@@ -72,18 +72,6 @@ public class LoginActDelegate extends AppDelegate {
 
     private void initView() {
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf");
-        /*if (SPHelper.getString("token", "", true).equals("")) {
-            //没有accessToken
-            login_real_layout.setVisibility(View.VISIBLE);
-            loading_layout.setVisibility(View.GONE);
-            ((LoginActivity)getActivity()).initHeader();
-        } else {
-            HttpHeaders headers = new HttpHeaders();
-            headers.put("Authorization", SPHelper.getString("token", "", true));
-            EasyHttp.getInstance().addCommonHeaders(headers);
-            ARouter.getInstance().build(ARouterPath.MAIN_PATH).navigation();
-            getActivity().finish();
-        }*/
         srl_login_acc = get(R.id.srl_login_acc);
         tv_acc = get(R.id.tv_acc);
         et_acc = get(R.id.et_acc);

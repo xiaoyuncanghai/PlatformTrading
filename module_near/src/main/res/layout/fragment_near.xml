@@ -17,7 +17,7 @@
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_home_page"
+        android:id="@+id/srl_near_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/common_bg">
@@ -30,7 +30,7 @@
             app:srlTextSizeTitle="@dimen/text_size_13sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_home_page"
+            android:id="@+id/rcv_near_page"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

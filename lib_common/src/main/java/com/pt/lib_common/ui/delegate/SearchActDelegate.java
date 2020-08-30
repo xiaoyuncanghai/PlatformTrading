@@ -220,7 +220,6 @@ public class SearchActDelegate extends AppDelegate {
 
                     @Override
                     public void onSuccess(String s) {
-                        LogUtils.d("Search Data = " + s);
                         SearchJsonBean jsonBean = new Gson().fromJson(s, SearchJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             if (jsonBean.getData() != null && jsonBean.getData().getRecords() != null
