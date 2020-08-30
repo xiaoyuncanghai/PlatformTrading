@@ -31,6 +31,7 @@ import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.circle.CircleImageView;
 import com.pt.lib_common.view.citychoose.CityPicker;
 import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
+import com.pt.lib_common.view.citychoose.db.DBManager;
 import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.lib_common.view.citychoose.model.HotCity;
 import com.pt.lib_common.view.citychoose.model.LocateState;
@@ -73,6 +74,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private ArrayList<BannerItemDataBean> bannerItemList = new ArrayList<BannerItemDataBean>();
     private ArrayList<HomePageDataBean> homePageItemList = new ArrayList<HomePageDataBean>();
     private ArrayList<HomePageDataBean> homePageItemListTemp = new ArrayList<HomePageDataBean>();
+    private ArrayList<HomePageDataBean> homePageBannerTemp = new ArrayList<HomePageDataBean>();
+    private ArrayList<HomePageDataBean> homePageCategoryTemp = new ArrayList<HomePageDataBean>();
     private HomePageAdapter homePageAdapter;
     private List<HotCity> hotCities;
     private String code = "";
@@ -212,9 +215,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         BannerJsonBean bannerJsonBean = new Gson().fromJson(s, BannerJsonBean.class);
                         //清空了tempList
-                        homePageItemListTemp.clear();
+                        homePageBannerTemp.clear();
                         if (bannerJsonBean.getCode() == 0) {
-                            //遍历数据, 转化数据
                             if (bannerJsonBean.getData() != null && bannerJsonBean.getData().size() > 0) {
                                 bannerItemList.clear();
                                 for (int i = 0; i < bannerJsonBean.getData().size(); i++) {
@@ -228,10 +230,9 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 HomePageDataBean bannerDataBean = new HomePageDataBean();
                                 bannerDataBean.setItemType(HomePageDataBean.TYPE_HOME_PAGE_BANNER);
                                 bannerDataBean.setBannerItemList(bannerItemList);
-                                homePageItemListTemp.add(bannerDataBean);
+                                homePageBannerTemp.add(bannerDataBean);
                             }
                         }
-                        LogUtils.d("homePageItemListTemp.size1 = " + homePageItemListTemp.size());
                         requestGoodCategory();
                     }
                 });
@@ -252,6 +253,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         HomePageCategoryJsonBean categoryJsonBean = new Gson().fromJson(s, HomePageCategoryJsonBean.class);
                         if (categoryJsonBean.getCode() == 0) {
+                            homePageCategoryTemp.clear();
                             if (categoryJsonBean.getData() != null && categoryJsonBean.getData().size() > 0) {
                                 for (int i = 0; i < categoryJsonBean.getData().size(); i++) {
                                     HomePageDataBean homepageCateDataBean = new HomePageDataBean();
@@ -259,7 +261,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     homepageCateDataBean.setCate_name(categoryJsonBean.getData().get(i).getName());
                                     homepageCateDataBean.setCate_id(categoryJsonBean.getData().get(i).getId());
                                     homepageCateDataBean.setCate_icon(categoryJsonBean.getData().get(i).getIcon());
-                                    homePageItemListTemp.add(homepageCateDataBean);
+                                    homePageCategoryTemp.add(homepageCateDataBean);
                                 }
                             }
                         }
@@ -285,8 +287,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         HomePagePromoteJsonBean promoteJsonBean = new Gson().fromJson(s, HomePagePromoteJsonBean.class);
                         if (promoteJsonBean.getCode() == 0) {
-                            LogUtils.d("homePageItemListTemp.size2 = " + homePageItemListTemp.size());
-                            homePageAdapter.notifyDataSetChanged();
+                            homePageItemListTemp.clear();
                             if (promoteJsonBean.getData() != null && promoteJsonBean.getData().getRecords() != null
                                     && promoteJsonBean.getData().getRecords().size() > 0) {
                                 for (int i = 0; i < promoteJsonBean.getData().getRecords().size(); i++) {
@@ -299,20 +300,22 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     homepagePromoteDataBean.setPromote_title(promoteJsonBean.getData().getRecords().get(i).getTitle());
                                     homePageItemListTemp.add(homepagePromoteDataBean);
                                 }
-                                if (srl_home_page.isRefreshing()) {
-                                    //刷新状态
-                                    homePageItemList.clear();
-                                }
                             } else {
                                 //表示没有数据了
                                 if (srl_home_page.isRefreshing()) {
                                     srl_home_page.resetNoMoreData();
-                                    //srl_home_page.finishRefresh();
                                 } else if (srl_home_page.isLoading()) {
                                     srl_home_page.finishLoadmoreWithNoMoreData();
                                 }
                             }
-                            homePageItemList.addAll(homePageItemListTemp);
+                            if (srl_home_page.isRefreshing()) {
+                                homePageItemList.clear();
+                                homePageItemList.addAll(homePageBannerTemp);
+                                homePageItemList.addAll(homePageCategoryTemp);
+                                homePageItemList.addAll(homePageItemListTemp);
+                            } else if (srl_home_page.isLoading()) {
+                                homePageItemList.addAll(homePageItemListTemp);
+                            }
                             homePageAdapter.notifyDataSetChanged();
                             if (srl_home_page.isRefreshing()) {
                                 srl_home_page.finishRefresh();
@@ -332,10 +335,14 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 });
     }
 
+    private DBManager dbManager;
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(CityInfo cityInfo) {
         cityName = cityInfo.getCityName();
         tv_location.setText(cityInfo.getCityName());
-        code = cityInfo.getCityCode();
+        //code = cityInfo.getCityCode();
+        dbManager = new DBManager(getActivity());
+        code = dbManager.searchCityForName(cityName);
+        LogUtils.d("code = "+code);
     }
 }
