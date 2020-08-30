@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.CityInfo;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -34,7 +35,6 @@ import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.lib_common.view.citychoose.model.HotCity;
 import com.pt.lib_common.view.citychoose.model.LocateState;
 import com.pt.lib_common.view.citychoose.model.LocatedCity;
-import com.pt.module_homepage.HomePageFragment;
 import com.pt.module_homepage.R;
 import com.pt.module_homepage.adapter.HomePageAdapter;
 import com.pt.module_homepage.databean.BannerItemDataBean;
@@ -76,6 +76,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private HomePageAdapter homePageAdapter;
     private List<HotCity> hotCities;
     private String code = "";
+    private String cityName = "";
 
 
     @Override
@@ -137,11 +138,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 final LocatedCity locatedCity;
-                if (BaseApplication.getInstance().getCity() != null
-                        && BaseApplication.getInstance().getCity().getCityName() != null
-                        && !BaseApplication.getInstance().getCity().getCityName().equals("")) {
-                    locatedCity = new LocatedCity(BaseApplication.getInstance().getCity().getCityName(),
-                            BaseApplication.getInstance().getCity().getCityCode());
+                if (code != "" && cityName != "") {
+                    locatedCity = new LocatedCity(cityName, code);
                 } else {
                     locatedCity = null;
                 }
@@ -154,9 +152,10 @@ public class HomePageFragmentDelegate extends AppDelegate {
                             //手动切换城市
                             @Override
                             public void onPick(int position, City data) {
-                                tv_location.setText(data.getName());
                                 //TODO:对数据citycode进行处理
                                 code = data.getCode();
+                                cityName = data.getName();
+                                tv_location.setText(cityName);
                                 Toast.makeText(
                                         HomePageFragmentDelegate.this.getActivity(),
                                         String.format("点击的数据：%s，%s", data.getName(), data.getCode()),
@@ -195,7 +194,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         edit_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).navigation();
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE, code).navigation();
             }
         });
     }
@@ -335,6 +334,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(CityInfo cityInfo) {
+        cityName = cityInfo.getCityName();
         tv_location.setText(cityInfo.getCityName());
+        code = cityInfo.getCityCode();
     }
 }

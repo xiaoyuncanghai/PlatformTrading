@@ -18,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.SearchAdapter;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.SearchJsonBean;
 import com.pt.lib_common.base.request.SearchRequestBean;
 import com.pt.lib_common.bean.databean.SearchBean;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -66,6 +69,7 @@ public class SearchActDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
+        cityCode = getActivity().getIntent().getStringExtra(Constant.KEY_CITY_CODE);
         tv_cancel = get(R.id.tv_cancel);
         srl_search = get(R.id.srl_search);
         rv_search = get(R.id.rv_search);
@@ -74,7 +78,6 @@ public class SearchActDelegate extends AppDelegate {
         tv_icon_search.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf"));
         tv_icon_search.setText("\ue616");
         histories = SPHelper.getStringSet("search_history", new HashSet<String>());
-
         rv_search.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         rv_search.setItemAnimator(new DefaultItemAnimator());
         searchAdapter = new SearchAdapter(this.getActivity(), searchList);
@@ -243,7 +246,7 @@ public class SearchActDelegate extends AppDelegate {
                                     LogUtils.d("222");
                                 }
                                 searchList.addAll(searchListTemp);
-                                LogUtils.d("searchList size = "+searchList.size());
+                                LogUtils.d("searchList size = " + searchList.size());
                                 searchAdapter.notifyDataSetChanged();
                                 if (srl_search.isRefreshing()) {
                                     srl_search.finishRefresh();
@@ -251,7 +254,7 @@ public class SearchActDelegate extends AppDelegate {
                                     srl_search.finishLoadmore();
                                 }
                             } else {
-                                if (!isLoadMore){
+                                if (!isLoadMore) {
                                     srl_search.setEnablePureScrollMode(true);
                                     searchList.clear();
                                     labels.clear();
@@ -265,15 +268,14 @@ public class SearchActDelegate extends AppDelegate {
                                     searchList.add(searchModel1);
                                     searchAdapter.notifyDataSetChanged();
                                 }
-                                /*if (srl_search.isRefreshing()) {
-                                    srl_search.resetNoMoreData();
-                                    srl_search.finishRefresh();
-                                } else if (srl_search.isLoading()) {
-                                    srl_search.finishLoadmoreWithNoMoreData();
-                                }*/
                             }
                         } else if (jsonBean.getCode() == 401) {
                             //去登陆界面
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                        } else if (jsonBean.getCode() == 500) {
+                            Snackbar.make(srl_search, "服务端返回数据有误", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
