@@ -263,7 +263,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 }
                             }
                         }
-                        LogUtils.d("homePageItemListTemp.size2 = " + homePageItemListTemp.size());
                         requestGoodIndex();
                     }
                 });
@@ -286,6 +285,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         HomePagePromoteJsonBean promoteJsonBean = new Gson().fromJson(s, HomePagePromoteJsonBean.class);
                         if (promoteJsonBean.getCode() == 0) {
+                            LogUtils.d("homePageItemListTemp.size2 = " + homePageItemListTemp.size());
+                            homePageAdapter.notifyDataSetChanged();
                             if (promoteJsonBean.getData() != null && promoteJsonBean.getData().getRecords() != null
                                     && promoteJsonBean.getData().getRecords().size() > 0) {
                                 for (int i = 0; i < promoteJsonBean.getData().getRecords().size(); i++) {
@@ -302,22 +303,21 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     //刷新状态
                                     homePageItemList.clear();
                                 }
-                                homePageItemList.addAll(homePageItemListTemp);
-                                homePageAdapter.notifyItemRangeChanged(homePageItemList.size() - promoteJsonBean.getData().getRecords().size(),
-                                        promoteJsonBean.getData().getRecords().size());
-                                if (srl_home_page.isRefreshing()) {
-                                    srl_home_page.finishRefresh();
-                                } else if (srl_home_page.isLoading()) {
-                                    srl_home_page.finishLoadmore();
-                                }
                             } else {
                                 //表示没有数据了
                                 if (srl_home_page.isRefreshing()) {
                                     srl_home_page.resetNoMoreData();
-                                    srl_home_page.finishRefresh();
+                                    //srl_home_page.finishRefresh();
                                 } else if (srl_home_page.isLoading()) {
                                     srl_home_page.finishLoadmoreWithNoMoreData();
                                 }
+                            }
+                            homePageItemList.addAll(homePageItemListTemp);
+                            homePageAdapter.notifyDataSetChanged();
+                            if (srl_home_page.isRefreshing()) {
+                                srl_home_page.finishRefresh();
+                            } else if (srl_home_page.isLoading()) {
+                                srl_home_page.finishLoadmore();
                             }
                         } else if (promoteJsonBean.getCode() == 500) {
                             //请求参数有误
