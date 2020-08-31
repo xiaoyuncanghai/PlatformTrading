@@ -6,7 +6,7 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.module_homepage.HomePageFragment;
 import com.pt.module_mine.MineFragment;
 import com.pt.module_near.NearFragment;
-import com.pt.module_order.OrderFragment;
+import com.pt.module_order.fragment.OrderFragment;
 import com.pt.platformtrading_location.R;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
