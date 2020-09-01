@@ -48,13 +48,8 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
     }
 
     private AlertDialog.Builder builder;
-    private String permissionInfo;
     private final int SDK_PERMISSION_REQUEST = 127;
 
-    /*
-    * ,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -84,4 +84,8 @@ dependencies {
 
     api 'org.greenrobot:eventbus:3.1.1'
     api 'com.github.donkingliang:LabelsView:1.4.1'
+
+    /*api 'com.ogaclejapan.smarttablayout:library:1.7.0@aar'
+    api 'com.ogaclejapan.smarttablayout:utils-v4:1.7.0@aar'
+    api 'com.ogaclejapan.smarttablayout:utils-v13:1.7.0@aar'*/
 }

@@ -1,7 +1,6 @@
 package com.pt.lib_common.ui.delegate;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;

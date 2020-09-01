@@ -28,7 +28,7 @@ public class OrderFragment extends FragmentPresenter<OrderFragmentDelegate> {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initHeader();
-        viewDelegate.initVp(getActivity().getSupportFragmentManager());
+        viewDelegate.initVp(getChildFragmentManager());
     }
 
     private void initHeader() {

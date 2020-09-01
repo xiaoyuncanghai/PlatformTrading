@@ -15,7 +15,10 @@ import com.pt.lib_common.BuildConfig;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.cache.converter.SerializableDiskConverter;
+import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
+import com.pt.lib_common.rxEasyhttp.model.HttpParams;
 import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
+import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.Utils;
 import com.pt.platformtrading_location.service.LocationService;
 
@@ -53,6 +56,8 @@ public class MainApplication extends BaseApplication {
         SDKInitializer.initialize(getApplicationContext());
         SDKInitializer.setCoordType(CoordType.BD09LL);
         EasyHttp.init(this);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("Authorization", SPHelper.getString("token", "", true));
         EasyHttp.getInstance()
                 .debug("Lion", BuildConfig.DEBUG)
                 .setReadTimeOut(60 * 1000)
@@ -60,8 +65,9 @@ public class MainApplication extends BaseApplication {
                 .setConnectTimeout(60 * 1000)
                 .setRetryCount(5)//默认网络不好自动重试3次
                 .setRetryDelay(1500)//每次延时500ms重试
-                .setRetryIncreaseDelay(1500)//每次延时叠加500ms
+                .setRetryIncreaseDelay(1500)//每次延时叠加1500ms
                 .setBaseUrl(BASE_URL)
+                .addCommonHeaders(headers)  //设置公共的请求头
                 .setCacheDiskConverter(new SerializableDiskConverter())//默认缓存使用序列化转化
                 .setCacheMaxSize(50 * 1024 * 1024)//设置缓存大小为50M
                 .setCacheVersion(1)//缓存版本为1
