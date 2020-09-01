@@ -1,11 +1,6 @@
 package com.pt.module_homepage;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.Nullable;
 
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_homepage.delegate.HomePageFragmentDelegate;

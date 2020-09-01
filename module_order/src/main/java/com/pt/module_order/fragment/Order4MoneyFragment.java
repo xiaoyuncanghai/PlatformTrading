@@ -2,6 +2,8 @@ package com.pt.module_order.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_order.delegate.Order4MoneyFgtDelegate;
 
@@ -21,5 +23,11 @@ public class Order4MoneyFragment extends FragmentPresenter<Order4MoneyFgtDelegat
         Order4MoneyFragment fragment = new Order4MoneyFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        viewDelegate.srl_order_money.autoRefresh();
     }
 }

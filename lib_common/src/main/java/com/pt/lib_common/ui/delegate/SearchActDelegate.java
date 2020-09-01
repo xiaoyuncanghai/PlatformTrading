@@ -1,7 +1,6 @@
 package com.pt.lib_common.ui.delegate;
 
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;

@@ -6,8 +6,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.pt.lib_common.R;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.rxEasyhttp.EasyHttp;
-import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 

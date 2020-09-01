@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.pt.lib_common.R;
 import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.lib_common.view.citychoose.model.HotCity;

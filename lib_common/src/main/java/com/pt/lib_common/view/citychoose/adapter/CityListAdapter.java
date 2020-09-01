@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apkfuns.logutils.LogUtils;
 import com.pt.lib_common.R;
 import com.pt.lib_common.view.citychoose.adapter.decoration.GridItemDecoration;
 import com.pt.lib_common.view.citychoose.model.City;

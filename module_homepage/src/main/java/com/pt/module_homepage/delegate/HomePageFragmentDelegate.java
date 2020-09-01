@@ -18,7 +18,6 @@ import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;

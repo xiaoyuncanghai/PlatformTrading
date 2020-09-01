@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-
 import com.pt.lib_common.R;
 
 import java.util.ArrayList;

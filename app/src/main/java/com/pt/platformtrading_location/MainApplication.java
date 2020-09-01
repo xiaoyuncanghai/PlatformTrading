@@ -16,7 +16,6 @@ import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.cache.converter.SerializableDiskConverter;
 import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
-import com.pt.lib_common.rxEasyhttp.model.HttpParams;
 import com.pt.lib_common.rxEasyhttp.utils.HttpLog;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.Utils;

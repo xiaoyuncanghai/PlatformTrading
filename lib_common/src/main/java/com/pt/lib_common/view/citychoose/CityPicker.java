@@ -1,7 +1,5 @@
 package com.pt.lib_common.view.citychoose;
 
-import android.view.View;
-
 import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
