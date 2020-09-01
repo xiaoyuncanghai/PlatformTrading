@@ -219,7 +219,6 @@ public class LoginActDelegate extends AppDelegate {
                                 if (smsLoginJsonBean.getCode() == 0 && !smsLoginJsonBean.getData().isEmpty()) {
                                     SPHelper.putString("token", smsLoginJsonBean.getData(), true);
                                     SPHelper.putString("phone", et_acc.getText().toString().replace(" ", ""), true);
-
                                     HttpHeaders headers = new HttpHeaders();
                                     headers.put("Authorization", smsLoginJsonBean.getData());
                                     EasyHttp.getInstance().addCommonHeaders(headers);

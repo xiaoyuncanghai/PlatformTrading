@@ -25,9 +25,7 @@ public class SplashActDelegate extends AppDelegate {
             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH)
                     .withTransition(R.anim.activity_up_in, R.anim.activity_up_out).navigation();
         } else {
-            HttpHeaders headers = new HttpHeaders();
-            headers.put("Authorization", SPHelper.getString("token", "", true));
-            EasyHttp.getInstance().addCommonHeaders(headers);
+            //MainApplication已经设置, 不需要重复设置
             ARouter.getInstance().build(ARouterPath.MAIN_PATH)
                     .withTransition(R.anim.activity_up_in, R.anim.activity_up_out).navigation();
         }

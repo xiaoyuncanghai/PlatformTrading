@@ -10,19 +10,19 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.module_order.R;
-import com.pt.module_order.bean.data.OrderAllItemBean;
+import com.pt.module_order.bean.data.OrderItemBean;
 
 import java.util.List;
 
-public class Order1AllAdapter extends BaseQuickAdapter<OrderAllItemBean, BaseViewHolder> {
+public class Order1AllAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHolder> {
     private Context context;
-    public Order1AllAdapter(Context context, int layoutResId, @Nullable List<OrderAllItemBean> data) {
+    public Order1AllAdapter(Context context, int layoutResId, @Nullable List<OrderItemBean> data) {
         super(layoutResId, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, OrderAllItemBean item) {
+    protected void convert(BaseViewHolder helper, OrderItemBean item) {
         TextView order_all_item_title = helper.getView(R.id.order_all_item_title);
         TextView order_all_item_description = helper.getView(R.id.order_all_item_description);
         TextView order_all_item_price = helper.getView(R.id.order_all_item_price);

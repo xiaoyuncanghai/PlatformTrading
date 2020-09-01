@@ -18,7 +18,7 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.module_order.R;
 import com.pt.module_order.adapter.Order1AllAdapter;
-import com.pt.module_order.bean.data.OrderAllItemBean;
+import com.pt.module_order.bean.data.OrderItemBean;
 import com.pt.module_order.bean.json.OrderAllJsonBean;
 import com.pt.module_order.bean.rquest.OrderAllRequestBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,8 +33,8 @@ public class Order1AllFgtDelegate extends AppDelegate {
 
     public SmartRefreshLayout srl_order_all;
     private RecyclerView rcv_order_all;
-    private ArrayList<OrderAllItemBean> allLit = new ArrayList<>();
-    private ArrayList<OrderAllItemBean> allLitTemp = new ArrayList<>();
+    private ArrayList<OrderItemBean> allLit = new ArrayList<>();
+    private ArrayList<OrderItemBean> allLitTemp = new ArrayList<>();
     private Order1AllAdapter order1AllAdapter;
     private int cpage = 1;
 
@@ -88,7 +88,7 @@ public class Order1AllFgtDelegate extends AppDelegate {
                                 allLitTemp.clear();
                                 for (OrderAllJsonBean.DataBean.RecordsBean recordsBean :
                                         jsonBean.getData().getRecords()) {
-                                    OrderAllItemBean itemBean = new OrderAllItemBean();
+                                    OrderItemBean itemBean = new OrderItemBean();
                                     itemBean.setGoodsType(recordsBean.getGoodsType());
                                     itemBean.setId(recordsBean.getId());
                                     itemBean.setDescription(recordsBean.getDescription());

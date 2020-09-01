@@ -57,7 +57,12 @@ public class MainApplication extends BaseApplication {
         SDKInitializer.setCoordType(CoordType.BD09LL);
         EasyHttp.init(this);
         HttpHeaders headers = new HttpHeaders();
-        headers.put("Authorization", SPHelper.getString("token", "", true));
+        if (SPHelper.getString("token", "", true) != "") {
+            //token不为null的时候设置公共请求头
+            headers.put("Authorization", SPHelper.getString("token", "", true));
+        } else {
+            headers = null;
+        }
         EasyHttp.getInstance()
                 .debug("Lion", BuildConfig.DEBUG)
                 .setReadTimeOut(60 * 1000)

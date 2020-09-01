@@ -1,6 +1,6 @@
 package com.pt.module_order.bean.data;
 
-public class OrderAllItemBean {
+public class OrderItemBean {
     private String title;
     private int id;
     private String pic;
