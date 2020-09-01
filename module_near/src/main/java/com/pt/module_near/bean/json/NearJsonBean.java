@@ -14,7 +14,7 @@ public class NearJsonBean {
      */
 
     private int code;
-    private SearchJsonBean.DataBean data;
+    private DataBean data;
     private String message;
     private boolean success;
 
@@ -26,11 +26,11 @@ public class NearJsonBean {
         this.code = code;
     }
 
-    public SearchJsonBean.DataBean getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(SearchJsonBean.DataBean data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 

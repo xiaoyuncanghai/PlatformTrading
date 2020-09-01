@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_180dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:layout_marginBottom="@dimen/size_20dp"
+        android:background="@drawable/search_shape_history_bg">
+
+        <ImageView
+            android:id="@+id/order_all_item_image"
+            android:layout_width="@dimen/size_180dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/order_all_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:text="title"
+            app:layout_constraintStart_toEndOf="@+id/order_all_item_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/order_all_item_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:text="description"
+            app:layout_constraintStart_toStartOf="@+id/order_all_item_title"
+            app:layout_constraintTop_toBottomOf="@+id/order_all_item_title" />
+
+        <TextView
+            android:id="@+id/order_all_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:text="$1000"
+            app:layout_constraintStart_toStartOf="@+id/order_all_item_description"
+            app:layout_constraintTop_toBottomOf="@+id/order_all_item_description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:text="已取消"
+            android:id="@+id/order_all_item_status"
+            app:layout_constraintStart_toStartOf="@+id/order_all_item_price"
+            app:layout_constraintTop_toBottomOf="@+id/order_all_item_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
