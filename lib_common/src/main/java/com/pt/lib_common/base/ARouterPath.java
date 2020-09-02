@@ -7,5 +7,7 @@ public class ARouterPath {
     public static final String PHONE_LOGIN_PATH = "/base/act/login";
     public static final String MAIN_PATH = "/main/act/single";
     public static final String SEARCH_PATH = "/search/check/act";
+    public static final String PUBLISH_SALE_PATH = "/sale/act/publish";
+
 
 }

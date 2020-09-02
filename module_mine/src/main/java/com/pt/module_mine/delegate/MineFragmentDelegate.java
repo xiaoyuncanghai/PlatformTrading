@@ -65,6 +65,7 @@ public class MineFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //发布求购信息界面
+                ARouter.getInstance().build(ARouterPath.PUBLISH_SALE_PATH).navigation();
             }
         });
 
