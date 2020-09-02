@@ -116,11 +116,12 @@
         android:text="提交"
         android:gravity="center"
         android:textSize="@dimen/text_size_15sp"
-        android:background="@color/color_actionbar_mid"
+        android:background="@drawable/selector_btn"
         android:layout_marginTop="@dimen/size_20dp"
         android:layout_marginStart="@dimen/size_20dp"
         android:layout_marginEnd="@dimen/size_20dp"
         android:layout_width="match_parent"
+        android:enabled="false"
         android:layout_height="@dimen/size_45dp" />
 
 </LinearLayout>
