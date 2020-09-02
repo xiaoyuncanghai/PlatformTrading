@@ -118,6 +118,7 @@ public class Order1AllFgtDelegate extends AppDelegate {
                             SPHelper.putString("token", "", true);
                             SPHelper.putString("phone", "", true);
                             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         } else if (jsonBean.getCode() == 500) {
                             Snackbar.make(srl_order_all, "服务端返回数据有误", Snackbar.LENGTH_SHORT).show();
                         }

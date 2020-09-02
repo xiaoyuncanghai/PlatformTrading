@@ -23,20 +23,79 @@
         android:layout_height="match_parent">
 
         <ImageView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/fgt_mine_user"
-            android:src="@drawable/tab_mine"
             android:layout_width="@dimen/size_60dp"
             android:layout_height="@dimen/size_60dp"
             android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_20dp" />
+            android:layout_marginTop="@dimen/size_20dp"
+            android:src="@drawable/tab_mine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<View
-            app:layout_constraintTop_toBottomOf="@+id/fgt_mine_user"
 
+        <TextView
+            android:id="@+id/current_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20dp"
+            android:text="手机号"
+            app:layout_constraintBottom_toBottomOf="@+id/fgt_mine_user"
+            app:layout_constraintStart_toEndOf="@id/fgt_mine_user"
+            app:layout_constraintTop_toTopOf="@+id/fgt_mine_user" />
+
+        <TextView
+            android:id="@+id/publish_message_sale"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_10" />
--->
+            android:layout_height="@dimen/size_35dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:background="@drawable/mine_item_backgroud"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="发布求购信息"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fgt_mine_user" />
+
+        <TextView
+            android:id="@+id/publish_message_product"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_35dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:background="@drawable/mine_item_backgroud"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="发布商品信息"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_message_sale" />
+
+        <TextView
+            android:id="@+id/publish_message_sale_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_35dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:background="@drawable/mine_item_backgroud"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="求购信息列表"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_message_product" />
+
+        <TextView
+            android:id="@+id/publish_message_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_35dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:background="@drawable/mine_item_backgroud"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="求购信息列表"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_message_sale_list" />
+
+        <include layout="@layout/layout_loading"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

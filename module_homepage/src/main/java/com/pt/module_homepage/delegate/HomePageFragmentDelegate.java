@@ -329,6 +329,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                             SPHelper.putString("token", "", true);
                             SPHelper.putString("phone", "", true);
                             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         }
                     }
                 });
