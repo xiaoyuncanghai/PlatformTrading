@@ -28,4 +28,10 @@ public class PublishSaleActivity extends ActivityPresenter<PublishSaleActDelegat
             tv_left.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onLeftClick(View v) {
+        super.onLeftClick(v);
+        finish();
+    }
 }
