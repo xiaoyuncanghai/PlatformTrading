@@ -34,6 +34,7 @@ public class MineFragmentDelegate extends AppDelegate {
     private TextView publish_message_product_list;
     private TextView current_user;
     private ConstraintLayout loading_layout;
+    private AlertDialog.Builder builder;
 
     @Override
     public int getRootLayoutId() {
@@ -52,7 +53,7 @@ public class MineFragmentDelegate extends AppDelegate {
         loading_layout = get(R.id.loading_layout);
         loading_layout.setVisibility(View.GONE);
 
-        current_user.setText("当前用户为: "+ SPHelper.getString("phone", "", true));
+        current_user.setText("当前用户为: " + SPHelper.getString("phone", "", true));
         fgt_mine_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +61,37 @@ public class MineFragmentDelegate extends AppDelegate {
                 showExitDialog();
             }
         });
+        publish_message_sale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //发布求购信息界面
+            }
+        });
+
+        publish_message_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //发布商品信息
+            }
+        });
+
+        publish_message_sale_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //发布信息列表
+            }
+        });
+
+        publish_message_product_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //商品信息列表
+            }
+        });
     }
 
-    private AlertDialog.Builder builder;
     private void showExitDialog() {
-        builder=new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("温馨提示");
         builder.setMessage("是否退出当前用户");
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -83,7 +110,7 @@ public class MineFragmentDelegate extends AppDelegate {
         });
         //设置对话框是可取消的
         builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
 
         try {
@@ -95,7 +122,7 @@ public class MineFragmentDelegate extends AppDelegate {
             TextView mTitleView = (TextView) mTitle.get(mAlertController);
             mTitleView.setTextSize(15f);
 
-            Field mMessage= mAlertController.getClass().getDeclaredField("mMessageView");
+            Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
             mMessage.setAccessible(true);
             TextView mMessageView = (TextView) mMessage.get(mAlertController);
             mMessageView.setTextSize(14f);
@@ -106,8 +133,6 @@ public class MineFragmentDelegate extends AppDelegate {
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
-
-
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#999999"));
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(14f);
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#0080ff"));
