@@ -2,8 +2,8 @@
 <resources>
     <!--APP的主题色-->
     <color name="colorPrimary">#FC6306</color>
-    <color name="colorPrimaryDark">#FC5205</color>
-    <color name="colorAccent">#FF5722</color>
+    <color name="colorPrimaryDark">#FC6306</color>
+    <color name="colorAccent">#FC6306</color>
     <color name="lightPrimaryColor">#aaFC6306</color>
 
     <color name="cp_colorPrimary">#FC6306</color>

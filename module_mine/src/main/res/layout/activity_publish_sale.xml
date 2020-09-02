@@ -30,12 +30,21 @@
         android:textSize="@dimen/text_size_14sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_publish_sale_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/img_publish_sale_upload"
+            android:src="@drawable/add_image_upload"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -101,5 +110,17 @@
             android:textColorHint="@color/thirdText"
             android:textSize="@dimen/text_size_14sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_publish_sale_upload"
+        android:text="提交"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_15sp"
+        android:background="@color/color_actionbar_mid"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45dp" />
 
 </LinearLayout>
