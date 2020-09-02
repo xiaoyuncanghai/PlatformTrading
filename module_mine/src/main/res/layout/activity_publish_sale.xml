@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
@@ -16,6 +17,7 @@
         <include layout="@layout/layout_actionbar"></include>
     </LinearLayout>
 
+
     <EditText
         android:id="@+id/et_publish_sale_content"
         android:layout_width="match_parent"
@@ -30,11 +32,11 @@
         android:textSize="@dimen/text_size_14sp" />
 
     <LinearLayout
-        android:layout_marginStart="@dimen/dp_10"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20dp">
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_publish_sale_image"
@@ -43,10 +45,10 @@
 
         <ImageView
             android:id="@+id/img_publish_sale_upload"
-            android:src="@drawable/add_image_upload"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@drawable/add_image_upload" />
 
     </LinearLayout>
 
@@ -113,15 +115,16 @@
 
     <TextView
         android:id="@+id/tv_publish_sale_upload"
-        android:text="提交"
-        android:gravity="center"
-        android:textSize="@dimen/text_size_15sp"
-        android:background="@drawable/selector_btn"
-        android:layout_marginTop="@dimen/size_20dp"
-        android:layout_marginStart="@dimen/size_20dp"
-        android:layout_marginEnd="@dimen/size_20dp"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:background="@drawable/selector_btn"
         android:enabled="false"
-        android:layout_height="@dimen/size_45dp" />
+        android:gravity="center"
+        android:text="提交"
+        android:textSize="@dimen/text_size_15sp" />
+
 
 </LinearLayout>

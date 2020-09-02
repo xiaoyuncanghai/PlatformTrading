@@ -36,6 +36,16 @@
         <activity
             android:name=".ui.component.SearchActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.pt.platformtrading_location"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

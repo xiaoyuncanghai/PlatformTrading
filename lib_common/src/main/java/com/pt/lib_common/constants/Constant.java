@@ -8,4 +8,6 @@ package com.pt.lib_common.constants;
 
 public interface Constant {
     String KEY_CITY_CODE = "current_city_code";
+    int REQUEST_CODE_CAMERA = 12;
+    int REQUEST_CODE_GALLERY = 13;
 }
