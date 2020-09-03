@@ -13,14 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
-import com.pt.module_mine.adpter.UriAdapter;
 import com.pt.module_mine.bean.ImageBean;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
@@ -45,6 +43,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
+    private ArrayList<ImageBean> imageBeansTemp = new ArrayList<>();
     private ImageChooseAdapter adapter;
 
     @Override
@@ -134,10 +133,8 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .forResult(REQUEST_CODE_CHOOSE);
     }
 
-    //private UriAdapter mAdapter;
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
-            //mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data));
             imageBeans.clear();
             if (Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
                 for (Uri s : Matisse.obtainResult(data)) {

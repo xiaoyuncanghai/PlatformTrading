@@ -27,6 +27,7 @@ public class ImageChooseAdapter extends BaseQuickAdapter<ImageBean, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, ImageBean item) {
         ImageView imageView = helper.getView(R.id.imageView);
+        LogUtils.d("item.getImageUri() = "+ item.getImageUri());
         Glide.with(context)
                 .load(item.getImageUri())
                 .placeholder(R.drawable.default_error)
