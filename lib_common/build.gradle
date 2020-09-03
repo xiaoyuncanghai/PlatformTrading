@@ -33,6 +33,7 @@ greendao {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api  project(':lib_oponsource')
+    api project(':lib_oponsource')
+    api project(':matisse')
     annotationProcessor'com.alibaba:arouter-compiler:1.1.4'
 }

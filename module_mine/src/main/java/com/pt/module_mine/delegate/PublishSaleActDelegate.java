@@ -3,6 +3,7 @@ package com.pt.module_mine.delegate;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.module_mine.R;
+import com.pt.module_mine.adpter.ImageChooseAdapter;
 import com.pt.module_mine.adpter.UriAdapter;
+import com.pt.module_mine.bean.ImageBean;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
@@ -25,6 +29,8 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import java.util.ArrayList;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +44,8 @@ public class PublishSaleActDelegate extends AppDelegate {
     private ImageView img_publish_sale_upload;
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
+    private ArrayList<ImageBean> imageBeans = new ArrayList<>();
+    private ImageChooseAdapter adapter;
 
     @Override
     public int getRootLayoutId() {
@@ -58,9 +66,11 @@ public class PublishSaleActDelegate extends AppDelegate {
         publish_sale_location = get(R.id.publish_sale_location);
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
 
-        rcv_publish_sale_image.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new UriAdapter();
-        rcv_publish_sale_image.setAdapter(mAdapter);
+        rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
+                GridLayoutManager.VERTICAL, false));
+        //mAdapter = new UriAdapter();
+        adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
+        rcv_publish_sale_image.setAdapter(adapter);
 
         img_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +113,8 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .countable(true)
                 .capture(true)
                 .captureStrategy(
-                        new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider", "test"))
-                .maxSelectable(9)
+                        new CaptureStrategy(true, "com.pt.platformtrading_location.fileprovider", "test"))
+                .maxSelectable(3)
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .gridExpectedSize(
                         getActivity().getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
@@ -122,14 +132,26 @@ public class PublishSaleActDelegate extends AppDelegate {
                     Log.e("isChecked", "onCheck: isChecked=" + isChecked);
                 })
                 .forResult(REQUEST_CODE_CHOOSE);
-        mAdapter.setData(null, null);
     }
 
-    private UriAdapter mAdapter;
+    //private UriAdapter mAdapter;
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
-            mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data));
-            Log.e("OnActivityResult ", String.valueOf(Matisse.obtainOriginalState(data)));
+            //mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data));
+            imageBeans.clear();
+            if (Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
+                for (Uri s : Matisse.obtainResult(data)) {
+                    ImageBean bean = new ImageBean();
+                    bean.setImageUri(s);
+                    imageBeans.add(bean);
+                }
+            }
+            adapter.notifyDataSetChanged();
+            if (imageBeans.size() > 2) {
+                img_publish_sale_upload.setVisibility(View.GONE);
+            } else {
+                img_publish_sale_upload.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
