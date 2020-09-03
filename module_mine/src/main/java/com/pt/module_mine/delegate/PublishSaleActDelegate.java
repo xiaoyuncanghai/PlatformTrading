@@ -25,6 +25,7 @@ import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
@@ -43,7 +44,6 @@ public class PublishSaleActDelegate extends AppDelegate {
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
-    private ArrayList<ImageBean> imageBeansTemp = new ArrayList<>();
     private ImageChooseAdapter adapter;
 
     @Override
@@ -107,7 +107,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     }
 
     private void startAction() {
-        Matisse.from(PublishSaleActDelegate.this.getActivity())
+        /*Matisse.from(PublishSaleActDelegate.this.getActivity())
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
                 .capture(true)
@@ -130,6 +130,17 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .setOnCheckedListener(isChecked -> {
                     Log.e("isChecked", "onCheck: isChecked=" + isChecked);
                 })
+                .forResult(REQUEST_CODE_CHOOSE);*/
+
+        Matisse.from(getActivity())
+                .choose(MimeType.ofImage())
+                .theme(R.style.Matisse_Dracula)
+                .countable(false)
+                .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                .maxSelectable(3)
+                .originalEnable(true)
+                .maxOriginalSize(10)
+                .imageEngine(new PicassoEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
     }
 
