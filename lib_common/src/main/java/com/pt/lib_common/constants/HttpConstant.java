@@ -2,6 +2,8 @@ package com.pt.lib_common.constants;
 
 public interface HttpConstant {
     String BASE_URL = "http://120.76.137.162:18081";
+    String STS_SERVER = "http://120.76.137.162:18081/oss/get_token";
+    String END_POINT = "oss-cn-shenzhen.aliyuncs.com";
     String API_LOGIN_SMS_URL = "/login/login_sms";
     String API_LOGOUT_URL = "/login/logout";
     String API_SEND_SMS_URL = "/login/send_sms_code";

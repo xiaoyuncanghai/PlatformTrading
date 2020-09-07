@@ -35,5 +35,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(':lib_oponsource')
     api project(':matisse')
+    api project(':oss-android-sdk')
     annotationProcessor'com.alibaba:arouter-compiler:1.1.4'
 }

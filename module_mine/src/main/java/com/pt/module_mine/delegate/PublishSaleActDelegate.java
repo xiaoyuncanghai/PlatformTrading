@@ -1,35 +1,46 @@
 package com.pt.module_mine.delegate;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.apkfuns.logutils.LogUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
 import com.pt.module_mine.bean.ImageBean;
+import com.pt.module_mine.oss.Config;
+import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -45,6 +56,12 @@ public class PublishSaleActDelegate extends AppDelegate {
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
     private ImageChooseAdapter adapter;
+    //OSS 相关
+    private OssService mService;
+    private AlertDialog dialog;
+    private AlertDialog.Builder builder;
+    private ConstraintLayout loading_coo;
+    private LinearLayout ll_content;
 
     @Override
     public int getRootLayoutId() {
@@ -64,13 +81,19 @@ public class PublishSaleActDelegate extends AppDelegate {
         publish_sale_price = get(R.id.publish_sale_price);
         publish_sale_location = get(R.id.publish_sale_location);
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
+        loading_coo = get(R.id.loading_coo);
+        ll_content = get(R.id.ll_content);
 
         rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
-        //mAdapter = new UriAdapter();
         adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
         rcv_publish_sale_image.setAdapter(adapter);
+        mService = initOSS(Config.OSS_ENDPOINT);
+        mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
+        initClickEvent();
+    }
 
+    private void initClickEvent() {
         img_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +127,56 @@ public class PublishSaleActDelegate extends AppDelegate {
                 );
             }
         });
+        tv_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageBeans != null && imageBeans.size() > 0) {
+                    for (int i = 0; i < imageBeans.size(); i++) {
+                        String picturePath = imageBeans.get(i).getImagePath();
+                        String pictureName = imageBeans.get(i).getImageName();
+                        mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
+                            @Override
+                            public void onProgress(int position, long currentSize, long totalSize) {
+                                // LogUtils.d("Lion, position = " + position + "  currentSize = " + currentSize);
+                                int progress = (int) (100 * currentSize / totalSize);
+                                LogUtils.d("Lion. progress = " + progress);
+                                //showProgressDialog(position, progress);
+
+                            }
+
+                            @Override
+                            public void onSuccess(int position, String imageUrl) {
+                                LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
+                                Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
+                                ll_content.setVisibility(View.GONE);
+                                loading_coo.setVisibility(View.VISIBLE);
+                                //开始请求接口
+                            }
+
+                            @Override
+                            public void onFailure(int position) {
+                                LogUtils.d("Lion, position = " + position);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    private void showProgressDialog(int position, int progress) {
+        builder = new  AlertDialog.Builder(getActivity());
+        View v = View.inflate(getActivity(), R.layout.dialog_loading, null);
+        builder.setView(v);
+        if (dialog == null) {
+            dialog = builder.create();
+            dialog.show();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+        }
+        if (progress == 100) {
+            dialog.dismiss();
+        }
     }
 
     private void startAction() {
@@ -148,9 +221,13 @@ public class PublishSaleActDelegate extends AppDelegate {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
             imageBeans.clear();
             if (Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
-                for (Uri s : Matisse.obtainResult(data)) {
+                List<Uri> UriList = Matisse.obtainResult(data);
+                List<String> pathList = Matisse.obtainPathResult(data);
+                for (int i = 0; i < UriList.size(); i++) {
                     ImageBean bean = new ImageBean();
-                    bean.setImageUri(s);
+                    bean.setImageUri(UriList.get(i));
+                    bean.setImagePath(pathList.get(i));
+                    bean.setImageName(pathList.get(i).replaceAll("/", ""));
                     imageBeans.add(bean);
                 }
             }
@@ -161,5 +238,20 @@ public class PublishSaleActDelegate extends AppDelegate {
                 img_publish_sale_upload.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    public OssService initOSS(String endpoint) {
+        //使用自己的获取STSToken的类
+        String stsServer = Config.STS_SERVER_URL;
+        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+        String editBucketName = Config.BUCKET_NAME;
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求书，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        OSS oss = new OSSClient(getActivity(), endpoint, credentialProvider, conf);
+        OSSLog.enableLog();
+        return new OssService(oss, editBucketName);
     }
 }

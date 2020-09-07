@@ -4,6 +4,15 @@ import android.net.Uri;
 
 public class ImageBean {
     private String imagePath;
+    private String imageName;
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public Uri getImageUri() {
         return imageUri;

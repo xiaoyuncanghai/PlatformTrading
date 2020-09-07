@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/module_mine" />
             <option value="$PROJECT_DIR$/module_near" />
             <option value="$PROJECT_DIR$/module_order" />
+            <option value="$PROJECT_DIR$/oss-android-sdk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -5,15 +5,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.pt.lib_common.view.citychoose.adapter.CityListAdapter;
 import com.pt.module_mine.R;
 import com.pt.module_mine.bean.ImageBean;
 
-import java.io.File;
 import java.util.List;
 
 public class ImageChooseAdapter extends BaseQuickAdapter<ImageBean, BaseViewHolder> {
@@ -27,7 +24,6 @@ public class ImageChooseAdapter extends BaseQuickAdapter<ImageBean, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, ImageBean item) {
         ImageView imageView = helper.getView(R.id.imageView);
-        LogUtils.d("item.getImageUri() = "+ item.getImageUri());
         Glide.with(context)
                 .load(item.getImageUri())
                 .placeholder(R.drawable.default_error)
