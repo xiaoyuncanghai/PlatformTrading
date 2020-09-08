@@ -15,4 +15,5 @@ public interface HttpConstant {
     String API_ORDER_BUY = "/order/buy_page";
     String API_ORDER_SALE = "/order/sale_page";
     String API_ORDER_MONEY = "/order/funder_page";
+    String API_CREATE_GOODS = "/goods/create";
 }

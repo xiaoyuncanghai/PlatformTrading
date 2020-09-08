@@ -1,11 +1,11 @@
 package com.pt.module_mine.delegate;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +25,23 @@ import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.pt.lib_common.constants.HttpConstant;
+import com.pt.lib_common.rxEasyhttp.EasyHttp;
+import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
+import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.module_mine.R;
+import com.pt.module_mine.adpter.ContentAdapter;
+import com.pt.module_mine.adpter.ContentItemListener;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
+import com.pt.module_mine.bean.CategoryDatebean;
 import com.pt.module_mine.bean.ImageBean;
+import com.pt.module_mine.bean.json.CategoryJsonBean;
+import com.pt.module_mine.bean.json.CreateGoodsJsonBean;
+import com.pt.module_mine.bean.request.CreateRequestBean;
+import com.pt.module_mine.dialog.ListDialog;
 import com.pt.module_mine.oss.Config;
 import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -44,9 +56,11 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishSaleActDelegate extends AppDelegate {
 
+    private String cityCode = "";
     private EditText et_publish_sale_content;
     private RecyclerView rcv_publish_sale_image;
     private XEditText publish_sale_price;
@@ -58,10 +72,12 @@ public class PublishSaleActDelegate extends AppDelegate {
     private ImageChooseAdapter adapter;
     //OSS 相关
     private OssService mService;
-    private AlertDialog dialog;
-    private AlertDialog.Builder builder;
     private ConstraintLayout loading_coo;
     private LinearLayout ll_content;
+    private TextView publish_sale_cate;
+    private String chooseCategory = "";
+    private ListDialog listDialog;
+    private EditText et_publish_sale_title;
 
     @Override
     public int getRootLayoutId() {
@@ -75,6 +91,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     }
 
     private void iniView() {
+        et_publish_sale_title = get(R.id.et_publish_sale_title);
         et_publish_sale_content = get(R.id.et_publish_sale_content);
         rcv_publish_sale_image = get(R.id.rcv_publish_sale_image);
         img_publish_sale_upload = get(R.id.img_publish_sale_upload);
@@ -83,6 +100,7 @@ public class PublishSaleActDelegate extends AppDelegate {
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
         loading_coo = get(R.id.loading_coo);
         ll_content = get(R.id.ll_content);
+        publish_sale_cate = get(R.id.publish_sale_cate);
 
         rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
@@ -91,6 +109,39 @@ public class PublishSaleActDelegate extends AppDelegate {
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
         initClickEvent();
+        requestCategroy();
+    }
+
+    /**
+     * 请求分类信息
+     */
+    ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
+
+    private void requestCategroy() {
+        EasyHttp.post(HttpConstant.API_HOME_CATE)
+                .timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        CategoryJsonBean categoryJsonBean = new Gson().fromJson(s, CategoryJsonBean.class);
+                        if (categoryJsonBean.getCode() == 0) {
+                            categoryList.clear();
+                            if (categoryJsonBean.getData() != null && categoryJsonBean.getData().size() > 0) {
+                                for (int i = 0; i < categoryJsonBean.getData().size(); i++) {
+                                    CategoryDatebean categoryDatebean = new CategoryDatebean();
+                                    categoryDatebean.setCategoryId(categoryJsonBean.getData().get(i).getId());
+                                    categoryDatebean.setCategoryName(categoryJsonBean.getData().get(i).getName());
+                                    categoryList.add(categoryDatebean);
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     private void initClickEvent() {
@@ -127,9 +178,107 @@ public class PublishSaleActDelegate extends AppDelegate {
                 );
             }
         });
+
+        publish_sale_cate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentAdapter adapter = new ContentAdapter(getActivity(), categoryList, new ContentItemListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        listDialog.dismiss();
+                        publish_sale_cate.setText(categoryList.get(position).getCategoryName());
+                        chooseCategory = categoryList.get(position).getCategoryId();
+                        if (et_publish_sale_title.getText().toString().length() > 0
+                                && et_publish_sale_content.getText().toString().length() > 0
+                                && !chooseCategory.equals("")
+                                && publish_sale_price.getText().toString().length() > 0) {
+                            tv_publish_sale_upload.setEnabled(true);
+                        } else {
+                            tv_publish_sale_upload.setEnabled(false);
+                        }
+                    }
+                });
+                listDialog = new ListDialog(getActivity(), R.style.MyDialog, "选择上传的类别", adapter);
+                listDialog.show();
+            }
+        });
+
+        et_publish_sale_title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (et_publish_sale_title.getText().toString().length() > 0
+                        && et_publish_sale_content.getText().toString().length() > 0
+                        && !chooseCategory.equals("")
+                        && publish_sale_price.getText().toString().length() > 0) {
+                    tv_publish_sale_upload.setEnabled(true);
+                } else {
+                    tv_publish_sale_upload.setEnabled(false);
+                }
+            }
+        });
+
+        et_publish_sale_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (et_publish_sale_title.getText().toString().length() > 0
+                        && et_publish_sale_content.getText().toString().length() > 0
+                        && !chooseCategory.equals("")
+                        && publish_sale_price.getText().toString().length() > 0) {
+                    tv_publish_sale_upload.setEnabled(true);
+                } else {
+                    tv_publish_sale_upload.setEnabled(false);
+                }
+            }
+        });
+
+        publish_sale_price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (et_publish_sale_title.getText().toString().length() > 0
+                        && et_publish_sale_content.getText().toString().length() > 0
+                        && !chooseCategory.equals("")
+                        && publish_sale_price.getText().toString().length() > 0) {
+                    tv_publish_sale_upload.setEnabled(true);
+                } else {
+                    tv_publish_sale_upload.setEnabled(false);
+                }
+            }
+        });
+
         tv_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
@@ -137,34 +286,84 @@ public class PublishSaleActDelegate extends AppDelegate {
                         mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
                             @Override
                             public void onProgress(int position, long currentSize, long totalSize) {
-                                // LogUtils.d("Lion, position = " + position + "  currentSize = " + currentSize);
                                 int progress = (int) (100 * currentSize / totalSize);
                                 LogUtils.d("Lion. progress = " + progress);
-                                //showProgressDialog(position, progress);
-
                             }
 
                             @Override
                             public void onSuccess(int position, String imageUrl) {
                                 LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
                                 Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
-                                ll_content.setVisibility(View.GONE);
-                                loading_coo.setVisibility(View.VISIBLE);
-                                //开始请求接口
+                                requestCreateGoods();
                             }
 
                             @Override
                             public void onFailure(int position) {
-                                LogUtils.d("Lion, position = " + position);
                             }
                         });
                     }
+                } else {
+                    //没有照片直接请求网络
+                    requestCreateGoods();
                 }
             }
         });
     }
 
-    private void showProgressDialog(int position, int progress) {
+    private void requestCreateGoods() {
+        CreateRequestBean requestBean = new CreateRequestBean();
+        //必选参数
+        requestBean.setCateId1(chooseCategory);
+        //可选参数
+        requestBean.setCityCode(cityCode);
+        //必选参数
+        requestBean.setDescription(et_publish_sale_content.getText().toString());
+        //可选参数
+        requestBean.setGoodsType("0");
+        //图片是可选参数
+        if (imageBeans != null && imageBeans.size() > 0) {
+            switch (imageBeans.size()) {
+                case 1:
+                    requestBean.setPic1(imageBeans.get(0).getImageName());
+                    break;
+                case 2:
+                    requestBean.setPic1(imageBeans.get(0).getImageName());
+                    requestBean.setPic2(imageBeans.get(1).getImageName());
+                    break;
+                case 3:
+                    requestBean.setPic1(imageBeans.get(0).getImageName());
+                    requestBean.setPic2(imageBeans.get(1).getImageName());
+                    requestBean.setPic3(imageBeans.get(2).getImageName());
+                    break;
+            }
+        }
+        //必选参数
+        requestBean.setPrice(publish_sale_price.getText().toString());
+        //必选参数
+        requestBean.setTitle(et_publish_sale_title.getText().toString());
+        EasyHttp.post(HttpConstant.API_CREATE_GOODS).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        } else {
+                            Snackbar.make(getRootView(), "发布失败", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    /*private void showProgressDialog(int position, int progress) {
         builder = new  AlertDialog.Builder(getActivity());
         View v = View.inflate(getActivity(), R.layout.dialog_loading, null);
         builder.setView(v);
@@ -178,7 +377,7 @@ public class PublishSaleActDelegate extends AppDelegate {
             dialog.dismiss();
         }
     }
-
+*/
     private void startAction() {
         /*Matisse.from(PublishSaleActDelegate.this.getActivity())
                 .choose(MimeType.ofImage(), false)
