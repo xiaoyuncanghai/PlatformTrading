@@ -19,8 +19,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.pt.lib_common.view.citychoose.db.DBConfig.COLUMN_C_AID;
 import static com.pt.lib_common.view.citychoose.db.DBConfig.COLUMN_C_CODE;
 import static com.pt.lib_common.view.citychoose.db.DBConfig.COLUMN_C_NAME;
+import static com.pt.lib_common.view.citychoose.db.DBConfig.COLUMN_C_PID;
 import static com.pt.lib_common.view.citychoose.db.DBConfig.DB_NAME_V1;
 import static com.pt.lib_common.view.citychoose.db.DBConfig.LATEST_DB_NAME;
 import static com.pt.lib_common.view.citychoose.db.DBConfig.TABLE_NAME;
@@ -113,6 +115,56 @@ public class DBManager {
             String pinyin = Pinyin.toPinyin(name, "");
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
             City city = new City(name, pinyin, code);
+            result.add(city);
+        }
+        cursor.close();
+        db.close();
+        CityComparator comparator = new CityComparator();
+        Collections.sort(result, comparator);
+        return result;
+    }
+
+    public List<City> getCityByParentId(){
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from addr where PARENT_ID=?", new String[]{String.valueOf(0)});
+        List<City> result = new ArrayList<>();
+        while (cursor.moveToNext()){
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+            String pinyin = Pinyin.toPinyin(name, "");
+            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+            String aid = cursor.getString(cursor.getColumnIndex(COLUMN_C_AID));
+            City city = new City(name, pinyin, code, aid);
+            result.add(city);
+        }
+        cursor.close();
+        db.close();
+        CityComparator comparator = new CityComparator();
+        Collections.sort(result, comparator);
+        return result;
+    }
+
+    public List<City> getCityByProvince(){
+        String[] parent_id = new String[getCityByParentId().size()];
+        //获取到省份, 得到省份下的所有的城市
+        StringBuilder builder = new StringBuilder(COLUMN_C_PID + " in (");
+        for (int i = 0; i < getCityByParentId().size(); i++) {
+            parent_id[i] = getCityByParentId().get(i).getAid();
+            if (i != getCityByParentId().size()-1) {
+                builder.append("? ,");
+            } else {
+                builder.append("?");
+            }
+        }
+        builder.append(")");
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from addr where "+ builder, parent_id);
+        List<City> result = new ArrayList<>();
+        while (cursor.moveToNext()){
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+            String pinyin = Pinyin.toPinyin(name, "");
+            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+            String aid = cursor.getString(cursor.getColumnIndex(COLUMN_C_AID));
+            City city = new City(name, pinyin, code, aid);
             result.add(city);
         }
         cursor.close();

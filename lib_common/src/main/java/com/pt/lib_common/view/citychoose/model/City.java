@@ -12,11 +12,27 @@ public class City {
     private String name;
     private String pinyin;
     private String code;
+    private String aid;
 
     public City(String name, String pinyin, String code) {
         this.name = name;
         this.pinyin = pinyin;
         this.code = code;
+    }
+
+    public City(String name, String pinyin, String code, String aid) {
+        this.name = name;
+        this.pinyin = pinyin;
+        this.code = code;
+        this.aid = aid;
+    }
+
+    public String getAid() {
+        return aid;
+    }
+
+    public void setAid(String aid) {
+        this.aid = aid;
     }
 
     /***

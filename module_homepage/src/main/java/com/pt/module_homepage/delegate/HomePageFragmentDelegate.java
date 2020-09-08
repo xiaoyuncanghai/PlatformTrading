@@ -341,8 +341,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
         cityName = cityInfo.getCityName();
         tv_location.setText(cityInfo.getCityName());
         //code = cityInfo.getCityCode();
-        dbManager = new DBManager(getActivity());
-        code = dbManager.searchCityForName(cityName);
+        //dbManager = new DBManager(getActivity());
+        //code = dbManager.searchCityForName(cityName);
         LogUtils.d("code = "+code);
     }
 }

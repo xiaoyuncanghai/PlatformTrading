@@ -187,9 +187,8 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         } else {
             locateState = LocateState.SUCCESS;
         }
-
         dbManager = new DBManager(getActivity());
-        mAllCities = dbManager.getAllCities();
+        mAllCities = dbManager.getCityByProvince();
         mAllCities.add(0, mLocatedCity);
         mAllCities.add(1, new HotCity("热门城市", "0"));
         mResults = mAllCities;

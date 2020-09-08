@@ -10,4 +10,6 @@ public class DBConfig {
 
     public static final String COLUMN_C_NAME = "ADDR_NAME";
     public static final String COLUMN_C_CODE = "ADDR_CODE";
+    public static final String COLUMN_C_PID = "PARENT_ID";
+    public static final String COLUMN_C_AID = "ADDR_ID";
 }
