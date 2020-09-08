@@ -12,7 +12,7 @@ import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.module_mine.delegate.PublishSaleActDelegate;
 
 @Route(path = ARouterPath.PUBLISH_SALE_PATH)
-public class PublishSaleActivity extends ActivityPresenter<PublishSaleActDelegate> {
+public class PublishRequestSaleActivity extends ActivityPresenter<PublishSaleActDelegate> {
     @Override
     protected Class<PublishSaleActDelegate> getDelegateClass() {
         return PublishSaleActDelegate.class;

@@ -3,7 +3,7 @@
     package="com.pt.module_mine">
 
     <application>
-        <activity android:name=".PublishSaleActivity" />
+        <activity android:name=".PublishRequestSaleActivity" />
     </application>
 
 </manifest>
