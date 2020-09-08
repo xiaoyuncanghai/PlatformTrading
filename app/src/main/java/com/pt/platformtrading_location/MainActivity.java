@@ -150,13 +150,12 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         public void onReceiveLocation(BDLocation location) {
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 start++;
-                LogUtils.d("type = " + location.getLocType());
                 LogUtils.d("city = " + location.getCity());
-                LogUtils.d("code = " + location.getAdCode());
                 CityInfo cityInfo = new CityInfo();
                 cityInfo.setCityName(location.getCity());
                 cityInfo.setCityCode(location.getAdCode());
                 BaseApplication.getInstance().setCity(cityInfo);
+                LogUtils.d("onReceive Location");
                 if (location.getCity() != null && !location.getCity().equals("")) {
                     //说明获取到了城市信息
                     locationService.unregisterListener(mListener); //注销掉监听
@@ -167,11 +166,6 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                 } else {
                     //说明没有定位到
                     LogUtils.d("定位失败");
-                    /*if (start > 50) {
-                        //重试15次
-                        locationService.unregisterListener(mListener); //注销掉监听
-                        locationService.stop(); //停止定位服务
-                    }*/
                 }
             }
         }

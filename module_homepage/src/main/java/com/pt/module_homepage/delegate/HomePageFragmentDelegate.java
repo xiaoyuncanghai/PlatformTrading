@@ -140,6 +140,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 final LocatedCity locatedCity;
+                LogUtils.d("current click code = "+code);
                 if (code != "" && cityName != "") {
                     locatedCity = new LocatedCity(cityName, code);
                 } else {
@@ -151,10 +152,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
                         .setLocatedCity(locatedCity)
                         .setHotCities(hotCities)
                         .setOnPickListener(new OnPickListener() {
-                            //手动切换城市
                             @Override
                             public void onPick(int position, City data) {
-                                //TODO:对数据citycode进行处理
                                 code = data.getCode();
                                 cityName = data.getName();
                                 tv_location.setText(cityName);
@@ -335,14 +334,21 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 });
     }
 
-    private DBManager dbManager;
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(CityInfo cityInfo) {
         cityName = cityInfo.getCityName();
         tv_location.setText(cityInfo.getCityName());
-        //code = cityInfo.getCityCode();
-        //dbManager = new DBManager(getActivity());
-        //code = dbManager.searchCityForName(cityName);
-        LogUtils.d("code = "+code);
+        LogUtils.d("current cityName = "+cityName);
+        //根据cityCode 去查找对应的code
+        List<City> allCities = new DBManager(getActivity()).getCityByProvince();
+        for (City city: allCities) {
+            if (city.getName().equals(cityName)) {
+                code = city.getCode();
+                break;
+            }
+        }
+        //定位成功了之后重新刷新界面
+        LogUtils.d("current location code = "+code);
+        srl_home_page.autoRefresh();
     }
 }

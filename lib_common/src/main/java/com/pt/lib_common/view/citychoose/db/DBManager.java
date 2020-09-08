@@ -95,14 +95,15 @@ public class DBManager {
         return result;
     }
 
-    public String searchCityForName (final String cityName) {
+    /*public String searchCityForName (final String cityName) {
         String sql = "select * from " + TABLE_NAME + " where "
                 + COLUMN_C_NAME + " like ? ";
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery(sql, new String[]{"%"+cityName+"%"});
+        //"select * from addr where PARENT_ID=?", new String[]{String.valueOf(0)}
         String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
         return code;
-    }
+    }*/
 
     public List<City> searchCity(final String keyword){
         String sql = "select * from " + TABLE_NAME + " where "
@@ -124,6 +125,10 @@ public class DBManager {
         return result;
     }
 
+    /**
+     * 查找省的消息
+     * @return
+     */
     public List<City> getCityByParentId(){
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery("select * from addr where PARENT_ID=?", new String[]{String.valueOf(0)});
@@ -143,6 +148,10 @@ public class DBManager {
         return result;
     }
 
+    /**
+     * 通过省查找对应下面市的消息
+     * @return
+     */
     public List<City> getCityByProvince(){
         String[] parent_id = new String[getCityByParentId().size()];
         //获取到省份, 得到省份下的所有的城市

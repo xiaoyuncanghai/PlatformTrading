@@ -20,6 +20,7 @@ import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.view.citychoose.db.DBManager;
+import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.module_near.R;
 import com.pt.module_near.adapter.NearAdapter;
 import com.pt.module_near.bean.data.NearItemDataBean;
@@ -34,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -153,7 +155,13 @@ public class NearFragmentDelegate extends AppDelegate {
     public void updateCityName(CityInfo cityInfo) {
         String cityName = cityInfo.getCityName();
         dbManager = new DBManager(getActivity());
-        cityCode = dbManager.searchCityForName(cityName);
-        LogUtils.d("code = " + cityCode);
+        List<City> allCities = new DBManager(getActivity()).getCityByProvince();
+        for (City city: allCities) {
+            if (city.getName().equals(cityName)) {
+                cityCode = city.getCode();
+                break;
+            }
+        }
+        LogUtils.d("near code = " + cityCode);
     }
 }
