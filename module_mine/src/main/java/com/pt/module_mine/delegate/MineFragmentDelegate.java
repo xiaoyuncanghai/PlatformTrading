@@ -61,19 +61,14 @@ public class MineFragmentDelegate extends AppDelegate {
                 showExitDialog();
             }
         });
-        publish_message_sale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //发布求购信息界面
-                ARouter.getInstance().build(ARouterPath.PUBLISH_SALE_PATH).navigation();
-            }
+        publish_message_sale.setOnClickListener(v -> {
+            //发布求购信息界面
+            ARouter.getInstance().build(ARouterPath.PUBLISH_SALE_PATH).navigation();
         });
 
-        publish_message_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //发布商品信息
-            }
+        publish_message_product.setOnClickListener(v -> {
+            //发布商品信息
+            ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
         });
 
         publish_message_sale_list.setOnClickListener(new View.OnClickListener() {

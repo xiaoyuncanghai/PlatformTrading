@@ -5,6 +5,8 @@
     <application>
         <activity android:name=".PublishRequestSaleActivity"
             android:theme="@style/DefaultCityPickerTheme"/>
+        <activity android:name=".PublishGoodsSaleActivity"
+            android:theme="@style/DefaultCityPickerTheme"/>
     </application>
 
 </manifest>

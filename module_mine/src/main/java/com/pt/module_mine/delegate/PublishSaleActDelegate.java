@@ -36,7 +36,6 @@ import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.lib_common.view.citychoose.CityPicker;
 import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
 import com.pt.lib_common.view.citychoose.model.City;
-import com.pt.lib_common.view.citychoose.model.LocateState;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
 import com.pt.module_mine.adpter.ContentItemListener;
@@ -61,7 +60,6 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import me.yokeyword.fragmentation.SupportActivity;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishSaleActDelegate extends AppDelegate {
