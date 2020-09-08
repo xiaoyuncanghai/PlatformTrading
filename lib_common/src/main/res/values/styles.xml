@@ -100,7 +100,6 @@
     <style name="DefaultCityPickerTheme" parent="AppTheme">
         <item name="cpCancelTextSize">@dimen/cp_cancel_text_size</item>
         <item name="cpCancelTextColor">@color/cp_color_gray</item>
-
         <item name="cpClearTextIcon">@mipmap/cp_icon_clear_all</item>
         <item name="cpSearchTextSize">@dimen/cp_search_text_size</item>
         <item name="cpSearchTextColor">@color/cp_color_gray_dark</item>

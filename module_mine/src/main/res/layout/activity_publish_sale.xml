@@ -157,6 +157,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
                     android:hint="请选择您的求购地点"
                     android:maxLines="1"
                     android:paddingStart="@dimen/size_5dp"

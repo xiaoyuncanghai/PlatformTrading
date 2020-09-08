@@ -3,7 +3,8 @@
     package="com.pt.module_mine">
 
     <application>
-        <activity android:name=".PublishRequestSaleActivity" />
+        <activity android:name=".PublishRequestSaleActivity"
+            android:theme="@style/DefaultCityPickerTheme"/>
     </application>
 
 </manifest>

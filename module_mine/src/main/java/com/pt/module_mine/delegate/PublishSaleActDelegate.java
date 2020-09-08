@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,6 +33,10 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
+import com.pt.lib_common.view.citychoose.CityPicker;
+import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
+import com.pt.lib_common.view.citychoose.model.City;
+import com.pt.lib_common.view.citychoose.model.LocateState;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
 import com.pt.module_mine.adpter.ContentItemListener;
@@ -56,6 +61,7 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import me.yokeyword.fragmentation.SupportActivity;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishSaleActDelegate extends AppDelegate {
@@ -145,6 +151,41 @@ public class PublishSaleActDelegate extends AppDelegate {
     }
 
     private void initClickEvent() {
+        //启动定位
+        publish_sale_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CityPicker.from(PublishSaleActDelegate.this.getActivity())
+                        .enableAnimation(false)
+                        .setAnimationStyle(R.style.DefaultCityPickerAnimation)
+                        .setLocatedCity(null)
+                        .setHotCities(null)
+                        .setOnPickListener(new OnPickListener() {
+                            @Override
+                            public void onPick(int position, City data) {
+                                cityCode = data.getCode();
+                                publish_sale_location.setText(data.getName());
+                            }
+
+                            @Override
+                            public void onLocate() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                }, 3000);
+                            }
+
+                            //取消定位
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        }).show();
+            }
+        });
+
         img_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
