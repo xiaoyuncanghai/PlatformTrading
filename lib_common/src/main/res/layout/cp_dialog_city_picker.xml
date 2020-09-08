@@ -28,12 +28,12 @@
             android:background="?attr/cpOverlayBackground"/>
 
         <!--右侧字母导航-->
-        <com.pt.lib_common.view.citychoose.view.SideIndexBar
+        <!--<com.pt.lib_common.view.citychoose.view.SideIndexBar
             android:id="@+id/cp_side_index_bar"
             android:layout_width="@dimen/cp_index_bar_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"/>-->
 
         <include layout="@layout/cp_empty_view"/>
     </RelativeLayout>

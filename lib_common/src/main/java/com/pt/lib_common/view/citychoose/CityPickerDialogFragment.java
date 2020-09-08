@@ -54,7 +54,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
     private RecyclerView mRecyclerView;
     private View mEmptyView;
     private TextView mOverlayTextView;
-    private SideIndexBar mIndexBar;
+    //private SideIndexBar mIndexBar;
     private EditText mSearchBox;
     private TextView mCancelBtn;
     private ImageView mClearAllBtn;
@@ -154,10 +154,9 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         mEmptyView = mContentView.findViewById(R.id.cp_empty_view);
         mOverlayTextView = mContentView.findViewById(R.id.cp_overlay);
 
-        mIndexBar = mContentView.findViewById(R.id.cp_side_index_bar);
-        mIndexBar.setNavigationBarHeight(ScreenUtil.getNavigationBarHeight(getActivity()));
-        mIndexBar.setOverlayTextView(mOverlayTextView)
-                .setOnIndexChangedListener(this);
+        //mIndexBar = mContentView.findViewById(R.id.cp_side_index_bar);
+//        mIndexBar.setNavigationBarHeight(ScreenUtil.getNavigationBarHeight(getActivity()));
+//        mIndexBar.setOverlayTextView(mOverlayTextView).setOnIndexChangedListener(this);
 
         mSearchBox = mContentView.findViewById(R.id.cp_search_box);
         mSearchBox.addTextChangedListener(this);

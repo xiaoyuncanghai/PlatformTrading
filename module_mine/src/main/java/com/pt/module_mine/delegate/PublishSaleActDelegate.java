@@ -64,7 +64,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     private EditText et_publish_sale_content;
     private RecyclerView rcv_publish_sale_image;
     private XEditText publish_sale_price;
-    private XEditText publish_sale_location;
+    private TextView publish_sale_location;
     private ImageView img_publish_sale_upload;
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
