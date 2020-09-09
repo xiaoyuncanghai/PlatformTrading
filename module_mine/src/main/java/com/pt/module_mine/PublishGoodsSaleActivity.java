@@ -1,7 +1,10 @@
 package com.pt.module_mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
@@ -33,5 +36,11 @@ public class PublishGoodsSaleActivity extends ActivityPresenter<PublishGoodsActD
     public void onLeftClick(View v) {
         super.onLeftClick(v);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        viewDelegate.onActivityResult(requestCode, resultCode, data);
     }
 }

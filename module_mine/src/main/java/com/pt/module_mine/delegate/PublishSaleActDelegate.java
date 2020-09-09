@@ -188,7 +188,8 @@ public class PublishSaleActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 RxPermissions rxPermissions = new RxPermissions(PublishSaleActDelegate.this.getActivity());
-                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
                         new Observer<Boolean>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -358,7 +359,7 @@ public class PublishSaleActDelegate extends AppDelegate {
         //必选参数
         requestBean.setDescription(et_publish_sale_content.getText().toString());
         //可选参数
-        requestBean.setGoodsType("0");
+        requestBean.setGoodsType("1");
         //图片是可选参数
         if (imageBeans != null && imageBeans.size() > 0) {
             switch (imageBeans.size()) {
