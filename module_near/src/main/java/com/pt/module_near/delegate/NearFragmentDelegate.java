@@ -135,6 +135,7 @@ public class NearFragmentDelegate extends AppDelegate {
                             } else {
                                 if (srl_near_page.isRefreshing()) {
                                     srl_near_page.resetNoMoreData();
+                                    srl_near_page.finishRefresh();
                                 } else if (srl_near_page.isLoading()) {
                                     srl_near_page.finishLoadmoreWithNoMoreData();
                                 }
