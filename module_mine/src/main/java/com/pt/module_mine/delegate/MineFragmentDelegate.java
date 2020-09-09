@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.apkfuns.logutils.LogUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.HttpConstant;
@@ -21,6 +24,7 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.ToastUtils;
 import com.pt.module_mine.R;
+import com.pt.module_mine.bean.json.CheckJsonBean;
 import com.pt.module_mine.bean.json.LogoutJsonBean;
 
 import java.lang.reflect.Field;
@@ -67,8 +71,8 @@ public class MineFragmentDelegate extends AppDelegate {
         });
 
         publish_message_product.setOnClickListener(v -> {
-            //发布商品信息
-            ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+            //首先检查售卖资格
+            checkSaleQualification();
         });
 
         publish_message_sale_list.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +88,36 @@ public class MineFragmentDelegate extends AppDelegate {
                 //商品信息列表
             }
         });
+    }
+
+    /**
+     * 检查售卖资格
+     */
+    private void checkSaleQualification() {
+        EasyHttp.post(HttpConstant.API_CAN_SALE).timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        CheckJsonBean checkJsonBean = new Gson().fromJson(s, CheckJsonBean.class);
+                        if (checkJsonBean.getCode() == 0 ) {
+                            //资格审核成功
+                            //前去发布商品信息
+                            if (checkJsonBean.isData()) {
+                                ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+                            } else {
+                                Snackbar.make(getRootView(), "请先去申请成为商家", Snackbar.LENGTH_SHORT).show();
+                                ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+                            }
+                        } else {
+                            //检查code 弹出对应的提示 TODO:
+                        }
+                    }
+                });
     }
 
     private void showExitDialog() {
