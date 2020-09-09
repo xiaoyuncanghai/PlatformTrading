@@ -118,7 +118,6 @@ public class MineFragmentDelegate extends AppDelegate {
                                 showNoticeDialog();
                             }
                         } else {
-                            //检查code 弹出对应的提示 TODO:
                         }
                     }
                 });
