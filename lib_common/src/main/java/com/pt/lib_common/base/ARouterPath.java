@@ -9,6 +9,5 @@ public class ARouterPath {
     public static final String SEARCH_PATH = "/search/check/act";
     public static final String PUBLISH_SALE_PATH = "/sale/act/publish";
     public static final String PUBLISH_GOODS_PATH = "/goods/act/pub";
-
-
+    public static final String APPLICATION_QUALI = "/application/for/quali";
 }

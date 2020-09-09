@@ -111,7 +111,7 @@ public class MineFragmentDelegate extends AppDelegate {
                                 ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
                             } else {
                                 Snackbar.make(getRootView(), "请先去申请成为商家", Snackbar.LENGTH_SHORT).show();
-                                ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+                                ARouter.getInstance().build(ARouterPath.APPLICATION_QUALI).navigation();
                             }
                         } else {
                             //检查code 弹出对应的提示 TODO:
