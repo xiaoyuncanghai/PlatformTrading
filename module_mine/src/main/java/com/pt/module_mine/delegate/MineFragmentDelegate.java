@@ -38,7 +38,6 @@ public class MineFragmentDelegate extends AppDelegate {
     private TextView publish_message_product_list;
     private TextView current_user;
     private ConstraintLayout loading_layout;
-    private AlertDialog.Builder builder;
 
     @Override
     public int getRootLayoutId() {
@@ -104,14 +103,19 @@ public class MineFragmentDelegate extends AppDelegate {
                     @Override
                     public void onSuccess(String s) {
                         CheckJsonBean checkJsonBean = new Gson().fromJson(s, CheckJsonBean.class);
-                        if (checkJsonBean.getCode() == 0 ) {
-                            //资格审核成功
-                            //前去发布商品信息
-                            if (checkJsonBean.isData()) {
-                                ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
-                            } else {
-                                Snackbar.make(getRootView(), "请先去申请成为商家", Snackbar.LENGTH_SHORT).show();
+                        if (checkJsonBean.getCode() == 0) {
+                            if (checkJsonBean.getData() == 0) {
+                                //初始状态
                                 ARouter.getInstance().build(ARouterPath.APPLICATION_QUALI).navigation();
+                            } else if (checkJsonBean.getData() == 1) {
+                                //审核通过
+                                ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+                            } else if (checkJsonBean.getData() == 2) {
+                                Snackbar.make(getRootView(), "资格正在审核中, 请您资格通过后再进行商品发布",
+                                        Snackbar.LENGTH_SHORT).show();
+                            } else if (checkJsonBean.getData() == -1) {
+                                //审核被拒绝
+                                showNoticeDialog();
                             }
                         } else {
                             //检查code 弹出对应的提示 TODO:
@@ -120,8 +124,31 @@ public class MineFragmentDelegate extends AppDelegate {
                 });
     }
 
+    private void showNoticeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("温馨提示");
+        builder.setMessage("当前您申请资质已经被拒绝, 请您上传有效证件, 核对公司名称和公司信用代码, 然后重新申请");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("申请", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ARouter.getInstance().build(ARouterPath.APPLICATION_QUALI).navigation();
+                dialog.dismiss();
+            }
+        });
+        //设置对话框是可取消的
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void showExitDialog() {
-        builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("温馨提示");
         builder.setMessage("是否退出当前用户");
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {

@@ -10,7 +10,7 @@ public class CheckJsonBean {
      */
 
     private int code;
-    private boolean data;
+    private int data;
     private String message;
     private boolean success;
 
@@ -22,11 +22,11 @@ public class CheckJsonBean {
         this.code = code;
     }
 
-    public boolean isData() {
+    public int getData() {
         return data;
     }
 
-    public void setData(boolean data) {
+    public void setData(int data) {
         this.data = data;
     }
 
