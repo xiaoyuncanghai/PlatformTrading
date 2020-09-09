@@ -122,7 +122,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
 
     private void requestCategroy() {
-        EasyHttp.post(HttpConstant.API_HOME_CATE)
+        EasyHttp.post(HttpConstant.API_ADD_CATE_SEARCH)
                 .timeStamp(true)
                 .execute(new SimpleCallBack<String>() {
                     @Override
