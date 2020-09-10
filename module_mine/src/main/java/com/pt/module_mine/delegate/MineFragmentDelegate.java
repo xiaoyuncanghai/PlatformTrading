@@ -74,18 +74,13 @@ public class MineFragmentDelegate extends AppDelegate {
             checkSaleQualification();
         });
 
-        publish_message_sale_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //发布信息列表
-            }
+        publish_message_sale_list.setOnClickListener(v -> {
+            //发布的信息列表
+            ARouter.getInstance().build(ARouterPath.PUBLISH_LIST).navigation();
         });
 
-        publish_message_product_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //商品信息列表
-            }
+        publish_message_product_list.setOnClickListener(v -> {
+
         });
     }
 

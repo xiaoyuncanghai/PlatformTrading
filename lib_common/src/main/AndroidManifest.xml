@@ -37,6 +37,8 @@
             android:name=".ui.component.SearchActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
+        <activity android:name=".ui.component.OrderCategoryActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.pt.platformtrading_location.fileprovider"

@@ -10,4 +10,5 @@ public class ARouterPath {
     public static final String PUBLISH_SALE_PATH = "/sale/act/publish";
     public static final String PUBLISH_GOODS_PATH = "/goods/act/pub";
     public static final String APPLICATION_QUALI = "/application/for/quali";
+    public static final String PUBLISH_LIST = "/publish/mine/list";
 }
