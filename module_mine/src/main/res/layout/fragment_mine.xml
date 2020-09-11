@@ -90,7 +90,7 @@
             android:background="@drawable/mine_item_backgroud"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/size_20dp"
-            android:text="申请资金方"
+            android:text="资金方列表"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/publish_message_sale_list" />

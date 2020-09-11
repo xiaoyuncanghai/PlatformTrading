@@ -80,7 +80,8 @@ public class MineFragmentDelegate extends AppDelegate {
         });
 
         publish_message_product_list.setOnClickListener(v -> {
-
+            //资金方列表
+            ARouter.getInstance().build(ARouterPath.FUND_SIDE).navigation();
         });
     }
 
