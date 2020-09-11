@@ -22,10 +22,10 @@ import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
-import com.facebook.imagepipeline.core.ImagePipeline;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -41,6 +41,7 @@ import com.pt.module_mine.adpter.ContentItemListener;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
 import com.pt.module_mine.bean.CategoryDatebean;
 import com.pt.module_mine.bean.ImageBean;
+import com.pt.module_mine.bean.ModifyRequestBean;
 import com.pt.module_mine.bean.json.CategoryJsonBean;
 import com.pt.module_mine.bean.json.CreateGoodsJsonBean;
 import com.pt.module_mine.bean.request.CreateRequestBean;
@@ -61,43 +62,44 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PublishGoodsActDelegate extends AppDelegate {
-
-    private TextView et_publish_goods_title;
-    private TextView et_publish_goods_content;
-    private RecyclerView rcv_publish_goods_image;
-    private ImageView img_publish_goods_upload;
-    private TextView publish_goods_cate;
-    private XEditText publish_goods_price;
-    private TextView publish_goods_location;
-    private TextView tv_publish_goods_upload;
+public class GoodsModifyActDelegate extends AppDelegate {
+    private TextView et_modify_goods_title;
+    private TextView et_modify_goods_content;
+    private RecyclerView rcv_modify_goods_image;
+    private ImageView img_modify_goods_upload;
+    private TextView modify_goods_cate;
+    private XEditText modify_goods_price;
+    private TextView modify_goods_location;
+    private TextView tv_modify_goods_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
     private ImageChooseAdapter adapter;
     private OssService mService;
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
+    private String id;
 
     @Override
     public int getRootLayoutId() {
-        return R.layout.activity_publish_goods;
+        return R.layout.activity_goods_modify;
     }
 
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        et_publish_goods_title = get(R.id.et_publish_goods_title);
-        et_publish_goods_content = get(R.id.et_publish_goods_content);
-        rcv_publish_goods_image = get(R.id.rcv_publish_goods_image);
-        img_publish_goods_upload = get(R.id.img_publish_goods_upload);
-        publish_goods_cate = get(R.id.publish_goods_cate);
-        publish_goods_price = get(R.id.publish_goods_price);
-        publish_goods_location = get(R.id.publish_goods_location);
-        tv_publish_goods_upload = get(R.id.tv_publish_goods_upload);
+        et_modify_goods_title = get(R.id.et_modify_goods_title);
+        et_modify_goods_content = get(R.id.et_modify_goods_content);
+        rcv_modify_goods_image = get(R.id.rcv_modify_goods_image);
+        img_modify_goods_upload = get(R.id.img_modify_goods_upload);
+        modify_goods_cate = get(R.id.modify_goods_cate);
+        modify_goods_price = get(R.id.modify_goods_price);
+        modify_goods_location = get(R.id.modify_goods_location);
+        tv_modify_goods_upload = get(R.id.tv_modify_goods_upload);
+        id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
 
-        rcv_publish_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
+        rcv_modify_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
         adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
-        rcv_publish_goods_image.setAdapter(adapter);
+        rcv_modify_goods_image.setAdapter(adapter);
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
         initClickEvent();
@@ -109,10 +111,10 @@ public class PublishGoodsActDelegate extends AppDelegate {
     private ListDialog listDialog;
     private void initClickEvent() {
         //启动定位
-        publish_goods_location.setOnClickListener(new View.OnClickListener() {
+        modify_goods_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CityPicker.from(PublishGoodsActDelegate.this.getActivity())
+                CityPicker.from(getActivity())
                         .enableAnimation(false)
                         .setAnimationStyle(R.style.DefaultCityPickerAnimation)
                         .setLocatedCity(null)
@@ -121,7 +123,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
                             @Override
                             public void onPick(int position, City data) {
                                 cityCode = data.getCode();
-                                publish_goods_location.setText(data.getName());
+                                modify_goods_location.setText(data.getName());
                             }
 
                             @Override
@@ -143,7 +145,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
             }
         });
 
-        img_publish_goods_upload.setOnClickListener(new View.OnClickListener() {
+        img_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RxPermissions rxPermissions = new RxPermissions(getActivity());
@@ -178,22 +180,22 @@ public class PublishGoodsActDelegate extends AppDelegate {
             }
         });
 
-        publish_goods_cate.setOnClickListener(new View.OnClickListener() {
+        modify_goods_cate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentAdapter adapter = new ContentAdapter(getActivity(), categoryList, new ContentItemListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         listDialog.dismiss();
-                        publish_goods_cate.setText(categoryList.get(position).getCategoryName());
+                        modify_goods_cate.setText(categoryList.get(position).getCategoryName());
                         chooseCategory = categoryList.get(position).getCategoryId();
-                        if (et_publish_goods_title.getText().toString().length() > 0
-                                && et_publish_goods_content.getText().toString().length() > 0
+                        if (et_modify_goods_title.getText().toString().length() > 0
+                                && et_modify_goods_content.getText().toString().length() > 0
                                 && !chooseCategory.equals("")
-                                && publish_goods_price.getText().toString().length() > 0) {
-                            tv_publish_goods_upload.setEnabled(true);
+                                && modify_goods_price.getText().toString().length() > 0) {
+                            tv_modify_goods_upload.setEnabled(true);
                         } else {
-                            tv_publish_goods_upload.setEnabled(false);
+                            tv_modify_goods_upload.setEnabled(false);
                         }
                     }
                 });
@@ -201,7 +203,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
                 listDialog.show();
             }
         });
-        et_publish_goods_title.addTextChangedListener(new TextWatcher() {
+        et_modify_goods_title.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -214,17 +216,17 @@ public class PublishGoodsActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_publish_goods_title.getText().toString().length() > 0
-                        && et_publish_goods_content.getText().toString().length() > 0
+                if (et_modify_goods_title.getText().toString().length() > 0
+                        && et_modify_goods_content.getText().toString().length() > 0
                         && !chooseCategory.equals("")
-                        && publish_goods_price.getText().toString().length() > 0) {
-                    tv_publish_goods_upload.setEnabled(true);
+                        && modify_goods_price.getText().toString().length() > 0) {
+                    tv_modify_goods_upload.setEnabled(true);
                 } else {
-                    tv_publish_goods_upload.setEnabled(false);
+                    tv_modify_goods_upload.setEnabled(false);
                 }
             }
         });
-        et_publish_goods_content.addTextChangedListener(new TextWatcher() {
+        et_modify_goods_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -237,18 +239,18 @@ public class PublishGoodsActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_publish_goods_title.getText().toString().length() > 0
-                        && et_publish_goods_content.getText().toString().length() > 0
+                if (et_modify_goods_title.getText().toString().length() > 0
+                        && et_modify_goods_content.getText().toString().length() > 0
                         && !chooseCategory.equals("")
-                        && publish_goods_price.getText().toString().length() > 0) {
-                    tv_publish_goods_upload.setEnabled(true);
+                        && modify_goods_price.getText().toString().length() > 0) {
+                    tv_modify_goods_upload.setEnabled(true);
                 } else {
-                    tv_publish_goods_upload.setEnabled(false);
+                    tv_modify_goods_upload.setEnabled(false);
                 }
             }
         });
 
-        publish_goods_price.addTextChangedListener(new TextWatcher() {
+        modify_goods_price.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -261,18 +263,18 @@ public class PublishGoodsActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_publish_goods_title.getText().toString().length() > 0
-                        && et_publish_goods_content.getText().toString().length() > 0
+                if (et_modify_goods_title.getText().toString().length() > 0
+                        && et_modify_goods_content.getText().toString().length() > 0
                         && !chooseCategory.equals("")
-                        && publish_goods_price.getText().toString().length() > 0) {
-                    tv_publish_goods_upload.setEnabled(true);
+                        && modify_goods_price.getText().toString().length() > 0) {
+                    tv_modify_goods_upload.setEnabled(true);
                 } else {
-                    tv_publish_goods_upload.setEnabled(false);
+                    tv_modify_goods_upload.setEnabled(false);
                 }
             }
         });
 
-        tv_publish_goods_upload.setOnClickListener(new View.OnClickListener() {
+        tv_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //首先上传照片
@@ -308,39 +310,32 @@ public class PublishGoodsActDelegate extends AppDelegate {
     }
 
     private void requestCreateGoods() {
-        CreateRequestBean requestBean = new CreateRequestBean();
-        //必选参数
-        requestBean.setCateId1(chooseCategory);
-        //可选参数
-        requestBean.setCityCode(cityCode);
-        //必选参数
-        requestBean.setDescription(et_publish_goods_content.getText().toString());
-        //可选参数
-        requestBean.setGoodsType("2");
-        //图片是可选参数
+        ModifyRequestBean request = new ModifyRequestBean();
+        request.setCateId1(chooseCategory);
+        request.setCityCode(cityCode);
+        request.setDescription(et_modify_goods_content.getText().toString());
+        request.setId(id);
         if (imageBeans != null && imageBeans.size() > 0) {
             switch (imageBeans.size()) {
                 case 1:
-                    requestBean.setPic1(imageBeans.get(0).getImageName());
+                    request.setPic1(imageBeans.get(0).getImageName());
                     break;
                 case 2:
-                    requestBean.setPic1(imageBeans.get(0).getImageName());
-                    requestBean.setPic2(imageBeans.get(1).getImageName());
+                    request.setPic1(imageBeans.get(0).getImageName());
+                    request.setPic2(imageBeans.get(1).getImageName());
                     break;
                 case 3:
-                    requestBean.setPic1(imageBeans.get(0).getImageName());
-                    requestBean.setPic2(imageBeans.get(1).getImageName());
-                    requestBean.setPic3(imageBeans.get(2).getImageName());
+                    request.setPic1(imageBeans.get(0).getImageName());
+                    request.setPic2(imageBeans.get(1).getImageName());
+                    request.setPic3(imageBeans.get(2).getImageName());
                     break;
             }
         }
-        //必选参数
-        requestBean.setPrice(publish_goods_price.getText().toString());
-        //必选参数
-        requestBean.setTitle(et_publish_goods_title.getText().toString());
+        request.setPrice(modify_goods_price.getText().toString());
+        request.setTitle(et_modify_goods_title.getText().toString());
         EasyHttp.post(HttpConstant.API_CREATE_GOODS).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
-                .upObject(requestBean)
+                .upObject(request)
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
@@ -351,10 +346,10 @@ public class PublishGoodsActDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
-                            Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getRootView(), "修改商品成功", Snackbar.LENGTH_SHORT).show();
                             getActivity().finish();
                         } else {
-                            Snackbar.make(getRootView(), "发布失败", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getRootView(), "修改商品失败", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

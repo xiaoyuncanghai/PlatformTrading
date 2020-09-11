@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg"
-    android:orientation="vertical"
-    tools:ignore="MissingDefaultResource">
+    android:orientation="vertical">
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_actionbar"
@@ -17,7 +14,7 @@
         <include layout="@layout/layout_status_bar"></include>
 
         <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>-->
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -34,7 +31,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/et_publish_goods_title"
+                    android:id="@+id/et_modify_goods_title"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_45dp"
                     android:layout_marginTop="@dimen/size_20dp"
@@ -45,7 +42,7 @@
                     android:textSize="@dimen/text_size_14sp" />
 
                 <EditText
-                    android:id="@+id/et_publish_goods_content"
+                    android:id="@+id/et_modify_goods_content"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_100dp"
                     android:layout_marginTop="@dimen/size_10dp"
@@ -65,12 +62,12 @@
                     android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcv_publish_goods_image"
+                        android:id="@+id/rcv_modify_goods_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <ImageView
-                        android:id="@+id/img_publish_goods_upload"
+                        android:id="@+id/img_modify_goods_upload"
                         android:layout_width="@dimen/size_100dp"
                         android:layout_height="@dimen/size_100dp"
                         android:layout_marginStart="@dimen/dp_10"
@@ -94,7 +91,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/publish_goods_cate"
+                        android:id="@+id/modify_goods_cate"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -125,7 +122,7 @@
                         android:textSize="15sp" />
 
                     <com.xw.repo.XEditText
-                        android:id="@+id/publish_goods_price"
+                        android:id="@+id/modify_goods_price"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -156,7 +153,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/publish_goods_location"
+                        android:id="@+id/modify_goods_location"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -172,7 +169,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_publish_goods_upload"
+                    android:id="@+id/tv_modify_goods_upload"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_45dp"
                     android:layout_marginStart="@dimen/size_20dp"

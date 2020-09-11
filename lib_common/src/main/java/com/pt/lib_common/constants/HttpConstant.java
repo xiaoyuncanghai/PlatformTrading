@@ -23,4 +23,6 @@ public interface HttpConstant {
     String API_FUND_SIDE_LIST = "/user/get_funder";
     String API_CATEGORY_LIST = "/goods/search_goods";
     String API_GOODS_DETAIL = "/goods/get_goods";
+    String API_OFF_SHELF = "/goods/release";
+    String API_DELETE_GOODS = "/goods/del";
 }

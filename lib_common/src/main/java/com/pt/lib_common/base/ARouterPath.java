@@ -14,4 +14,6 @@ public class ARouterPath {
     public static final String FUND_SIDE = "/fund/side/list";
     public static final String ORDER_CATEGORY = "/order/category/list";
     public static final String GOODS_DETAIL = "/good/detail/act";
+
+    public static final String GOODS_MODIFY = "/modify/goods/item";
 }
