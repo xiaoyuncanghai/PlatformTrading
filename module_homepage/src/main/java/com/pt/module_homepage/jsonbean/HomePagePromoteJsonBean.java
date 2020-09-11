@@ -142,17 +142,17 @@ public class HomePagePromoteJsonBean {
              * goodsType : 2
              */
 
-            private int id;
+            private String id;
             private String title;
             private String price;
             private String pic1;
             private int goodsType;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

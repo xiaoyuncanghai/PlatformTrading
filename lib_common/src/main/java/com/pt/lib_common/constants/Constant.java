@@ -12,4 +12,5 @@ public interface Constant {
     int REQUEST_CODE_GALLERY = 13;
     String KEY_CATEGORY_NAME = "home_category_name";
     String KEY_CATEGORY_ID = "home_category_id";
+    String KEY_GOODS_ID = "detail_goods_id";
 }

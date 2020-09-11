@@ -22,4 +22,5 @@ public interface HttpConstant {
     String API_PUBLISH_GOODS = "/goods/my_goods";
     String API_FUND_SIDE_LIST = "/user/get_funder";
     String API_CATEGORY_LIST = "/goods/search_goods";
+    String API_GOODS_DETAIL = "/goods/get_goods";
 }

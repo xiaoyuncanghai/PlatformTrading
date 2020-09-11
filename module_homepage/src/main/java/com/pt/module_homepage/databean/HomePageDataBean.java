@@ -62,7 +62,7 @@ public class HomePageDataBean implements MultiItemEntity {
     private String promote_title;
     private String promote_price;
     private String promote_pic;
-    private int promote_id;
+    private String promote_id;
     private int promote_type;
 
     public int getPromote_type() {
@@ -97,11 +97,11 @@ public class HomePageDataBean implements MultiItemEntity {
         this.promote_pic = promote_pic;
     }
 
-    public int getPromote_id() {
+    public String getPromote_id() {
         return promote_id;
     }
 
-    public void setPromote_id(int promote_id) {
+    public void setPromote_id(String promote_id) {
         this.promote_id = promote_id;
     }
 }

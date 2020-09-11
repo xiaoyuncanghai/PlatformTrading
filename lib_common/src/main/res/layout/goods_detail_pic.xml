@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_10dp"
+    android:layout_marginBottom="@dimen/size_20dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/category_body_pic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_200dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/goods_detail_img_background" />
+
+    <ImageView
+        android:id="@+id/category_body_pic2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_200dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/goods_detail_img_background" />
+
+    <ImageView
+        android:id="@+id/category_body_pic3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_200dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:background="@drawable/goods_detail_img_background" />
+
+</LinearLayout>

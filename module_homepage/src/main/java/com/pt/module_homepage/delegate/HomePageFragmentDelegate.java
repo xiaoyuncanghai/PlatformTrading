@@ -148,6 +148,13 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 .withString(Constant.KEY_CATEGORY_ID, id)
                                 .navigation();
                         break;
+
+                     case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
+                         String product_id = homePageItemList.get(position).getPromote_id();
+                         ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                                 .withString(Constant.KEY_GOODS_ID, product_id)
+                                 .navigation();
+                         break;
                 }
             }
         });
@@ -286,7 +293,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     private void requestGoodIndex() {
         HomePageIndexRequestBean homePageIndexRequestBean = new HomePageIndexRequestBean();
-        homePageIndexRequestBean.setCityCode(code);
+        homePageIndexRequestBean.setCityCode("");
         homePageIndexRequestBean.setCurrent(cpage);
         EasyHttp.post(HttpConstant.API_HOME_PAGE).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())

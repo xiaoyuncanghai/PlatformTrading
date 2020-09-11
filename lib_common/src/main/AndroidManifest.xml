@@ -38,6 +38,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity android:name=".ui.component.OrderCategoryActivity" />
+        <activity android:name=".ui.component.GoodsDetailsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
