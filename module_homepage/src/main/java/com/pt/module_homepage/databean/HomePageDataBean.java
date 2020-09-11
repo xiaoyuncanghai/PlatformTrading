@@ -31,15 +31,15 @@ public class HomePageDataBean implements MultiItemEntity {
         this.bannerItemList = bannerItemList;
     }
 
-    private int cate_id;
+    private String cate_id;
     private String cate_name;
     private String cate_icon;
 
-    public int getCate_id() {
+    public String getCate_id() {
         return cate_id;
     }
 
-    public void setCate_id(int cate_id) {
+    public void setCate_id(String cate_id) {
         this.cate_id = cate_id;
     }
 

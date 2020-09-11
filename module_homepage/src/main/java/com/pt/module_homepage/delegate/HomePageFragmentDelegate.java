@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
@@ -135,6 +136,22 @@ public class HomePageFragmentDelegate extends AppDelegate {
         });
         srl_home_page.autoRefresh();
 
+        homePageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (adapter.getItemViewType(position)) {
+                    case HomePageDataBean.TYPE_HOME_PAGE_CATEGORY:
+                        String title = homePageItemList.get(position).getCate_name();
+                        String id = homePageItemList.get(position).getCate_id();
+                        ARouter.getInstance().build(ARouterPath.ORDER_CATEGORY)
+                                .withString(Constant.KEY_CATEGORY_NAME, title)
+                                .withString(Constant.KEY_CATEGORY_ID, id)
+                                .navigation();
+                        break;
+                }
+            }
+        });
+
         //定位点击
         coo_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +252,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     }
                 });
     }
-
 
     //请求
     private void requestGoodCategory() {

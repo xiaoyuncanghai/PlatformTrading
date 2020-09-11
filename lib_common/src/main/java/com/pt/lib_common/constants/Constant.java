@@ -10,4 +10,6 @@ public interface Constant {
     String KEY_CITY_CODE = "current_city_code";
     int REQUEST_CODE_CAMERA = 12;
     int REQUEST_CODE_GALLERY = 13;
+    String KEY_CATEGORY_NAME = "home_category_name";
+    String KEY_CATEGORY_ID = "home_category_id";
 }

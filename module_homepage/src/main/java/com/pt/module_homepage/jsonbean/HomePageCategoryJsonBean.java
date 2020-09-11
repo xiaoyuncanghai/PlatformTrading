@@ -55,15 +55,15 @@ public class HomePageCategoryJsonBean {
          * icon : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/prod/ad/1.jpg
          */
 
-        private int id;
+        private String id;
         private String name;
         private String icon;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
