@@ -385,9 +385,9 @@ public class GoodsModifyActDelegate extends AppDelegate {
             }
             adapter.notifyDataSetChanged();
             if (imageBeans.size() > 2) {
-                img_publish_goods_upload.setVisibility(View.GONE);
+                img_modify_goods_upload.setVisibility(View.GONE);
             } else {
-                img_publish_goods_upload.setVisibility(View.VISIBLE);
+                img_modify_goods_upload.setVisibility(View.VISIBLE);
             }
         }
     }
