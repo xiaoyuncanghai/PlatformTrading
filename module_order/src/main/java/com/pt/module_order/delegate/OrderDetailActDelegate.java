@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.bean.databean.FundSideItem;
+import com.pt.lib_common.bean.jsonbean.OrderOpratelJsonBean;
+import com.pt.lib_common.bean.requestBean.OrderCancelRequestBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -78,6 +79,11 @@ public class OrderDetailActDelegate extends AppDelegate {
                     ARouter.getInstance().build(ARouterPath.FUND_SIDE)
                             .navigation(getActivity() , KEY_ORDER_FUNDER);
                 }
+
+                if (order_apply.isEnabled() && user_type == 3) {
+                    //资金方确认
+                    requestMoneyConfirm();
+                }
             }
         });
 
@@ -87,9 +93,61 @@ public class OrderDetailActDelegate extends AppDelegate {
                 //买入
                 if (order_cancel.isEnabled() && user_type == 1) {
                     //取消订单
+                    requestCancelOrder(user_type);
                 }
             }
         });
+    }
+
+    /**
+     * 资金方确认
+     */
+    private void requestMoneyConfirm() {
+        OrderCancelRequestBean requestBean = new OrderCancelRequestBean();
+        requestBean.setId(order_id);
+        requestBean.setUserType(user_type);
+        EasyHttp.post(HttpConstant.API_MONEY_CONFIRM).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        OrderOpratelJsonBean jsonBean = new Gson().fromJson(s, OrderOpratelJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            Snackbar.make(getRootView(), "资金方已同意", Snackbar.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        }
+                    }
+                });
+    }
+
+    private void requestCancelOrder(int user_type) {
+        OrderCancelRequestBean requestBean = new OrderCancelRequestBean();
+        requestBean.setId(order_id);
+        requestBean.setUserType(user_type);
+        EasyHttp.post(HttpConstant.API_CANCEL_ORDER).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        OrderOpratelJsonBean jsonBean = new Gson().fromJson(s, OrderOpratelJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            Snackbar.make(getRootView(), "订单已取消", Snackbar.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        }
+                    }
+                });
     }
 
     /**

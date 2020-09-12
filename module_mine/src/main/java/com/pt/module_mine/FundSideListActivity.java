@@ -22,7 +22,7 @@ public class FundSideListActivity extends ActivityPresenter<FundSideListActDeleg
     }
 
     private void initHeader() {
-        setTitle("资金方列表");
+        setTitle("选择资金方");
         setLeft("\ue605");
         if (tv_left!=null){
             tv_left.setVisibility(View.VISIBLE);
