@@ -1,9 +1,13 @@
 package com.pt.lib_common.ui.delegate;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +22,11 @@ import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.bean.databean.GoodsDetailDateBean;
 import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
+import com.pt.lib_common.bean.jsonbean.PhoneRequestJsonBean;
+import com.pt.lib_common.bean.requestBean.ExchangeRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsDetailRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
+import com.pt.lib_common.bean.requestBean.PhoneRequestBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -45,6 +52,9 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private String goods_id;
     private boolean isOwen;
     private int currentStatus;
+    private int goodsType;
+    private String phone;
+    private String name;
 
     @Override
     public int getRootLayoutId() {
@@ -68,6 +78,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         rcv_order_detail.setItemAnimator(new DefaultItemAnimator());
         srl_order_detail.setEnablePureScrollMode(true);
         requestList();
+        requestUserPhoneInfo();
 
         if (order_off_shelf.isEnabled()) {
             //上架:
@@ -163,10 +174,108 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     }
                                 });
                     } else {
-                        //订单交易, 不是自己的,
+                        //交易, 分成求购和出售两种, 根据goodType 判断
+
+                        showDialog();
                     }
                 }
             });
+        }
+    }
+
+    /**
+     * 请求上次填写的姓名和电话
+     */
+    private void requestUserPhoneInfo() {
+        PhoneRequestBean requestBean = new PhoneRequestBean();
+        requestBean.setGoodsType(goodsType);
+        EasyHttp.post(HttpConstant.API_PHONE_USER).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        PhoneRequestJsonBean jsonBean = new Gson().fromJson(s, PhoneRequestJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            name = jsonBean.getData().getPerson();
+                            phone = jsonBean.getData().getPhone();
+                        }
+                    }
+                });
+    }
+
+
+    private void showDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.media_loading_layout,null,false);
+        final AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(view).create();
+        TextView cancel = view.findViewById(R.id.cancel_input);
+        TextView confirm = view.findViewById(R.id.confirm_input);
+        final EditText input_name = view.findViewById(R.id.input_name);
+        final EditText input_phone = view.findViewById(R.id.input_phone);
+        input_name.setText(name);
+        input_phone.setText(phone);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestExchangeInternet(goodsType, input_name.getText().toString(), input_phone.getText().toString());
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void requestExchangeInternet(int goodsType, String name, String phone) {
+        ExchangeRequestBean requestBean = new ExchangeRequestBean();
+        requestBean.setGid(goods_id);
+        requestBean.setPerson(name);
+        requestBean.setPhone(phone);
+        if (goodsType == 1) {
+            //交易求购
+            EasyHttp.post(HttpConstant.API_SEEK_REQUEST).headers("Content-Type", "application/json")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .upObject(requestBean)
+                    .execute(new SimpleCallBack<String>() {
+                        @Override
+                        public void onError(ApiException e) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+
+                        }
+                    });
+
+        } else if (goodsType == 2) {
+            EasyHttp.post(HttpConstant.API_SALE_REQUEST).headers("Content-Type", "application/json")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .upObject(requestBean)
+                    .execute(new SimpleCallBack<String>() {
+                        @Override
+                        public void onError(ApiException e) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+
+                        }
+                    });
+
         }
     }
 
@@ -230,6 +339,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                 order_delete_or_transaction.setText("交易");
                             }
 
+                            if (detailBean.getData().getGoodsType() == 1) {
+                                // 求购商品
+                                goodsType = 1;
+                            } else if (detailBean.getData().getGoodsType() == 2) {
+                                //出售商品交易
+                                goodsType = 2;
+                            }
                             GoodsDetailDateBean titleItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIIL_TITLE);
                             titleItem.setTitle(detailBean.getData().getTitle());
                             titleItem.setDescription(detailBean.getData().getDescription());

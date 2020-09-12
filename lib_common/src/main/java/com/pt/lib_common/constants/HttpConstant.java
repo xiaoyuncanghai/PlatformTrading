@@ -28,4 +28,7 @@ public interface HttpConstant {
     String API_OFF_SHELF = "/goods/off";
     String API_ON_SHELF = "/goods/release";
     String API_DELETE_GOODS = "/goods/del";
+    String API_PHONE_USER = "/order/get_last_person";
+    String API_SEEK_REQUEST = "/order/create_seek_order";
+    String API_SALE_REQUEST = "/order/create_sale_order";
 }
