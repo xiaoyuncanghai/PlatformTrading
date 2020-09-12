@@ -8,6 +8,7 @@
         <activity android:name=".PublishGoodsSaleActivity"
             android:theme="@style/DefaultCityPickerTheme"/>
         <activity android:name=".ApplicationForQualiActivity" />
+        <activity android:name=".ApplyMoneyActivity" />
         <activity android:name=".PublishListActivity" />
         <activity android:name=".FundSideListActivity" />
     </application>

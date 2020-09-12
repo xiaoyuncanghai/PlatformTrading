@@ -81,8 +81,47 @@ public class MineFragmentDelegate extends AppDelegate {
 
         publish_message_product_list.setOnClickListener(v -> {
             //资金方列表
-            ARouter.getInstance().build(ARouterPath.FUND_SIDE).navigation();
+            //ARouter.getInstance().build(ARouterPath.FUND_SIDE).navigation();
+            //申请成为资金方
+            checkApplyMoney();
         });
+    }
+
+    /**
+     * 检查资金方资格
+     */
+    private void checkApplyMoney() {
+        EasyHttp.post(HttpConstant.API_USER_FUND).timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        CheckJsonBean checkJsonBean = new Gson().fromJson(s, CheckJsonBean.class);
+                        if (checkJsonBean.getCode() == 0) {
+                            if (checkJsonBean.getData() == 0) {
+                                //初始状态, 前往申请成为资金方
+                                ARouter.getInstance().build(ARouterPath.MONEY_APPLY).navigation();
+                            } else if (checkJsonBean.getData() == 1) {
+                                //审核通过
+                                //ARouter.getInstance().build(ARouterPath.PUBLISH_GOODS_PATH).navigation();
+                                Snackbar.make(getRootView(), "您已经是资金方, 无需继续申请",
+                                        Snackbar.LENGTH_SHORT).show();
+                                publish_message_product_list.setVisibility(View.GONE);
+                            } else if (checkJsonBean.getData() == 2) {
+                                Snackbar.make(getRootView(), "资格正在审核中, 请您资格通过后再进行商品发布",
+                                        Snackbar.LENGTH_SHORT).show();
+                            } else if (checkJsonBean.getData() == -1) {
+                                //审核被拒绝
+                                showNoticeDialog();
+                            }
+                        } else {
+                        }
+                    }
+                });
     }
 
     /**

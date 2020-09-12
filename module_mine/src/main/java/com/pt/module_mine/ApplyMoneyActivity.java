@@ -9,13 +9,13 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
-import com.pt.module_mine.delegate.ApplicationForQualiActDelegate;
+import com.pt.module_mine.delegate.ApplyMoneyActDelegate;
 
-@Route(path = ARouterPath.APPLICATION_QUALI)
-public class ApplicationForQualiActivity extends ActivityPresenter<ApplicationForQualiActDelegate> {
+@Route(path = ARouterPath.MONEY_APPLY)
+public class ApplyMoneyActivity extends ActivityPresenter<ApplyMoneyActDelegate> {
     @Override
-    protected Class<ApplicationForQualiActDelegate> getDelegateClass() {
-        return ApplicationForQualiActDelegate.class;
+    protected Class<ApplyMoneyActDelegate> getDelegateClass() {
+        return ApplyMoneyActDelegate.class;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ApplicationForQualiActivity extends ActivityPresenter<ApplicationFo
     }
 
     private void initHeader() {
-        setTitle("售卖资格申请");
+        setTitle("成为资金方");
         setLeft("\ue605");
         if (tv_left!=null){
             tv_left.setVisibility(View.VISIBLE);
