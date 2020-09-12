@@ -11,6 +11,8 @@
         <activity android:name=".ApplyMoneyActivity" />
         <activity android:name=".PublishListActivity" />
         <activity android:name=".FundSideListActivity" />
+        <activity android:name=".GoodsModifyActivity"
+            android:theme="@style/DefaultCityPickerTheme"/>
     </application>
 
 </manifest>

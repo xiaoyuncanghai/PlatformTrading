@@ -333,7 +333,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
         }
         request.setPrice(modify_goods_price.getText().toString());
         request.setTitle(et_modify_goods_title.getText().toString());
-        EasyHttp.post(HttpConstant.API_CREATE_GOODS).headers("Content-Type", "application/json")
+        EasyHttp.post(HttpConstant.API_UPDATE_GOODS).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
                 .upObject(request)
                 .execute(new SimpleCallBack<String>() {

@@ -1,5 +1,6 @@
 package com.pt.lib_common.ui.delegate;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.GoodsDetailAdapter;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.bean.databean.GoodsDetailDateBean;
+import com.pt.lib_common.bean.jsonbean.CreateOrderJson;
 import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
 import com.pt.lib_common.bean.jsonbean.PhoneRequestJsonBean;
@@ -85,12 +87,12 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             order_off_shelf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isOwen && currentStatus == 1) {
-                        //上架状态显示下架
+                    if (isOwen && currentStatus == 0) {
                         GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
                         requestBean.setId(goods_id);
-                        EasyHttp.post(HttpConstant.API_OFF_SHELF).headers("Content-Type", "application/json")
+                        EasyHttp.post(HttpConstant.API_ON_SHELF).headers("Content-Type", "application/json")
                                 .addConverterFactory(GsonConverterFactory.create())
+                                .headers("Authorization", SPHelper.getString("token", "", true))
                                 .upObject(requestBean)
                                 .execute(new SimpleCallBack<String>() {
                                     @Override
@@ -102,16 +104,16 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     public void onSuccess(String s) {
                                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                                         if (jsonBean.getCode() == 0) {
-                                            Snackbar.make(getRootView(), "下架成功", Snackbar.LENGTH_SHORT).show();
+                                            Snackbar.make(getRootView(), "上架成功", Snackbar.LENGTH_SHORT).show();
                                             getActivity().finish();
                                         }
                                     }
                                 });
                     } else if (isOwen && currentStatus == 1) {
-                        //下架状态显示上架
                         GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
                         requestBean.setId(goods_id);
                         EasyHttp.post(HttpConstant.API_ON_SHELF).headers("Content-Type", "application/json")
+                                .headers("Authorization", SPHelper.getString("token", "", true))
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .upObject(requestBean)
                                 .execute(new SimpleCallBack<String>() {
@@ -174,8 +176,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     }
                                 });
                     } else {
-                        //交易, 分成求购和出售两种, 根据goodType 判断
-
                         showDialog();
                     }
                 }
@@ -211,15 +211,18 @@ public class GoodsDetailsActDelegate extends AppDelegate {
 
 
     private void showDialog() {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.media_loading_layout,null,false);
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(view).create();
-        TextView cancel = view.findViewById(R.id.cancel_input);
-        TextView confirm = view.findViewById(R.id.confirm_input);
-        final EditText input_name = view.findViewById(R.id.input_name);
-        final EditText input_phone = view.findViewById(R.id.input_phone);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dilog_input_user_phone, null);
+        final Dialog dialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setCancelable(true)
+                .create();
+        dialog.show();
+        final EditText input_name = (EditText) view.findViewById(R.id.input_name);
+        final EditText input_phone = (EditText) view.findViewById(R.id.input_phone);
         input_name.setText(name);
         input_phone.setText(phone);
-
+        TextView cancel = view.findViewById(R.id.cancel_input);
+        TextView confirm = view.findViewById(R.id.confirm_input);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,12 +233,17 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestExchangeInternet(goodsType, input_name.getText().toString(), input_phone.getText().toString());
-                dialog.dismiss();
+                if (input_name.getText().toString() != "" && input_phone.getText().toString() != "") {
+                    requestExchangeInternet(goodsType, input_name.getText().toString(),
+                            input_phone.getText().toString());
+                    dialog.dismiss();
+                } else {
+                    Snackbar.make(getRootView(), "请先输入姓名和电话号码", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
-        dialog.show();
+
     }
 
     private void requestExchangeInternet(int goodsType, String name, String phone) {
@@ -256,7 +264,12 @@ public class GoodsDetailsActDelegate extends AppDelegate {
 
                         @Override
                         public void onSuccess(String s) {
-
+                            CreateOrderJson order = new Gson().fromJson(s, CreateOrderJson.class);
+                            if (order.getCode() == 0) {
+                                ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
+                                        .withString(Constant.KEY_ORDER_ID, order.getData())
+                                        .navigation();
+                            }
                         }
                     });
 
@@ -301,32 +314,34 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             LogUtils.d("phone = " + SPHelper.getString("phone", "", true));
                             if (detailBean.getData().getCreateUserPhone().equals(
                                     SPHelper.getString("phone", "", true))) {
-                                //为自己创建的商品
                                 isOwen = true;
-                                order_off_shelf.setVisibility(View.VISIBLE);
-                                order_modified.setVisibility(View.VISIBLE);
-                                order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                order_modified.setEnabled(true);
-                                order_delete_or_transaction.setEnabled(true);
-                                //查看当前自己订单的状态 取反状态
                                 if (detailBean.getData().getGoodsStatus() == 0) {
                                     //当前为下架状态
-                                    order_off_shelf.setEnabled(true);
                                     currentStatus = 0;
+                                    order_off_shelf.setVisibility(View.VISIBLE);
+                                    order_off_shelf.setEnabled(true);
                                     order_off_shelf.setText("上架");
                                 } else if (detailBean.getData().getGoodsStatus() == 1) {
                                     currentStatus = 1;
+                                    order_off_shelf.setVisibility(View.VISIBLE);
                                     order_off_shelf.setEnabled(true);
                                     order_off_shelf.setText("下架");
                                 } else if (detailBean.getData().getGoodsStatus() == 3) {
                                     currentStatus = 3;
+                                    order_off_shelf.setVisibility(View.INVISIBLE);
                                     order_off_shelf.setEnabled(false);
                                     order_off_shelf.setText("违规");
                                 } else if (detailBean.getData().getGoodsStatus() == 4) {
                                     currentStatus = 4;
+                                    order_off_shelf.setVisibility(View.INVISIBLE);
                                     order_off_shelf.setEnabled(false);
                                     order_off_shelf.setText("禁售");
                                 }
+                                order_modified.setVisibility(View.VISIBLE);
+                                order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                order_modified.setEnabled(true);
+                                order_delete_or_transaction.setEnabled(true);
+                                order_modified.setText("修改");
                                 order_delete_or_transaction.setText("删除");
                             } else {
                                 isOwen = false;
@@ -358,12 +373,11 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             detailList.add(titleItem);
                             GoodsDetailDateBean picItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY);
                             picItem.setPic1Url(detailBean.getData().getPic1Url());
-                            picItem.setPic2Url(detailBean.getData().getPic3Url());
+                            picItem.setPic2Url(detailBean.getData().getPic2Url());
                             picItem.setPic3Url(detailBean.getData().getPic3Url());
                             detailList.add(picItem);
                             goodsDetailAdapter.notifyDataSetChanged();
                         } else {
-                            //商品为null 显示EmptyView
                         }
                     }
                 });

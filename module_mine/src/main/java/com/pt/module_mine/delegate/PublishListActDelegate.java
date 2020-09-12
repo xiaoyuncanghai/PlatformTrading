@@ -1,12 +1,17 @@
 package com.pt.module_mine.delegate;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -66,6 +71,14 @@ public class PublishListActDelegate extends AppDelegate {
             }
         });
         srl_mine_publish_list.autoRefresh();
+
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            //int status = publishList.get(position).getGoodsStatus();
+            String goods_id = publishList.get(position).getId();
+            ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                    .withString(Constant.KEY_GOODS_ID, goods_id)
+                    .navigation();
+        });
     }
 
     /**

@@ -74,6 +74,7 @@
             android:hint="请输入您的电话"
             android:maxLines="1"
             android:paddingStart="@dimen/size_5dp"
+            android:inputType="phone"
             android:textColor="@color/primaryText"
             android:textColorHint="@color/thirdText"
             android:textSize="@dimen/text_size_13sp" />

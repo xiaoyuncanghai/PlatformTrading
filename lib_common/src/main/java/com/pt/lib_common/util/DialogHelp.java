@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.pt.lib_common.R;
+import com.pt.lib_common.constants.Constant;
 
 
 /**
@@ -33,6 +34,10 @@ public class DialogHelp {
 
     private Dialog dialog;
     public View contentView;
+
+   /* public Dialog showInputDialog(Context context, boolean canceledOnTouchOutside) {
+        contentView = View.inflate(context, R.layout.dilog_input_user_phone,null);
+    }*/
 
     /*
     * 上传头像时条目选择提示框

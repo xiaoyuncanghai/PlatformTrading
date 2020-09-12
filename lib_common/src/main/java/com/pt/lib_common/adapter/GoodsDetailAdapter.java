@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -22,6 +21,7 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
      * @param data A new list is created out of this one to avoid mutable list
      */
     private Context context;
+
     public GoodsDetailAdapter(Context context, List<GoodsDetailDateBean> data) {
         super(data);
         this.context = context;
@@ -41,20 +41,20 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                 TextView goods_detail_description = helper.getView(R.id.goods_detail_description);
                 TextView goods_detail_price = helper.getView(R.id.goods_detail_price);
                 goods_detail_title.setText(item.getTitle());
-                goods_detail_status.setText("状态: "+item.getGoodsStatusDes());
-                goods_detail_category.setText("所属分类: "+item.getCategory());
-                goods_detail_time.setText("时间: "+item.getUpdateTime());
+                goods_detail_status.setText("状态: " + item.getGoodsStatusDes());
+                goods_detail_category.setText("所属分类: " + item.getCategory());
+                goods_detail_time.setText("时间: " + item.getUpdateTime());
                 goods_detail_phone.setText("电话" + item.getCreatePhone());
-                goods_detail_description.setText("描述: "+item.getDescription());
-                goods_detail_price.setText("价格: " +item.getPrice());
+                goods_detail_description.setText("描述: " + item.getDescription());
+                goods_detail_price.setText("价格: " + item.getPrice());
                 break;
 
             case GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY:
                 ImageView category_body_pic = helper.getView(R.id.category_body_pic);
                 ImageView category_body_pic2 = helper.getView(R.id.category_body_pic2);
                 ImageView category_body_pic3 = helper.getView(R.id.category_body_pic3);
-                LogUtils.d("pic = "+item.getPic1Url());
                 if (!item.getPic1Url().equals("")) {
+                    category_body_pic.setVisibility(View.VISIBLE);
                     Glide.with(context)
                             .load(item.getPic1Url())
                             .placeholder(R.drawable.ic_place_holder)
@@ -63,6 +63,7 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                 }
 
                 if (!item.getPic2Url().equals("")) {
+                    category_body_pic2.setVisibility(View.VISIBLE);
                     Glide.with(context)
                             .load(item.getPic2Url())
                             .placeholder(R.drawable.ic_place_holder)
@@ -70,7 +71,8 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                             .error(R.drawable.ic_place_holder).into(category_body_pic2);
                 }
 
-                if (!item.getPic1Url().equals("")) {
+                if (!item.getPic3Url().equals("")) {
+                    category_body_pic3.setVisibility(View.VISIBLE);
                     Glide.with(context)
                             .load(item.getPic3Url())
                             .placeholder(R.drawable.ic_place_holder)

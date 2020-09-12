@@ -131,6 +131,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                cpage = 1;
                 requestBanner();
             }
         });
