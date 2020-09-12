@@ -74,7 +74,9 @@ public class Order2BuyFgtDelegate extends AppDelegate {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
-                        .withString(Constant.KEY_ORDER_ID, buyList.get(position).getId()).navigation();
+                        .withString(Constant.KEY_ORDER_ID, buyList.get(position).getId())
+                        .withInt(Constant.ORDER_USER_TYPE, 1)
+                        .navigation();
             }
         });
     }

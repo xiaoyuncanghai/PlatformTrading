@@ -73,7 +73,8 @@ public class Order3SaleFgtDelegate extends AppDelegate {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
-                        .withString(Constant.KEY_ORDER_ID, saleList.get(position).getId()).navigation();
+                        .withString(Constant.KEY_ORDER_ID, saleList.get(position).getId())
+                        .withInt(Constant.ORDER_USER_TYPE, 2).navigation();
             }
         });
     }

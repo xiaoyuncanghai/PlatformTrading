@@ -71,7 +71,8 @@ public class Order4MoneyFgtDelegate extends AppDelegate {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
-                        .withString(Constant.KEY_ORDER_ID, moneyList.get(position).getId()).navigation();
+                        .withString(Constant.KEY_ORDER_ID, moneyList.get(position).getId())
+                        .withInt(Constant.ORDER_USER_TYPE, 3).navigation();
             }
         });
     }

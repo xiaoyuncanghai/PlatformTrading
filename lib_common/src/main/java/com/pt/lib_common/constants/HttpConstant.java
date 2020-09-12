@@ -32,4 +32,6 @@ public interface HttpConstant {
     String API_PHONE_USER = "/order/get_last_person";
     String API_SEEK_REQUEST = "/order/create_seek_order";
     String API_SALE_REQUEST = "/order/create_sale_order";
+    String API_ORDER_DETAIL = "/order/get_order";
+    String API_APPLY_FUNDER = "/order/apply_funder";
 }

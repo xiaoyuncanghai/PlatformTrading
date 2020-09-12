@@ -1,6 +1,8 @@
-package com.pt.module_mine.bean;
+package com.pt.lib_common.bean.databean;
 
-public class FundSideItem {
+import java.io.Serializable;
+
+public class FundSideItem implements Serializable {
     private String phone;
     private String name;
 

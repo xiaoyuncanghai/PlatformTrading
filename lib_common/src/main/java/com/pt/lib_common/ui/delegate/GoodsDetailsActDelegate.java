@@ -111,7 +111,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                     } else if (isOwen && currentStatus == 1) {
                         GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
                         requestBean.setId(goods_id);
-                        EasyHttp.post(HttpConstant.API_ON_SHELF).headers("Content-Type", "application/json")
+                        EasyHttp.post(HttpConstant.API_OFF_SHELF).headers("Content-Type", "application/json")
                                 .headers("Authorization", SPHelper.getString("token", "", true))
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .upObject(requestBean)
@@ -125,7 +125,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     public void onSuccess(String s) {
                                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                                         if (jsonBean.getCode() == 0) {
-                                            Snackbar.make(getRootView(), "上架成功", Snackbar.LENGTH_SHORT).show();
+                                            Snackbar.make(getRootView(), "下架成功", Snackbar.LENGTH_SHORT).show();
                                             getActivity().finish();
                                         }
                                     }
@@ -268,7 +268,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
-                                        //.withInt(Constant.KEY_ORDER_TYPE, goodsType)
+                                        .withInt(Constant.ORDER_USER_TYPE, 1)
                                         .navigation();
                             }
                         }
@@ -290,7 +290,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
-                                        //.withInt(Constant.KEY_ORDER_TYPE, goodsType)
+                                        .withInt(Constant.ORDER_USER_TYPE, 2)
                                         .navigation();
                             }
                         }
