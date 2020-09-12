@@ -31,7 +31,7 @@ public class NearAdapter extends BaseQuickAdapter<NearItemDataBean, BaseViewHold
         near_price.setText(item.getPrice());
         Glide.with(context)
                 .load(item.getPicture())
-                .placeholder(R.drawable.ic_common_happy_yuu1_cat1)
-                .error(R.drawable.ic_common_happy_yuu1_cat1).into(near_promote_iv);
+                .placeholder(R.drawable.default_error)
+                .error(R.drawable.default_error).into(near_promote_iv);
     }
 }
