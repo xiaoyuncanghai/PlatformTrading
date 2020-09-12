@@ -72,16 +72,13 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<SearchBean, BaseVie
                 break;
 
             case SearchBean.TYPE_LIST:
-                LogUtils.d("title = "+ item.getTitle());
-                LogUtils.d("price = "+ item.getPrice());
-                LogUtils.d("picture = "+ item.getPic());
                 ImageView search_promote_iv = helper.getView(R.id.search_promote_iv);
                 TextView search_promote_tv_title = helper.getView(R.id.search_promote_tv_title);
                 TextView search_promote_tv_price =helper.getView(R.id.search_promote_tv_price);
                 search_promote_tv_title.setText(item.getTitle());
                 search_promote_tv_price.setText(item.getPrice());
-                Glide.with(context).load(item.getPic()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
-                        .error(R.drawable.ic_common_happy_yuu1_cat1).into(search_promote_iv);
+                Glide.with(context).load(item.getPic()).placeholder(R.drawable.default_error)
+                        .error(R.drawable.default_error).into(search_promote_iv);
                 break;
         }
     }

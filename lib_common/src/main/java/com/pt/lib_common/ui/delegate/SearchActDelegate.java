@@ -192,10 +192,10 @@ public class SearchActDelegate extends AppDelegate {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (adapter.getItemViewType(position)) {
                     case SearchBean.TYPE_LIST:
-                        /*Uri uri = Uri.parse(ARouterPath.
-                                BASE_URL+ARouterPath.ARTICAL_DETAIL+"?aid="
-                                +searchModelList.get(position).getAid()+"&inner=1");*/
-                        //ARouter.getInstance().build(uri).navigation();
+                        String id = searchList.get(position).getId();
+                        ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                                .withString(Constant.KEY_GOODS_ID, id)
+                                .navigation();
                         break;
                 }
             }

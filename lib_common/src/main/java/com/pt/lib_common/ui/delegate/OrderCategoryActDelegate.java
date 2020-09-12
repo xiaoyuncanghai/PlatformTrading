@@ -1,14 +1,18 @@
 package com.pt.lib_common.ui.delegate;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.CategoryListAdapter;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.CategoryItemDateBean;
 import com.pt.lib_common.bean.jsonbean.CategoryListJsonBean;
@@ -70,6 +74,15 @@ public class OrderCategoryActDelegate extends AppDelegate {
             }
         });
         srl_order_category.autoRefresh();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String product_id = categoryItemList.get(position).getId();
+                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                        .withString(Constant.KEY_GOODS_ID, product_id)
+                        .navigation();
+            }
+        });
     }
 
     /**
@@ -100,6 +113,7 @@ public class OrderCategoryActDelegate extends AppDelegate {
                                 for (CategoryListJsonBean.DataBean.RecordsBean json : jsonBean.getData().getRecords()) {
                                     CategoryItemDateBean categoryItem = new CategoryItemDateBean();
                                     categoryItem.setTitle(json.getTitle());
+                                    categoryItem.setId(json.getId());
                                     categoryItem.setPrice(json.getPrice());
                                     categoryItem.setPic(json.getPic1());
                                     categoryItem.setPicUrl(json.getPic1Url());

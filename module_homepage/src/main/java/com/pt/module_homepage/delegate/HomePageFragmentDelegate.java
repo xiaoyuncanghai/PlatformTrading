@@ -294,7 +294,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     private void requestGoodIndex() {
         HomePageIndexRequestBean homePageIndexRequestBean = new HomePageIndexRequestBean();
-        homePageIndexRequestBean.setCityCode("");
+        homePageIndexRequestBean.setCityCode(code);
         homePageIndexRequestBean.setCurrent(cpage);
         EasyHttp.post(HttpConstant.API_HOME_PAGE).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())

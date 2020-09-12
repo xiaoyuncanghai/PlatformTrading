@@ -170,7 +170,7 @@ public class SearchJsonBean {
              */
 
             private int goodsType;
-            private int id;
+            private String id;
             private String pic1;
             private String pic1Url;
             private String price;
@@ -184,11 +184,11 @@ public class SearchJsonBean {
                 this.goodsType = goodsType;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

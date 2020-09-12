@@ -12,7 +12,7 @@ public class ARouterPath {
     public static final String APPLICATION_QUALI = "/application/for/quali";
     public static final String PUBLISH_LIST = "/publish/mine/list";
     public static final String FUND_SIDE = "/fund/side/list";
-    public static final String ORDER_CATEGORY = "/order/category/list";
+    public static final String ORDER_CATEGORY = "/orders/category/list";
     public static final String GOODS_DETAIL = "/good/detail/act";
     public static final String GOODS_MODIFY = "/modify/goods/item";
     public static final String MONEY_APPLY = "/apply/money/index";

@@ -1,6 +1,8 @@
 package com.pt.module_homepage.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +57,11 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
                         Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse(((BannerItemDataBean)model).getLinkUrl());
+                        intent.setData(content_url);
+                        context.startActivity(intent);
                     }
                 });
                 break;

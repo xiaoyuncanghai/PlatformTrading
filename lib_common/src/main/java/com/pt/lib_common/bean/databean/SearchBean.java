@@ -53,18 +53,18 @@ public class SearchBean implements MultiItemEntity {
         isSearch = search;
     }
 
-    private int id;
+    private String id;
     private String pic;
     private String picUrl;
     private String price;
     private String title;
     private int goodsType;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

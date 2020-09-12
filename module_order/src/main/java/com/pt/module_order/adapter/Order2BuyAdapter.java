@@ -41,8 +41,8 @@ public class Order2BuyAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHo
             order_buy_item_status.setText("已取消");
         }
         Glide.with(context).load(item.getPic())
-                .placeholder(R.drawable.ic_common_fb)
-                .error(R.drawable.ic_common_fb).into(order_buy_item_image);
+                .placeholder(R.drawable.default_error)
+                .error(R.drawable.default_error).into(order_buy_item_image);
 
     }
 }

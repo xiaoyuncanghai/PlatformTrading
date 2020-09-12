@@ -91,7 +91,7 @@ public class OrderDetailActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //买入
-                if (order_cancel.isEnabled() && user_type == 1) {
+                if (order_cancel.isEnabled()) {
                     //取消订单
                     requestCancelOrder(user_type);
                 }

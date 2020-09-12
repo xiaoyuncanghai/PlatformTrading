@@ -12,8 +12,8 @@
     <ImageView
         android:id="@+id/category_item_image"
         android:layout_width="@dimen/size_100dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_common_happy_yuu1_cat1"
+        android:layout_height="@dimen/size_100dp"
+        android:src="@drawable/default_error"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
