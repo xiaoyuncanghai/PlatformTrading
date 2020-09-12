@@ -46,6 +46,15 @@ public class GoodsDetailDateBean implements MultiItemEntity {
     private String category;
     private String updateTime;
     private String createPhone;
+    private int goodsStatus;
+
+    public int getGoodsStatus() {
+        return goodsStatus;
+    }
+
+    public void setGoodsStatus(int goodsStatus) {
+        this.goodsStatus = goodsStatus;
+    }
 
     public String getTitle() {
         return title;
