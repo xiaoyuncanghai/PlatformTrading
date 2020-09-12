@@ -2,7 +2,7 @@ package com.pt.module_order.bean.data;
 
 public class OrderItemBean {
     private String title;
-    private int id;
+    private String id;
     private String pic;
     private String price;
     private String buyerPhone;
@@ -36,11 +36,11 @@ public class OrderItemBean {
         this.title = title;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

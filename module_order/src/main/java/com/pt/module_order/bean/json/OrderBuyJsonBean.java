@@ -158,7 +158,7 @@ public class OrderBuyJsonBean {
              * createTime : 2020-08-09 16:12:27
              */
 
-            private int id;
+            private String id;
             private String sn;
             private int gid;
             private String title;
@@ -180,11 +180,11 @@ public class OrderBuyJsonBean {
             private int orderStatus;
             private String createTime;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

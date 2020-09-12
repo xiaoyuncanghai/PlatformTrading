@@ -1,15 +1,18 @@
 package com.pt.module_order.delegate;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -64,6 +67,13 @@ public class Order3SaleFgtDelegate extends AppDelegate {
             public void onRefresh(RefreshLayout refreshlayout) {
                 cpage = 1;
                 requestList();
+            }
+        });
+        order2BuyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
+                        .withString(Constant.KEY_ORDER_ID, saleList.get(position).getId()).navigation();
             }
         });
     }

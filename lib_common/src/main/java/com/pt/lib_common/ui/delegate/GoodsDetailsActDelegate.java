@@ -1,7 +1,6 @@
 package com.pt.lib_common.ui.delegate;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,6 +175,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     }
                                 });
                     } else {
+                        //交易订单
                         showDialog();
                     }
                 }
@@ -246,7 +246,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
 
     }
 
-    private void requestExchangeInternet(int goodsType, String name, String phone) {
+    private void requestExchangeInternet(final int goodsType, String name, String phone) {
         ExchangeRequestBean requestBean = new ExchangeRequestBean();
         requestBean.setGid(goods_id);
         requestBean.setPerson(name);
@@ -268,6 +268,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
+                                        //.withInt(Constant.KEY_ORDER_TYPE, goodsType)
                                         .navigation();
                             }
                         }
@@ -285,7 +286,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
 
                         @Override
                         public void onSuccess(String s) {
-
+                            CreateOrderJson order = new Gson().fromJson(s, CreateOrderJson.class);
+                            if (order.getCode() == 0) {
+                                ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
+                                        .withString(Constant.KEY_ORDER_ID, order.getData())
+                                        //.withInt(Constant.KEY_ORDER_TYPE, goodsType)
+                                        .navigation();
+                            }
                         }
                     });
 

@@ -14,4 +14,5 @@ public interface Constant {
     String KEY_CATEGORY_ID = "home_category_id";
     String KEY_GOODS_ID = "detail_goods_id";
     String KEY_ORDER_ID = "detail_order_id";
+    String KEY_ORDER_TYPE = "order_type";
 }

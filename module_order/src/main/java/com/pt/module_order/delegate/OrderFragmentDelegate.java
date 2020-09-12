@@ -26,7 +26,7 @@ public class OrderFragmentDelegate extends AppDelegate {
 
     private TabLayout tl_order;
     private ViewPager vp_order;
-    private String[] mTitles = new String[]{ "全部","买入","卖出","资金"};
+    private String[] mTitles = new String[]{ "买入","卖出","资金"};
     public List<SupportFragment> fragments = new ArrayList<SupportFragment>();
     private TabTitlePager adapter;
 
@@ -43,12 +43,12 @@ public class OrderFragmentDelegate extends AppDelegate {
     }
 
     public void initVp(FragmentManager fm) {
-        fragments.add(Order1AllFragment.newInstance());
+        //fragments.add(Order1AllFragment.newInstance());
         fragments.add(Order2BuyFragment.newInstance());
         fragments.add(Order3SaleFragment.newInstance());
         fragments.add(Order4MoneyFragment.newInstance());
         adapter = new TabTitlePager(fm, 1);
-        adapter.addPage(Order1AllFragment.newInstance(), "全部");
+        //adapter.addPage(Order1AllFragment.newInstance(), "全部");
         adapter.addPage(Order2BuyFragment.newInstance(), "买入");
         adapter.addPage(Order3SaleFragment.newInstance(), "卖出");
         adapter.addPage(Order4MoneyFragment.newInstance(), "资金");
