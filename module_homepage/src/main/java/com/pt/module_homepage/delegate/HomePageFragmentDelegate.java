@@ -99,7 +99,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         hotCities = new ArrayList<>();
         hotCities.add(new HotCity("北京市", "110100"));
         hotCities.add(new HotCity("天津市", "120100"));
-        hotCities.add(new HotCity("武汉市", "420111"));
+        hotCities.add(new HotCity("武汉市", "420110"));
     }
 
     private void initView() {
@@ -294,7 +294,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     private void requestGoodIndex() {
         HomePageIndexRequestBean homePageIndexRequestBean = new HomePageIndexRequestBean();
-        homePageIndexRequestBean.setCityCode(code);
+        //首页商品的citycode不传
+        //homePageIndexRequestBean.setCityCode("");
         homePageIndexRequestBean.setCurrent(cpage);
         EasyHttp.post(HttpConstant.API_HOME_PAGE).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())

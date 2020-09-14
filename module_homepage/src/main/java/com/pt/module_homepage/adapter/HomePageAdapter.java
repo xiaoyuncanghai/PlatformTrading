@@ -19,6 +19,7 @@ import com.pt.module_homepage.databean.BannerItemDataBean;
 import com.pt.module_homepage.databean.HomePageDataBean;
 import com.stx.xhb.androidx.XBanner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean, BaseViewHolder> {
@@ -44,6 +45,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
             case HomePageDataBean.TYPE_HOME_PAGE_BANNER:
                 XBanner banner = helper.getView(R.id.xBanner);
                 banner.setBannerData(item.getBannerItemList());
+                banner.setAutoPlayAble(item.getBannerItemList().size() > 1);
                 banner.loadImage(new XBanner.XBannerAdapter() {
                     @Override
                     public void loadBanner(XBanner banner, Object model, View view, int position) {
@@ -57,11 +59,13 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
                         Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent();
-                        intent.setAction("android.intent.action.VIEW");
-                        Uri content_url = Uri.parse(((BannerItemDataBean)model).getLinkUrl());
-                        intent.setData(content_url);
-                        context.startActivity(intent);
+                        if (!((BannerItemDataBean)model).getLinkUrl().equals("")) {
+                            Intent intent= new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(((BannerItemDataBean)model).getLinkUrl());
+                            intent.setData(content_url);
+                            context.startActivity(intent);
+                        }
                     }
                 });
                 break;
