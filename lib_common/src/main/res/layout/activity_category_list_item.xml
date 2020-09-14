@@ -33,6 +33,7 @@
             android:textSize="@dimen/size_15dp"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,13 +52,6 @@
                 android:textColor="@color/primaryText"
                 android:textSize="@dimen/size_15dp" />
 
-
-            <TextView
-                android:id="@+id/category_item_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="上架"
-                android:textAlignment="viewEnd" />
 
         </LinearLayout>
     </LinearLayout>

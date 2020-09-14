@@ -7,11 +7,11 @@ public class HomePagePromoteJsonBean {
     /**
      * message : null
      * code : 0
-     * data : {"records":[{"id":429,"title":"混泥土10吨","price":50000,"pic1":"","goodsType":2},{"id":426,"title":"mmm","price":99,"pic1":"mm","goodsType":1}],"total":2,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
+     * data : {"records":[{"id":488,"title":"test003","price":192,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":484,"title":"product test 001","price":92,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":483,"title":"test发布","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":479,"title":"需要买台电脑","price":200,"pic1":"","pic1Url":"","goodsType":1},{"id":477,"title":"联想电脑","price":5000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2}],"total":6,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
-    private String  message;
+    private String message;
     private int code;
     private DataBean data;
     private boolean success;
@@ -50,8 +50,8 @@ public class HomePagePromoteJsonBean {
 
     public static class DataBean {
         /**
-         * records : [{"id":429,"title":"混泥土10吨","price":50000,"pic1":"","goodsType":2},{"id":426,"title":"mmm","price":99,"pic1":"mm","goodsType":1}]
-         * total : 2
+         * records : [{"id":488,"title":"test003","price":192,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":484,"title":"product test 001","price":92,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":483,"title":"test发布","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":479,"title":"需要买台电脑","price":200,"pic1":"","pic1Url":"","goodsType":1},{"id":477,"title":"联想电脑","price":5000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2}]
+         * total : 6
          * size : 10
          * current : 1
          * orders : []
@@ -135,10 +135,11 @@ public class HomePagePromoteJsonBean {
 
         public static class RecordsBean {
             /**
-             * id : 429
-             * title : 混泥土10吨
-             * price : 50000.0
-             * pic1 :
+             * id : 488
+             * title : test003
+             * price : 192.0
+             * pic1 : CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150
              * goodsType : 2
              */
 
@@ -146,6 +147,7 @@ public class HomePagePromoteJsonBean {
             private String title;
             private String price;
             private String pic1;
+            private String pic1Url;
             private int goodsType;
 
             public String getId() {
@@ -164,7 +166,7 @@ public class HomePagePromoteJsonBean {
                 this.title = title;
             }
 
-            public String  getPrice() {
+            public String getPrice() {
                 return price;
             }
 
@@ -178,6 +180,14 @@ public class HomePagePromoteJsonBean {
 
             public void setPic1(String pic1) {
                 this.pic1 = pic1;
+            }
+
+            public String getPic1Url() {
+                return pic1Url;
+            }
+
+            public void setPic1Url(String pic1Url) {
+                this.pic1Url = pic1Url;
             }
 
             public int getGoodsType() {

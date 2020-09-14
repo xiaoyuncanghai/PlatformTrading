@@ -77,7 +77,7 @@ public class SearchAdapter extends BaseMultiItemQuickAdapter<SearchBean, BaseVie
                 TextView search_promote_tv_price =helper.getView(R.id.search_promote_tv_price);
                 search_promote_tv_title.setText(item.getTitle());
                 search_promote_tv_price.setText(item.getPrice());
-                Glide.with(context).load(item.getPic()).placeholder(R.drawable.default_error)
+                Glide.with(context).load(item.getPicUrl()).placeholder(R.drawable.default_error)
                         .error(R.drawable.default_error).into(search_promote_iv);
                 break;
         }

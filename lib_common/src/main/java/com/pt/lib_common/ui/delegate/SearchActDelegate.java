@@ -25,6 +25,7 @@ import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.SearchJsonBean;
 import com.pt.lib_common.base.request.SearchRequestBean;
 import com.pt.lib_common.bean.databean.SearchBean;
+import com.pt.lib_common.bean.requestBean.SearchListRequestBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -203,11 +204,10 @@ public class SearchActDelegate extends AppDelegate {
     }
 
     private void requestList(int cpage, final String keyword, String cityCode, final boolean isLoadMore) {
-        SearchRequestBean requestBean = new SearchRequestBean();
+        SearchListRequestBean requestBean = new SearchListRequestBean();
         requestBean.setCurrent(cpage);
         requestBean.setKeyword(keyword);
         requestBean.setCityCode(cityCode);
-        requestBean.setGoodsType(0);
         EasyHttp.post(HttpConstant.API_SEARCH).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
                 .upObject(requestBean)

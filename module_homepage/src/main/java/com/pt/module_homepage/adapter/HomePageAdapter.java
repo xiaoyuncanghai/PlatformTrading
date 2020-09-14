@@ -58,7 +58,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
-                        Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
                         if (!((BannerItemDataBean)model).getLinkUrl().equals("")) {
                             Intent intent= new Intent();
                             intent.setAction("android.intent.action.VIEW");

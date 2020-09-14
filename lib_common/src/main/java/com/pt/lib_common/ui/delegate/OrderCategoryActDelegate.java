@@ -55,7 +55,7 @@ public class OrderCategoryActDelegate extends AppDelegate {
 
         rcv_order_category.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
                 GridLayoutManager.VERTICAL, false));
-        adapter = new CategoryListAdapter(getActivity(), R.layout.fragment_publish_list_item,
+        adapter = new CategoryListAdapter(getActivity(), R.layout.activity_category_list_item,
                 categoryItemList);
         rcv_order_category.setAdapter(adapter);
         rcv_order_category.setItemAnimator(new DefaultItemAnimator());
@@ -123,8 +123,8 @@ public class OrderCategoryActDelegate extends AppDelegate {
                                 if (srl_order_category.isRefreshing()) {
                                     categoryItemList.clear();
                                 }
-                                adapter.notifyItemChanged(categoryItemList.size() - categoryItemListTemp.size(),
-                                        categoryItemListTemp.size());
+                                categoryItemList.addAll(categoryItemListTemp);
+                                adapter.notifyDataSetChanged();
                                 if (srl_order_category.isRefreshing()) {
                                     srl_order_category.finishRefresh();
                                 } else if (srl_order_category.isLoading()) {

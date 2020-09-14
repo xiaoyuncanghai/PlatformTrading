@@ -4,17 +4,26 @@ import java.util.List;
 
 public class CategoryListJsonBean {
 
+
     /**
+     * message : null
      * code : 0
-     * data : {"current":0,"hitCount":true,"orders":[{"asc":true,"column":""}],"pages":0,"records":[{"goodsType":0,"id":0,"pic1":"","pic1Url":"","price":0,"title":""}],"searchCount":true,"size":0,"total":0}
-     * message :
+     * data : {"records":[{"id":480,"title":"不要删1","price":10,"pic1":"storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1}],"total":1,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
+    private String message;
     private int code;
     private DataBean data;
-    private String message;
     private boolean success;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getCode() {
         return code;
@@ -32,14 +41,6 @@ public class CategoryListJsonBean {
         this.data = data;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public boolean isSuccess() {
         return success;
     }
@@ -50,24 +51,40 @@ public class CategoryListJsonBean {
 
     public static class DataBean {
         /**
-         * current : 0
-         * hitCount : true
-         * orders : [{"asc":true,"column":""}]
-         * pages : 0
-         * records : [{"goodsType":0,"id":0,"pic1":"","pic1Url":"","price":0,"title":""}]
+         * records : [{"id":480,"title":"不要删1","price":10,"pic1":"storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1}]
+         * total : 1
+         * size : 10
+         * current : 1
+         * orders : []
+         * hitCount : false
          * searchCount : true
-         * size : 0
-         * total : 0
+         * pages : 1
          */
 
+        private int total;
+        private int size;
         private int current;
         private boolean hitCount;
-        private int pages;
         private boolean searchCount;
-        private int size;
-        private int total;
-        private List<OrdersBean> orders;
+        private int pages;
         private List<RecordsBean> records;
+        private List<?> orders;
+
+        public int getTotal() {
+            return total;
+        }
+
+        public void setTotal(int total) {
+            this.total = total;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
 
         public int getCurrent() {
             return current;
@@ -85,14 +102,6 @@ public class CategoryListJsonBean {
             this.hitCount = hitCount;
         }
 
-        public int getPages() {
-            return pages;
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
-
         public boolean isSearchCount() {
             return searchCount;
         }
@@ -101,28 +110,12 @@ public class CategoryListJsonBean {
             this.searchCount = searchCount;
         }
 
-        public int getSize() {
-            return size;
+        public int getPages() {
+            return pages;
         }
 
-        public void setSize(int size) {
-            this.size = size;
-        }
-
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public List<OrdersBean> getOrders() {
-            return orders;
-        }
-
-        public void setOrders(List<OrdersBean> orders) {
-            this.orders = orders;
+        public void setPages(int pages) {
+            this.pages = pages;
         }
 
         public List<RecordsBean> getRecords() {
@@ -133,56 +126,30 @@ public class CategoryListJsonBean {
             this.records = records;
         }
 
-        public static class OrdersBean {
-            /**
-             * asc : true
-             * column :
-             */
+        public List<?> getOrders() {
+            return orders;
+        }
 
-            private boolean asc;
-            private String column;
-
-            public boolean isAsc() {
-                return asc;
-            }
-
-            public void setAsc(boolean asc) {
-                this.asc = asc;
-            }
-
-            public String getColumn() {
-                return column;
-            }
-
-            public void setColumn(String column) {
-                this.column = column;
-            }
+        public void setOrders(List<?> orders) {
+            this.orders = orders;
         }
 
         public static class RecordsBean {
             /**
-             * goodsType : 0
-             * id : 0
-             * pic1 :
-             * pic1Url :
-             * price : 0
-             * title :
+             * id : 480
+             * title : 不要删1
+             * price : 10.0
+             * pic1 : storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMScreenshotsScreenshot_2020-09-12-19-36-26-202_aihuishou.aihuishouapp.jpg?x-oss-process=image/resize,m_fill,h_150,w_150
+             * goodsType : 1
              */
 
-            private int goodsType;
             private String id;
+            private String title;
+            private String price;
             private String pic1;
             private String pic1Url;
-            private String price;
-            private String title;
-
-            public int getGoodsType() {
-                return goodsType;
-            }
-
-            public void setGoodsType(int goodsType) {
-                this.goodsType = goodsType;
-            }
+            private int goodsType;
 
             public String getId() {
                 return id;
@@ -190,6 +157,22 @@ public class CategoryListJsonBean {
 
             public void setId(String id) {
                 this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
             }
 
             public String getPic1() {
@@ -208,20 +191,12 @@ public class CategoryListJsonBean {
                 this.pic1Url = pic1Url;
             }
 
-            public String getPrice() {
-                return price;
+            public int getGoodsType() {
+                return goodsType;
             }
 
-            public void setPrice(String price) {
-                this.price = price;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
+            public void setGoodsType(int goodsType) {
+                this.goodsType = goodsType;
             }
         }
     }

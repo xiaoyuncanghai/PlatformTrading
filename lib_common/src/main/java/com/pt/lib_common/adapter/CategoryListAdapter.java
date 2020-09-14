@@ -25,22 +25,15 @@ public class CategoryListAdapter extends BaseQuickAdapter<CategoryItemDateBean, 
 
     @Override
     protected void convert(BaseViewHolder helper, CategoryItemDateBean item) {
-        ImageView category_item_image = helper.getView(R.id.category_item_image);
-        TextView category_item_title = helper.getView(R.id.category_item_title);
-        TextView category_item_price = helper.getView(R.id.category_item_price);
-        TextView category_item_status = helper.getView(R.id.category_item_status);
+        ImageView publish_item_image = helper.getView(R.id.category_item_image);
+        TextView publish_item_title = helper.getView(R.id.category_item_title);
+        TextView publish_item_price = helper.getView(R.id.category_item_price);
 
-        category_item_title.setText(item.getTitle());
-        category_item_price.setText(item.getPrice());
-        if (item.getStatus() == 1) {
-            category_item_status.setText("求购中...");
-        } else if (item.getStatus() == 2) {
-            category_item_status.setText("售卖中...");
-        } else {
-            category_item_status.setText("");
-        }
-        Glide.with(context).load(item.getPicUrl()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
-                .error(R.drawable.ic_common_happy_yuu1_cat1).into(category_item_image);
-
+        publish_item_title.setText(item.getTitle());
+        publish_item_price.setText(item.getPrice());
+        Glide.with(context).load(item.getPicUrl())
+                .placeholder(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
+                .error(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
+                .into(publish_item_image);
     }
 }

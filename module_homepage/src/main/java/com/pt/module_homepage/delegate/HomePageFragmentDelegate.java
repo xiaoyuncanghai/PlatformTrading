@@ -317,14 +317,13 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     HomePageDataBean homepagePromoteDataBean = new HomePageDataBean();
                                     homepagePromoteDataBean.setItemType(HomePageDataBean.TYPE_HOME_PAGE_PROMOTE);
                                     homepagePromoteDataBean.setPromote_id(promoteJsonBean.getData().getRecords().get(i).getId());
-                                    homepagePromoteDataBean.setPromote_pic(promoteJsonBean.getData().getRecords().get(i).getPic1());
+                                    homepagePromoteDataBean.setPromote_pic(promoteJsonBean.getData().getRecords().get(i).getPic1Url());
                                     homepagePromoteDataBean.setPromote_price(promoteJsonBean.getData().getRecords().get(i).getPrice());
                                     homepagePromoteDataBean.setPromote_type(promoteJsonBean.getData().getRecords().get(i).getGoodsType());
                                     homepagePromoteDataBean.setPromote_title(promoteJsonBean.getData().getRecords().get(i).getTitle());
                                     homePageItemListTemp.add(homepagePromoteDataBean);
                                 }
                             } else {
-                                //表示没有数据了
                                 if (srl_home_page.isRefreshing()) {
                                     srl_home_page.resetNoMoreData();
                                 } else if (srl_home_page.isLoading()) {

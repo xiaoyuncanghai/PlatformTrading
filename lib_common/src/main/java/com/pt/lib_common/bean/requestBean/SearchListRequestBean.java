@@ -1,8 +1,9 @@
-package com.pt.module_near.bean.request;
+package com.pt.lib_common.bean.requestBean;
 
-public class NearRequestBean {
+public class SearchListRequestBean {
     private String cityCode;
     private int current;
+    private String keyword;
 
     public String getCityCode() {
         return cityCode;
@@ -18,5 +19,13 @@ public class NearRequestBean {
 
     public void setCurrent(int current) {
         this.current = current;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

@@ -1,14 +1,12 @@
 package com.pt.module_mine.delegate;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.Constant;
@@ -52,7 +50,7 @@ public class PublishListActDelegate extends AppDelegate {
 
         rcv_mine_publish_list.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
                 GridLayoutManager.VERTICAL, false));
-        adapter = new PublistListAdapter(getActivity(), R.layout.fragment_publish_list_item,
+        adapter = new PublistListAdapter(getActivity(), R.layout.activity_category_list_item,
                 publishList);
         rcv_mine_publish_list.setAdapter(adapter);
         rcv_mine_publish_list.setItemAnimator(new DefaultItemAnimator());

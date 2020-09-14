@@ -177,7 +177,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
             mHotCities = new ArrayList<>();
             mHotCities.add(new HotCity("北京市", "110100"));
             mHotCities.add(new HotCity("天津市", "120100"));
-            mHotCities.add(new HotCity("武汉市", "420111"));
+            mHotCities.add(new HotCity("武汉市", "420110"));
         }
         //初始化定位城市，默认为空时会自动回调定位
         if (mLocatedCity == null) {

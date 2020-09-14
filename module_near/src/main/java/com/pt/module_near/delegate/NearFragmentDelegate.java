@@ -1,6 +1,7 @@
 package com.pt.module_near.delegate;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.SearchJsonBean;
 import com.pt.lib_common.bean.CityInfo;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -85,6 +88,15 @@ public class NearFragmentDelegate extends AppDelegate {
                 requestList();
             }
         });
+        nearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String product_id = nearItemDataBeans.get(position).getId();
+                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                        .withString(Constant.KEY_GOODS_ID, product_id)
+                        .navigation();
+            }
+        });
     }
 
     /**
@@ -93,9 +105,7 @@ public class NearFragmentDelegate extends AppDelegate {
     private void requestList() {
         NearRequestBean requestBean = new NearRequestBean();
         requestBean.setCurrent(cPage);
-        requestBean.setKeyword("");
         requestBean.setCityCode(cityCode);
-        requestBean.setGoodsType(0);
         EasyHttp.post(HttpConstant.API_SEARCH).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
                 .upObject(requestBean)
@@ -118,6 +128,7 @@ public class NearFragmentDelegate extends AppDelegate {
                                     itemDataBean.setPrice(recordsBean.getPrice());
                                     itemDataBean.setPic_url(recordsBean.getPic1Url());
                                     itemDataBean.setPicture(recordsBean.getPic1());
+                                    itemDataBean.setId(recordsBean.getId());
                                     nearItemDataBeansTemp.add(itemDataBean);
                                 }
                                 if (srl_near_page.isRefreshing()) {
