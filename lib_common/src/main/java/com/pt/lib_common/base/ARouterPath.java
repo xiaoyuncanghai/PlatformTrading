@@ -17,4 +17,5 @@ public class ARouterPath {
     public static final String GOODS_MODIFY = "/modify/goods/item";
     public static final String MONEY_APPLY = "/apply/money/index";
     public static final String ORDER_DETAIL = "/order/detail/act";
+    public static final String PUBLISH_STATUS = "/status/publish/act";
 }

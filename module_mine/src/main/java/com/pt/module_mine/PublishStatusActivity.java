@@ -1,19 +1,18 @@
 package com.pt.module_mine;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
-import com.pt.module_mine.delegate.PublishListActDelegate;
+import com.pt.module_mine.delegate.PublishStatusActDelegate;
 
-@Route(path = ARouterPath.PUBLISH_LIST)
-public class PublishListActivity extends ActivityPresenter<PublishListActDelegate> {
+@Route(path = ARouterPath.PUBLISH_STATUS)
+public class PublishStatusActivity extends ActivityPresenter<PublishStatusActDelegate> {
     @Override
-    protected Class<PublishListActDelegate> getDelegateClass() {
-        return PublishListActDelegate.class;
+    protected Class<PublishStatusActDelegate> getDelegateClass() {
+        return PublishStatusActDelegate.class;
     }
 
     @Override
@@ -23,7 +22,7 @@ public class PublishListActivity extends ActivityPresenter<PublishListActDelegat
     }
 
     private void initHeader() {
-        setTitle("我的发布");
+        setTitle("");
         setLeft("\ue605");
         if (tv_left!=null){
             tv_left.setVisibility(View.VISIBLE);
@@ -36,9 +35,4 @@ public class PublishListActivity extends ActivityPresenter<PublishListActDelegat
         finish();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        viewDelegate.onNewIntent(intent);
-    }
 }

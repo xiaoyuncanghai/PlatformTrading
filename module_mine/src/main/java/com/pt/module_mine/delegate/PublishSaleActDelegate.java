@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
@@ -27,6 +28,8 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -395,10 +398,14 @@ public class PublishSaleActDelegate extends AppDelegate {
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
-                            getActivity().finish();
+                            ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 1)
+                                    .navigation();
                         } else {
                             Snackbar.make(getRootView(), "发布失败", Snackbar.LENGTH_SHORT).show();
+                            ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 2)
+                                    .navigation();
                         }
+                        getActivity().finish();
                     }
                 });
     }

@@ -4,10 +4,11 @@ import java.util.List;
 
 public class PublishListJsonBean {
 
+
     /**
      * message : null
      * code : 0
-     * data : {"records":[{"id":438,"title":"test","price":10000000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":2,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":437,"title":"test","price":10000000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":2,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":433,"title":"fhnd","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599475950815.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475950815.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"hshsh","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":432,"title":"fhnd","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599475950815.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475950815.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"hshsh","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":431,"title":"标题","price":100,"pic1":"","pic1Url":"","description":"123456789","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"}],"total":5,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
+     * data : {"records":[{"id":500,"title":"123","price":123,"pic1":"storageemulated0PicturesWeiXinmmexport1599475900090.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475900090.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"qwe","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":499,"title":"test","price":10000,"pic1":"storageemulated0DCIMCameraIMG_20200824_111232.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200824_111232.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":498,"title":"呵呵","price":100,"pic1":"storageemulated0DCIMCameraIMG_20200824_110755.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200824_110755.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"呵呵","goodsType":1,"goodsStatus":1,"goodsStatusDes":"上架"},{"id":497,"title":"啦啦","price":1.0E7,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599665939904.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599665939904.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"啦啦","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"tets2","goodsType":1,"goodsStatus":1,"goodsStatusDes":"上架"}],"total":5,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
@@ -20,7 +21,7 @@ public class PublishListJsonBean {
         return message;
     }
 
-    public void setMessage(String  message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
@@ -50,7 +51,7 @@ public class PublishListJsonBean {
 
     public static class DataBean {
         /**
-         * records : [{"id":438,"title":"test","price":10000000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":2,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":437,"title":"test","price":10000000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":2,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":433,"title":"fhnd","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599475950815.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475950815.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"hshsh","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":432,"title":"fhnd","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599475950815.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475950815.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"hshsh","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":431,"title":"标题","price":100,"pic1":"","pic1Url":"","description":"123456789","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"}]
+         * records : [{"id":500,"title":"123","price":123,"pic1":"storageemulated0PicturesWeiXinmmexport1599475900090.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475900090.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"qwe","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":499,"title":"test","price":10000,"pic1":"storageemulated0DCIMCameraIMG_20200824_111232.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200824_111232.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"test","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":498,"title":"呵呵","price":100,"pic1":"storageemulated0DCIMCameraIMG_20200824_110755.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200824_110755.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"呵呵","goodsType":1,"goodsStatus":1,"goodsStatusDes":"上架"},{"id":497,"title":"啦啦","price":1.0E7,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599665939904.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599665939904.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"啦啦","goodsType":1,"goodsStatus":0,"goodsStatusDes":"下架"},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","description":"tets2","goodsType":1,"goodsStatus":1,"goodsStatusDes":"上架"}]
          * total : 5
          * size : 10
          * current : 1
@@ -135,13 +136,13 @@ public class PublishListJsonBean {
 
         public static class RecordsBean {
             /**
-             * id : 438
-             * title : test
-             * price : 10000000
-             * pic1 : storageemulated0PicturesWeiXinmmexport1599476030839.jpg
-             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150
-             * description : test
-             * goodsType : 2
+             * id : 500
+             * title : 123
+             * price : 123.0
+             * pic1 : storageemulated0PicturesWeiXinmmexport1599475900090.jpg
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599475900090.jpg?x-oss-process=image/resize,m_fill,h_150,w_150
+             * description : qwe
+             * goodsType : 1
              * goodsStatus : 0
              * goodsStatusDes : 下架
              */

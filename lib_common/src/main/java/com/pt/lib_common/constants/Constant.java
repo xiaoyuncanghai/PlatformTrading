@@ -19,4 +19,5 @@ public interface Constant {
     int KEY_ORDER_FUNDER_RESULT = 100002;
     String CHOOSE_FUND_ITEM = "choose_fund_item";
     String KEY_CHOOSE_FUND = "choose_fund";
+    String KEY_PUBLISH_STATUS = "publish_status";
 }

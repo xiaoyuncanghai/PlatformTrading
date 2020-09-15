@@ -1,5 +1,6 @@
 package com.pt.module_mine.delegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.apkfuns.logutils.LogUtils;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.Constant;
@@ -50,7 +52,7 @@ public class PublishListActDelegate extends AppDelegate {
 
         rcv_mine_publish_list.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
                 GridLayoutManager.VERTICAL, false));
-        adapter = new PublistListAdapter(getActivity(), R.layout.activity_category_list_item,
+        adapter = new PublistListAdapter(getActivity(), R.layout.fragment_publish_list_item,
                 publishList);
         rcv_mine_publish_list.setAdapter(adapter);
         rcv_mine_publish_list.setItemAnimator(new DefaultItemAnimator());
@@ -71,7 +73,6 @@ public class PublishListActDelegate extends AppDelegate {
         srl_mine_publish_list.autoRefresh();
 
         adapter.setOnItemClickListener((adapter, view, position) -> {
-            //int status = publishList.get(position).getGoodsStatus();
             String goods_id = publishList.get(position).getId();
             ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                     .withString(Constant.KEY_GOODS_ID, goods_id)
@@ -119,8 +120,7 @@ public class PublishListActDelegate extends AppDelegate {
                                     publishList.clear();
                                 }
                                 publishList.addAll(publishListTemp);
-                                adapter.notifyItemRangeChanged(publishList.size() - publishListTemp.size(),
-                                        publishListTemp.size());
+                                adapter.notifyDataSetChanged();
                                 if (srl_mine_publish_list.isRefreshing()) {
                                     srl_mine_publish_list.finishRefresh();
                                 } else if (srl_mine_publish_list.isLoading()) {
@@ -137,6 +137,11 @@ public class PublishListActDelegate extends AppDelegate {
                         }
                     }
                 });
+    }
+
+
+    public void onNewIntent(Intent intent) {
+        srl_mine_publish_list.autoRefresh();
     }
 }
 

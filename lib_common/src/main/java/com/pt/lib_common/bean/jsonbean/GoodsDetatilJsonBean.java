@@ -2,10 +2,11 @@ package com.pt.lib_common.bean.jsonbean;
 
 public class GoodsDetatilJsonBean {
 
+
     /**
      * message : null
      * code : 0
-     * data : {"id":434,"sn":"20090918164714536","title":"Test Product 001","description":"Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001","price":890,"cateId1":14,"cateName1":"IT/互联网/通信/电子","pic1":"ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED.jpg","pic2":"106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg","pic3":"9F983DBA-EC35-42B8-8773-B597CF782EDD.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED.jpg","pic2Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg","pic3Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/9F983DBA-EC35-42B8-8773-B597CF782EDD.jpg","goodsType":2,"goodsStatus":1,"goodsStatusDes":"上架","violationReason":"","releaseTime":"2020-09-09 20:04:52","updateTime":"2020-09-09 18:16:47","createUserPhone":"15337255569","createTime":"2020-09-09 18:16:47"}
+     * data : {"id":489,"sn":"20091422345964676","title":"可乐","description":"非常可乐","price":5,"cateId1":24,"cateName1":"旅游/酒店/餐饮/休闲","pic1":"storageemulated0DCIMCameraIMG_20200914_223304.jpg","pic2":"","pic3":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200914_223304.jpg","pic2Url":"","pic3Url":"","pic4":"","pic4Url":"","pic5":"","pic5Url":"","goodsType":2,"goodsStatus":1,"goodsStatusDes":"上架","violationReason":"","releaseTime":"2020-09-14 22:35:07","updateTime":"2020-09-14 22:35:00","createUserPhone":"15311976613","createTime":"2020-09-14 22:35:00"}
      * success : true
      */
 
@@ -48,35 +49,39 @@ public class GoodsDetatilJsonBean {
 
     public static class DataBean {
         /**
-         * id : 434
-         * sn : 20090918164714536
-         * title : Test Product 001
-         * description : Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001 Test Product 001
-         * price : 890.0
-         * cateId1 : 14
-         * cateName1 : IT/互联网/通信/电子
-         * pic1 : ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED.jpg
-         * pic2 : 106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg
-         * pic3 : 9F983DBA-EC35-42B8-8773-B597CF782EDD.jpg
-         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED.jpg
-         * pic2Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg
-         * pic3Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/9F983DBA-EC35-42B8-8773-B597CF782EDD.jpg
+         * id : 489
+         * sn : 20091422345964676
+         * title : 可乐
+         * description : 非常可乐
+         * price : 5
+         * cateId1 : 24
+         * cateName1 : 旅游/酒店/餐饮/休闲
+         * pic1 : storageemulated0DCIMCameraIMG_20200914_223304.jpg
+         * pic2 :
+         * pic3 :
+         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200914_223304.jpg
+         * pic2Url :
+         * pic3Url :
+         * pic4 :
+         * pic4Url :
+         * pic5 :
+         * pic5Url :
          * goodsType : 2
          * goodsStatus : 1
          * goodsStatusDes : 上架
          * violationReason :
-         * releaseTime : 2020-09-09 20:04:52
-         * updateTime : 2020-09-09 18:16:47
-         * createUserPhone : 15337255569
-         * createTime : 2020-09-09 18:16:47
+         * releaseTime : 2020-09-14 22:35:07
+         * updateTime : 2020-09-14 22:35:00
+         * createUserPhone : 15311976613
+         * createTime : 2020-09-14 22:35:00
          */
 
-        private int id;
+        private String id;
         private String sn;
         private String title;
         private String description;
         private String price;
-        private int cateId1;
+        private String cateId1;
         private String cateName1;
         private String pic1;
         private String pic2;
@@ -84,6 +89,10 @@ public class GoodsDetatilJsonBean {
         private String pic1Url;
         private String pic2Url;
         private String pic3Url;
+        private String pic4;
+        private String pic4Url;
+        private String pic5;
+        private String pic5Url;
         private int goodsType;
         private int goodsStatus;
         private String goodsStatusDes;
@@ -93,11 +102,11 @@ public class GoodsDetatilJsonBean {
         private String createUserPhone;
         private String createTime;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -133,11 +142,11 @@ public class GoodsDetatilJsonBean {
             this.price = price;
         }
 
-        public int getCateId1() {
+        public String getCateId1() {
             return cateId1;
         }
 
-        public void setCateId1(int cateId1) {
+        public void setCateId1(String cateId1) {
             this.cateId1 = cateId1;
         }
 
@@ -195,6 +204,38 @@ public class GoodsDetatilJsonBean {
 
         public void setPic3Url(String pic3Url) {
             this.pic3Url = pic3Url;
+        }
+
+        public String getPic4() {
+            return pic4;
+        }
+
+        public void setPic4(String pic4) {
+            this.pic4 = pic4;
+        }
+
+        public String getPic4Url() {
+            return pic4Url;
+        }
+
+        public void setPic4Url(String pic4Url) {
+            this.pic4Url = pic4Url;
+        }
+
+        public String getPic5() {
+            return pic5;
+        }
+
+        public void setPic5(String pic5) {
+            this.pic5 = pic5;
+        }
+
+        public String getPic5Url() {
+            return pic5Url;
+        }
+
+        public void setPic5Url(String pic5Url) {
+            this.pic5Url = pic5Url;
         }
 
         public int getGoodsType() {
