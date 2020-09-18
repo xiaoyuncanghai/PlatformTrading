@@ -57,8 +57,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private String name;
     private TextView order_apply_money;
     private int goodsStatus;
-    private LinearLayout ll_order_owen;
-    private LinearLayout ll_other;
     private TextView order_exchange;
 
     @Override
@@ -72,8 +70,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         goods_id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
         srl_order_detail = get(R.id.srl_order_detail);
         rcv_order_detail = get(R.id.rcv_order_detail);
-        ll_order_owen = get(R.id.ll_order_owen);
-        ll_other = get(R.id.ll_other);
         order_off_shelf = get(R.id.order_off_shelf);
         order_modified = get(R.id.order_modified);
         order_apply_money = get(R.id.order_apply_money);
@@ -348,21 +344,54 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
                         if (detailJsonBean.getData() != null) {
                             goodsType = detailJsonBean.getData().getGoodsType();
+                            String phoneText = SPHelper.getString("phone", "", true);
+                            LogUtils.d("current user phone = "+ phoneText);
+                            goodsStatus = detailJsonBean.getData().getGoodsStatus();
                             if (goodsType == 1) {
-                                //求购商品, 是别人的东西
-                                ll_order_owen.setVisibility(View.GONE);
-                                ll_other.setVisibility(View.VISIBLE);
-                                order_exchange.setText("交易");
+                                //自己布求购商品, 上架  修改  删除
+                                //别人发布的值存在交易
+                                //order_exchange.setText("交易");
+                                if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
+                                    if (goodsStatus == 0) {
+                                        order_off_shelf.setVisibility(View.VISIBLE);
+                                        order_off_shelf.setText("上架");
+                                        order_modified.setVisibility(View.VISIBLE);
+                                        order_modified.setText("修改");
+                                        order_apply_money.setVisibility(View.GONE);
+                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                        order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
+                                    } else if (goodsStatus == 1) {
+                                        order_off_shelf.setVisibility(View.VISIBLE);
+                                        order_off_shelf.setText("下架");
+                                        order_modified.setVisibility(View.VISIBLE);
+                                        order_modified.setText("修改");
+                                        order_apply_money.setVisibility(View.GONE);
+                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                        order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
+                                    } else if (goodsStatus == 3) {
+                                        order_off_shelf.setVisibility(View.GONE);
+                                        order_modified.setVisibility(View.VISIBLE);
+                                        order_modified.setText("修改");
+                                        order_apply_money.setVisibility(View.GONE);
+                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                        order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    order_off_shelf.setVisibility(View.GONE);
+                                    order_modified.setVisibility(View.GONE);
+                                    order_apply_money.setVisibility(View.GONE);
+                                    order_delete_or_transaction.setVisibility(View.GONE);
+                                    order_exchange.setVisibility(View.VISIBLE);
+                                    order_exchange.setText("交易");
+                                }
                             } else if (goodsType == 2) {
                                 //售卖商品,可以直接抵押
                                 //自己售卖还是别人售卖
-                                String phoneText = SPHelper.getString("phone", "", true);
-                                LogUtils.d("current user phone = "+ phoneText);
                                 if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
                                     //是自己售卖
-                                    goodsStatus = detailJsonBean.getData().getGoodsStatus();
-                                    ll_order_owen.setVisibility(View.VISIBLE);
-                                    ll_other.setVisibility(View.GONE);
                                     if (goodsStatus == 0) {
                                         //显示上架, 修改, 资金, 删除
                                         order_off_shelf.setVisibility(View.VISIBLE);
@@ -373,6 +402,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_apply_money.setText("资金");
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
                                     } else if (goodsStatus == 1) {
                                         //显示下架, 修改, 资金, 删除
                                         order_off_shelf.setVisibility(View.VISIBLE);
@@ -383,6 +413,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_apply_money.setText("资金");
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
                                     } else if (goodsStatus == 3) {
                                         order_off_shelf.setVisibility(View.GONE);
                                         order_modified.setVisibility(View.VISIBLE);
@@ -390,10 +421,14 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_apply_money.setVisibility(View.GONE);
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
+                                        order_exchange.setVisibility(View.GONE);
                                     }
                                 } else {
-                                    ll_order_owen.setVisibility(View.GONE);
-                                    ll_other.setVisibility(View.VISIBLE);
+                                    order_off_shelf.setVisibility(View.GONE);
+                                    order_modified.setVisibility(View.GONE);
+                                    order_apply_money.setVisibility(View.GONE);
+                                    order_delete_or_transaction.setVisibility(View.GONE);
+                                    order_exchange.setVisibility(View.VISIBLE);
                                     order_exchange.setText("交易");
                                 }
                             }
