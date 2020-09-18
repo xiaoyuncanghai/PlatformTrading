@@ -9,6 +9,15 @@ public class OrderItemBean {
     private String sellerPhone;
     private int goodsType;
     private int orderStatus;
+    private String orderStatusDes;
+
+    public String getOrderStatusDes() {
+        return orderStatusDes;
+    }
+
+    public void setOrderStatusDes(String orderStatusDes) {
+        this.orderStatusDes = orderStatusDes;
+    }
 
     public int getOrderStatus() {
         return orderStatus;

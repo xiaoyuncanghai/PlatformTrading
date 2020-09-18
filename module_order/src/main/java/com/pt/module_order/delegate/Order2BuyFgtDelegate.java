@@ -108,6 +108,8 @@ public class Order2BuyFgtDelegate extends AppDelegate {
                                     itemBean.setTitle(recordsBean.getTitle());
                                     itemBean.setPrice(recordsBean.getPrice());
                                     itemBean.setOrderStatus(recordsBean.getOrderStatus());
+                                    itemBean.setPic(recordsBean.getPic1Url());
+                                    itemBean.setOrderStatusDes(recordsBean.getOrderStatusDes());
                                     buyListTemp.add(itemBean);
                                 }
                                 if (srl_order_buy.isRefreshing()) {

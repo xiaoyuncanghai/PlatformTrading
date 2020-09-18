@@ -33,16 +33,16 @@ public class Order2BuyAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHo
         order_buy_item_title.setText(item.getTitle());
         order_buy_item_description.setText(item.getDescription());
         order_buy_item_price.setText(item.getPrice());
-        if (item.getOrderStatus() == 0) {
+        order_buy_item_status.setText(item.getOrderStatusDes());
+        /*if (item.getOrderStatus() == 0) {
             order_buy_item_status.setText("刚上架");
         } else if (item.getOrderStatus() == 10) {
             order_buy_item_status.setText("确定资金方");
         } else if (item.getOrderStatus() == -10) {
             order_buy_item_status.setText("已取消");
-        }
+        }*/
         Glide.with(context).load(item.getPic())
                 .placeholder(R.drawable.default_error)
                 .error(R.drawable.default_error).into(order_buy_item_image);
-
     }
 }

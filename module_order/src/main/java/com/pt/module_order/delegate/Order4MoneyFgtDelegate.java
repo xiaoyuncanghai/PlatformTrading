@@ -103,7 +103,8 @@ public class Order4MoneyFgtDelegate extends AppDelegate {
                                     itemBean.setDescription(recordsBean.getDescription());
                                     itemBean.setTitle(recordsBean.getTitle());
                                     itemBean.setPrice(recordsBean.getPrice());
-                                    itemBean.setOrderStatus(recordsBean.getOrderStatus());
+                                    itemBean.setPic(recordsBean.getPic1Url());
+                                    itemBean.setOrderStatusDes(recordsBean.getOrderStatusDes());
                                     moneyListTemp.add(itemBean);
                                 }
                                 if (srl_order_money.isRefreshing()) {

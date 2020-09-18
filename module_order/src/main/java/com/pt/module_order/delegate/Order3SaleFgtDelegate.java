@@ -105,7 +105,8 @@ public class Order3SaleFgtDelegate extends AppDelegate {
                                     itemBean.setDescription(recordsBean.getDescription());
                                     itemBean.setTitle(recordsBean.getTitle());
                                     itemBean.setPrice(recordsBean.getPrice());
-                                    itemBean.setOrderStatus(recordsBean.getOrderStatus());
+                                    itemBean.setPic(recordsBean.getPic1Url());
+                                    itemBean.setOrderStatusDes(recordsBean.getOrderStatusDes());
                                     saleListTemp.add(itemBean);
                                 }
                                 if (srl_order_sale.isRefreshing()) {

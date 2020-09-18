@@ -4,10 +4,11 @@ import java.util.List;
 
 public class OrderBuyJsonBean {
 
+
     /**
      * message : null
      * code : 0
-     * data : {"records":[{"id":429,"sn":"3","gid":3,"title":"3","description":"3","price":3,"cateId1":15,"cateId2":0,"cateName1":"金融业","cateName2":"","pic1":"3","pic2":"3","pic3":"3","pic4":"","pic5":"","goodsType":2,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":428,"sn":"2","gid":2,"title":"2","description":"2","price":2,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"2","pic2":"2","pic3":"2","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":427,"sn":"1","gid":1,"title":"1","description":"1","price":1,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"1","pic2":"1","pic3":"1","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":426,"sn":"D20080916122718052","gid":0,"title":"mmm","description":"mmm","price":99,"cateId1":14,"cateId2":2,"cateName1":"IT/互联网/通信/电子","cateName2":"IT服务/系统集成","pic1":"mm","pic2":"mm","pic3":"mm","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"}],"total":4,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
+     * data : {"records":[{"id":446,"linkId":0,"sn":"D20091416132866811","gid":477,"title":"联想电脑","description":"18年买的联想电脑，想换新的，原价7600","price":5000,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"orderTypeDes":"买入订单","person":"王","phone":"1320000000","buyerPhone":"15927623715","sellerPhone":"15311976613","funderPhone":"15337255569","orderStatus":-10,"orderStatusDes":"已取消","createTime":"2020-09-14 16:13:28","orderLogList":null}],"total":1,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
@@ -20,7 +21,7 @@ public class OrderBuyJsonBean {
         return message;
     }
 
-    public void setMessage(String  message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
@@ -50,8 +51,8 @@ public class OrderBuyJsonBean {
 
     public static class DataBean {
         /**
-         * records : [{"id":429,"sn":"3","gid":3,"title":"3","description":"3","price":3,"cateId1":15,"cateId2":0,"cateName1":"金融业","cateName2":"","pic1":"3","pic2":"3","pic3":"3","pic4":"","pic5":"","goodsType":2,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":428,"sn":"2","gid":2,"title":"2","description":"2","price":2,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"2","pic2":"2","pic3":"2","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":427,"sn":"1","gid":1,"title":"1","description":"1","price":1,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"1","pic2":"1","pic3":"1","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"},{"id":426,"sn":"D20080916122718052","gid":0,"title":"mmm","description":"mmm","price":99,"cateId1":14,"cateId2":2,"cateName1":"IT/互联网/通信/电子","cateName2":"IT服务/系统集成","pic1":"mm","pic2":"mm","pic3":"mm","pic4":"","pic5":"","goodsType":1,"buyerPhone":"15927623715","sellerPhone":"15927623715","funderPhone":"","orderStatus":0,"createTime":"2020-08-09 16:12:27"}]
-         * total : 4
+         * records : [{"id":446,"linkId":0,"sn":"D20091416132866811","gid":477,"title":"联想电脑","description":"18年买的联想电脑，想换新的，原价7600","price":5000,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"orderTypeDes":"买入订单","person":"王","phone":"1320000000","buyerPhone":"15927623715","sellerPhone":"15311976613","funderPhone":"15337255569","orderStatus":-10,"orderStatusDes":"已取消","createTime":"2020-09-14 16:13:28","orderLogList":null}]
+         * total : 1
          * size : 10
          * current : 1
          * orders : []
@@ -135,37 +136,49 @@ public class OrderBuyJsonBean {
 
         public static class RecordsBean {
             /**
-             * id : 429
-             * sn : 3
-             * gid : 3
-             * title : 3
-             * description : 3
-             * price : 3.0
-             * cateId1 : 15
+             * id : 446
+             * linkId : 0
+             * sn : D20091416132866811
+             * gid : 477
+             * title : 联想电脑
+             * description : 18年买的联想电脑，想换新的，原价7600
+             * price : 5000.0
+             * cateId1 : 14
              * cateId2 : 0
-             * cateName1 : 金融业
+             * cateName1 : IT/互联网/通信/电子
              * cateName2 :
-             * pic1 : 3
-             * pic2 : 3
-             * pic3 : 3
+             * pic1 : storageemulated0DCIMCameraIMG_20200913_153149.jpg
+             * pic2 :
+             * pic3 :
              * pic4 :
              * pic5 :
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg
+             * pic2Url :
+             * pic3Url :
+             * pic4Url :
+             * pic5Url :
              * goodsType : 2
+             * orderTypeDes : 买入订单
+             * person : 王
+             * phone : 1320000000
              * buyerPhone : 15927623715
-             * sellerPhone : 15927623715
-             * funderPhone :
-             * orderStatus : 0
-             * createTime : 2020-08-09 16:12:27
+             * sellerPhone : 15311976613
+             * funderPhone : 15337255569
+             * orderStatus : -10
+             * orderStatusDes : 已取消
+             * createTime : 2020-09-14 16:13:28
+             * orderLogList : null
              */
 
             private String id;
+            private int linkId;
             private String sn;
-            private int gid;
+            private String gid;
             private String title;
             private String description;
             private String price;
-            private int cateId1;
-            private int cateId2;
+            private String cateId1;
+            private String cateId2;
             private String cateName1;
             private String cateName2;
             private String pic1;
@@ -173,12 +186,22 @@ public class OrderBuyJsonBean {
             private String pic3;
             private String pic4;
             private String pic5;
+            private String pic1Url;
+            private String pic2Url;
+            private String pic3Url;
+            private String pic4Url;
+            private String pic5Url;
             private int goodsType;
+            private String orderTypeDes;
+            private String person;
+            private String phone;
             private String buyerPhone;
             private String sellerPhone;
             private String funderPhone;
             private int orderStatus;
+            private String orderStatusDes;
             private String createTime;
+            private Object orderLogList;
 
             public String getId() {
                 return id;
@@ -186,6 +209,14 @@ public class OrderBuyJsonBean {
 
             public void setId(String id) {
                 this.id = id;
+            }
+
+            public int getLinkId() {
+                return linkId;
+            }
+
+            public void setLinkId(int linkId) {
+                this.linkId = linkId;
             }
 
             public String getSn() {
@@ -196,11 +227,11 @@ public class OrderBuyJsonBean {
                 this.sn = sn;
             }
 
-            public int getGid() {
+            public String getGid() {
                 return gid;
             }
 
-            public void setGid(int gid) {
+            public void setGid(String gid) {
                 this.gid = gid;
             }
 
@@ -220,7 +251,7 @@ public class OrderBuyJsonBean {
                 this.description = description;
             }
 
-            public String  getPrice() {
+            public String getPrice() {
                 return price;
             }
 
@@ -228,19 +259,19 @@ public class OrderBuyJsonBean {
                 this.price = price;
             }
 
-            public int getCateId1() {
+            public String getCateId1() {
                 return cateId1;
             }
 
-            public void setCateId1(int cateId1) {
+            public void setCateId1(String cateId1) {
                 this.cateId1 = cateId1;
             }
 
-            public int getCateId2() {
+            public String getCateId2() {
                 return cateId2;
             }
 
-            public void setCateId2(int cateId2) {
+            public void setCateId2(String cateId2) {
                 this.cateId2 = cateId2;
             }
 
@@ -300,12 +331,76 @@ public class OrderBuyJsonBean {
                 this.pic5 = pic5;
             }
 
+            public String getPic1Url() {
+                return pic1Url;
+            }
+
+            public void setPic1Url(String pic1Url) {
+                this.pic1Url = pic1Url;
+            }
+
+            public String getPic2Url() {
+                return pic2Url;
+            }
+
+            public void setPic2Url(String pic2Url) {
+                this.pic2Url = pic2Url;
+            }
+
+            public String getPic3Url() {
+                return pic3Url;
+            }
+
+            public void setPic3Url(String pic3Url) {
+                this.pic3Url = pic3Url;
+            }
+
+            public String getPic4Url() {
+                return pic4Url;
+            }
+
+            public void setPic4Url(String pic4Url) {
+                this.pic4Url = pic4Url;
+            }
+
+            public String getPic5Url() {
+                return pic5Url;
+            }
+
+            public void setPic5Url(String pic5Url) {
+                this.pic5Url = pic5Url;
+            }
+
             public int getGoodsType() {
                 return goodsType;
             }
 
             public void setGoodsType(int goodsType) {
                 this.goodsType = goodsType;
+            }
+
+            public String getOrderTypeDes() {
+                return orderTypeDes;
+            }
+
+            public void setOrderTypeDes(String orderTypeDes) {
+                this.orderTypeDes = orderTypeDes;
+            }
+
+            public String getPerson() {
+                return person;
+            }
+
+            public void setPerson(String person) {
+                this.person = person;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
             }
 
             public String getBuyerPhone() {
@@ -340,12 +435,28 @@ public class OrderBuyJsonBean {
                 this.orderStatus = orderStatus;
             }
 
+            public String getOrderStatusDes() {
+                return orderStatusDes;
+            }
+
+            public void setOrderStatusDes(String orderStatusDes) {
+                this.orderStatusDes = orderStatusDes;
+            }
+
             public String getCreateTime() {
                 return createTime;
             }
 
             public void setCreateTime(String createTime) {
                 this.createTime = createTime;
+            }
+
+            public Object getOrderLogList() {
+                return orderLogList;
+            }
+
+            public void setOrderLogList(Object orderLogList) {
+                this.orderLogList = orderLogList;
             }
         }
     }

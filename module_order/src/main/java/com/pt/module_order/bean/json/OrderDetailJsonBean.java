@@ -1,11 +1,13 @@
 package com.pt.module_order.bean.json;
 
+import java.util.List;
+
 public class OrderDetailJsonBean {
 
     /**
      * message : null
      * code : 0
-     * data : {"id":439,"sn":"D20091216513747205","gid":442,"title":"电脑","description":"18年买的","price":1000,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"1AFEF9C9-C8E5-4374-97DB-0C8720371418.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/1AFEF9C9-C8E5-4374-97DB-0C8720371418.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"person":"王小二","phone":"15927623715","buyerPhone":"15927623715","sellerPhone":"15311976613","funderPhone":"","orderStatus":0,"createTime":"2020-09-12 16:51:38"}
+     * data : {"id":446,"linkId":0,"sn":"D20091416132866811","gid":477,"title":"联想电脑","description":"18年买的联想电脑，想换新的，原价7600","price":5000,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"orderTypeDes":"买入订单","person":"王","phone":"1320000000","buyerPhone":"15927623715","sellerPhone":"15311976613","funderPhone":"15337255569","orderStatus":-10,"orderStatusDes":"已取消","createTime":"2020-09-14 16:13:28","orderLogList":["2020-09-14 17:06:13 资金方拒绝","2020-09-14 16:16:45 用户(联系方式：15927623715)申请资金方","2020-09-14 16:13:28 创建订单"]}
      * success : true
      */
 
@@ -14,7 +16,7 @@ public class OrderDetailJsonBean {
     private DataBean data;
     private boolean success;
 
-    public String  getMessage() {
+    public String getMessage() {
         return message;
     }
 
@@ -48,42 +50,47 @@ public class OrderDetailJsonBean {
 
     public static class DataBean {
         /**
-         * id : 439
-         * sn : D20091216513747205
-         * gid : 442
-         * title : 电脑
-         * description : 18年买的
-         * price : 1000.0
+         * id : 446
+         * linkId : 0
+         * sn : D20091416132866811
+         * gid : 477
+         * title : 联想电脑
+         * description : 18年买的联想电脑，想换新的，原价7600
+         * price : 5000
          * cateId1 : 14
          * cateId2 : 0
          * cateName1 : IT/互联网/通信/电子
          * cateName2 :
-         * pic1 : 1AFEF9C9-C8E5-4374-97DB-0C8720371418.jpg
+         * pic1 : storageemulated0DCIMCameraIMG_20200913_153149.jpg
          * pic2 :
          * pic3 :
          * pic4 :
          * pic5 :
-         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/1AFEF9C9-C8E5-4374-97DB-0C8720371418.jpg
+         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg
          * pic2Url :
          * pic3Url :
          * pic4Url :
          * pic5Url :
          * goodsType : 2
-         * person : 王小二
-         * phone : 15927623715
+         * orderTypeDes : 买入订单
+         * person : 王
+         * phone : 1320000000
          * buyerPhone : 15927623715
          * sellerPhone : 15311976613
-         * funderPhone :
-         * orderStatus : 0
-         * createTime : 2020-09-12 16:51:38
+         * funderPhone : 15337255569
+         * orderStatus : -10
+         * orderStatusDes : 已取消
+         * createTime : 2020-09-14 16:13:28
+         * orderLogList : ["2020-09-14 17:06:13 资金方拒绝","2020-09-14 16:16:45 用户(联系方式：15927623715)申请资金方","2020-09-14 16:13:28 创建订单"]
          */
 
         private int id;
+        private int linkId;
         private String sn;
         private int gid;
         private String title;
         private String description;
-        private double price;
+        private int price;
         private int cateId1;
         private int cateId2;
         private String cateName1;
@@ -99,13 +106,16 @@ public class OrderDetailJsonBean {
         private String pic4Url;
         private String pic5Url;
         private int goodsType;
+        private String orderTypeDes;
         private String person;
         private String phone;
         private String buyerPhone;
         private String sellerPhone;
         private String funderPhone;
         private int orderStatus;
+        private String orderStatusDes;
         private String createTime;
+        private List<String> orderLogList;
 
         public int getId() {
             return id;
@@ -113,6 +123,14 @@ public class OrderDetailJsonBean {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public int getLinkId() {
+            return linkId;
+        }
+
+        public void setLinkId(int linkId) {
+            this.linkId = linkId;
         }
 
         public String getSn() {
@@ -147,11 +165,11 @@ public class OrderDetailJsonBean {
             this.description = description;
         }
 
-        public double getPrice() {
+        public int getPrice() {
             return price;
         }
 
-        public void setPrice(double price) {
+        public void setPrice(int price) {
             this.price = price;
         }
 
@@ -275,6 +293,14 @@ public class OrderDetailJsonBean {
             this.goodsType = goodsType;
         }
 
+        public String getOrderTypeDes() {
+            return orderTypeDes;
+        }
+
+        public void setOrderTypeDes(String orderTypeDes) {
+            this.orderTypeDes = orderTypeDes;
+        }
+
         public String getPerson() {
             return person;
         }
@@ -323,12 +349,28 @@ public class OrderDetailJsonBean {
             this.orderStatus = orderStatus;
         }
 
+        public String getOrderStatusDes() {
+            return orderStatusDes;
+        }
+
+        public void setOrderStatusDes(String orderStatusDes) {
+            this.orderStatusDes = orderStatusDes;
+        }
+
         public String getCreateTime() {
             return createTime;
         }
 
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
+        }
+
+        public List<String> getOrderLogList() {
+            return orderLogList;
+        }
+
+        public void setOrderLogList(List<String> orderLogList) {
+            this.orderLogList = orderLogList;
         }
     }
 }

@@ -2,13 +2,14 @@ package com.pt.lib_common.bean.requestBean;
 
 public class OrderCancelRequestBean {
 
+
     /**
      * id : 0
-     * userType : 0
+     * orderSource : 0
      */
 
     private String id;
-    private int userType;
+    private int orderSource;
 
     public String getId() {
         return id;
@@ -18,11 +19,11 @@ public class OrderCancelRequestBean {
         this.id = id;
     }
 
-    public int getUserType() {
-        return userType;
+    public int getOrderSource() {
+        return orderSource;
     }
 
-    public void setUserType(int userType) {
-        this.userType = userType;
+    public void setOrderSource(int orderSource) {
+        this.orderSource = orderSource;
     }
 }
