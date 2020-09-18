@@ -17,6 +17,7 @@ public interface Constant {
     String ORDER_USER_TYPE = "order_user_type";
     int KEY_ORDER_FUNDER = 100001;
     int KEY_ORDER_FUNDER_RESULT = 100002;
+    int KEY_ORDER_FUNDER_SALER = 100001;
     String CHOOSE_FUND_ITEM = "choose_fund_item";
     String KEY_CHOOSE_FUND = "choose_fund";
     String KEY_PUBLISH_STATUS = "publish_status";

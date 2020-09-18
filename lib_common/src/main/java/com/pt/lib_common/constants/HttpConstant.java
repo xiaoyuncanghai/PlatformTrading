@@ -34,6 +34,7 @@ public interface HttpConstant {
     String API_SALE_REQUEST = "/order/create_sale_order";
     String API_ORDER_DETAIL = "/order/get_order";
     String API_APPLY_FUNDER = "/order/apply_funder";
+    String API_APPLY_SALE_FUNDER = "/order/create_fund_order";
     String API_CANCEL_ORDER = "/order/cancel";
     String API_MONEY_CONFIRM = "/order/funder_agree";
 }

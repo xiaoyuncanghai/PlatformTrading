@@ -1,6 +1,7 @@
 package com.pt.lib_common.ui.delegate;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,14 @@ import com.google.gson.Gson;
 import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.GoodsDetailAdapter;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.bean.databean.GoodsDetailDateBean;
+import com.pt.lib_common.bean.jsonbean.ApplyFunderSaleJsonBean;
 import com.pt.lib_common.bean.jsonbean.CreateOrderJson;
 import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
 import com.pt.lib_common.bean.jsonbean.PhoneRequestJsonBean;
+import com.pt.lib_common.bean.requestBean.ApplyFunderSalerRequestBean;
 import com.pt.lib_common.bean.requestBean.ExchangeRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsDetailRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
@@ -42,6 +46,11 @@ import java.util.ArrayList;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_RESULT;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_SALER;
+
 public class GoodsDetailsActDelegate extends AppDelegate {
 
     private RecyclerView rcv_order_detail;
@@ -55,6 +64,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private int goodsType;
     private String phone;
     private String name;
+    private String phone_input;
+    private String name_input;
     private TextView order_apply_money;
     private int goodsStatus;
     private TextView order_exchange;
@@ -110,7 +121,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_apply_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showSaleDialog();
             }
         });
 
@@ -233,6 +244,44 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         }
                     }
                 });
+    }
+
+    private void showSaleDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dilog_input_user_phone, null);
+        final Dialog dialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setCancelable(true)
+                .create();
+        dialog.show();
+        final EditText input_name = (EditText) view.findViewById(R.id.input_name);
+        final EditText input_phone = (EditText) view.findViewById(R.id.input_phone);
+        input_name.setText(name);
+        input_phone.setText(phone);
+        TextView cancel = view.findViewById(R.id.cancel_input);
+        TextView confirm = view.findViewById(R.id.confirm_input);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (input_name.getText().toString() != "" && input_phone.getText().toString() != "") {
+                    //去申请资金资金
+                    //选择资金方, 申请资金方垫支
+                    ARouter.getInstance().build(ARouterPath.FUND_SIDE)
+                            .navigation(getActivity(), KEY_ORDER_FUNDER_SALER);
+                    phone_input = input_phone.getText().toString();
+                    name_input = input_name.getText().toString();
+                    dialog.dismiss();
+                } else {
+                    Snackbar.make(getRootView(), "请先输入姓名和电话号码", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     /**
@@ -453,5 +502,37 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         }
                     }
                 });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == KEY_ORDER_FUNDER_SALER && resultCode == KEY_ORDER_FUNDER_RESULT) {
+            Bundle bundle = data.getBundleExtra(Constant.KEY_CHOOSE_FUND);
+            FundSideItem item = (FundSideItem) bundle.getSerializable(CHOOSE_FUND_ITEM);
+            ApplyFunderSalerRequestBean requestBean = new ApplyFunderSalerRequestBean();
+            requestBean.setFunderPhone(item.getPhone());
+            requestBean.setGid(goods_id);
+            requestBean.setPerson(name_input);
+            requestBean.setPhone(phone_input);
+
+            EasyHttp.post(HttpConstant.API_APPLY_SALE_FUNDER).headers("Content-Type", "application/json")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .upObject(requestBean)
+                    .execute(new SimpleCallBack<String>() {
+                        @Override
+                        public void onError(ApiException e) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+                            ApplyFunderSaleJsonBean jsonBean = new Gson().fromJson(s, ApplyFunderSaleJsonBean.class);
+                            if (jsonBean.getCode() == 0) {
+                                Snackbar.make(getRootView(), "正在申请资金方垫资", Snackbar.LENGTH_SHORT).show();
+                                getActivity().finish();
+                            }
+                        }
+                    });
+        }
+
     }
 }
