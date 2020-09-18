@@ -244,7 +244,7 @@ public class MineFragmentDelegate extends AppDelegate {
             public void onSuccess(String s) {
                 ToastUtils.showShortToast("退出成功");
                 LogoutJsonBean jsonBean = new Gson().fromJson(s, LogoutJsonBean.class);
-                if (jsonBean.getCode() == 0) {
+                if (jsonBean.getCode() == 0 && jsonBean.isSuccess()) {
                     SPHelper.putString("token", "", true);
                     SPHelper.putString("phone", "", true);
                     ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();

@@ -111,8 +111,7 @@ public class Order4MoneyFgtDelegate extends AppDelegate {
                                     moneyList.clear();
                                 }
                                 moneyList.addAll(moneyListTemp);
-                                order2BuyAdapter.notifyItemChanged(moneyList.size() - moneyListTemp.size(),
-                                        moneyListTemp.size());
+                                order2BuyAdapter.notifyDataSetChanged();
                                 if (srl_order_money.isRefreshing()) {
                                     srl_order_money.finishRefresh();
                                 } else if (srl_order_money.isLoading()) {

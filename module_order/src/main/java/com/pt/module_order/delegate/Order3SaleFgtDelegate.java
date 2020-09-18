@@ -113,8 +113,7 @@ public class Order3SaleFgtDelegate extends AppDelegate {
                                     saleList.clear();
                                 }
                                 saleList.addAll(saleListTemp);
-                                order2BuyAdapter.notifyItemChanged(saleList.size() - saleListTemp.size(),
-                                        saleListTemp.size());
+                                order2BuyAdapter.notifyDataSetChanged();
                                 if (srl_order_sale.isRefreshing()) {
                                     srl_order_sale.finishRefresh();
                                 } else if (srl_order_sale.isLoading()) {

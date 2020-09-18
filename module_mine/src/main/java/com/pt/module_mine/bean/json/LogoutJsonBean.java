@@ -4,16 +4,24 @@ public class LogoutJsonBean {
 
 
     /**
+     * message : null
      * code : 0
-     * data :
-     * message :
+     * data : true
      * success : true
      */
 
-    private int code;
-    private String data;
     private String message;
+    private int code;
+    private boolean data;
     private boolean success;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getCode() {
         return code;
@@ -23,20 +31,12 @@ public class LogoutJsonBean {
         this.code = code;
     }
 
-    public String getData() {
+    public boolean isData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(boolean data) {
         this.data = data;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public boolean isSuccess() {

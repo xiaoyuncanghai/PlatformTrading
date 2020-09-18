@@ -116,8 +116,7 @@ public class Order2BuyFgtDelegate extends AppDelegate {
                                     buyList.clear();
                                 }
                                 buyList.addAll(buyListTemp);
-                                order2BuyAdapter.notifyItemChanged(buyList.size() - buyListTemp.size(),
-                                        buyListTemp.size());
+                                order2BuyAdapter.notifyDataSetChanged();
                                 if (srl_order_buy.isRefreshing()) {
                                     srl_order_buy.finishRefresh();
                                 } else if (srl_order_buy.isLoading()) {

@@ -101,7 +101,7 @@ public class Order1AllFgtDelegate extends AppDelegate {
                                     allLit.clear();
                                 }
                                 allLit.addAll(allLitTemp);
-                                order1AllAdapter.notifyItemChanged(allLit.size() - allLitTemp.size(), allLitTemp.size());
+                                order1AllAdapter.notifyDataSetChanged();
                                 if (srl_order_all.isRefreshing()) {
                                     srl_order_all.finishRefresh();
                                 } else if (srl_order_all.isLoading()) {
