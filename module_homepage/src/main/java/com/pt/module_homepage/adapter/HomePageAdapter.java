@@ -59,10 +59,12 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
                         //Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
-                        if (!((BannerItemDataBean)model).getLinkUrl().equals("")) {
-                            Intent intent= new Intent();
-                            intent.setAction("android.intent.action.VIEW");
-                            Uri content_url = Uri.parse(((BannerItemDataBean)model).getLinkUrl());
+                        if (!((BannerItemDataBean) model).getLinkUrl().equals("")
+                                && (((BannerItemDataBean) model).getLinkUrl().startsWith("http") ||
+                                ((BannerItemDataBean) model).getLinkUrl().startsWith("https")
+                                || ((BannerItemDataBean) model).getLinkUrl().startsWith("file"))) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            Uri content_url = Uri.parse(((BannerItemDataBean) model).getLinkUrl());
                             intent.setData(content_url);
                             context.startActivity(intent);
                         }
