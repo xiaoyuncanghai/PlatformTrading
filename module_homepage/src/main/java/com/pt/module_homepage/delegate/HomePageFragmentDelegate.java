@@ -116,7 +116,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         fragment_header_layout.setPadding(0,
                 Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
                 0, Utils.dip2px(this.getActivity(), 10f));
-        rcv_home_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 4,
+        rcv_home_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
         homePageAdapter = new HomePageAdapter(getActivity(), homePageItemList);
         rcv_home_page.setAdapter(homePageAdapter);

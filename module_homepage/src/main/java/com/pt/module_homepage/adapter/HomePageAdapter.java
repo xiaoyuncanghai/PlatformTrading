@@ -104,7 +104,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     switch (type) {
                         case HomePageDataBean.TYPE_HOME_PAGE_BANNER:
                         case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
-                            return 4;
+                            return 3;
                         case HomePageDataBean.TYPE_HOME_PAGE_CATEGORY:
                             return 1;
                         default:

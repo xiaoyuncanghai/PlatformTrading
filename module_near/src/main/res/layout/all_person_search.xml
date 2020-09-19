@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_actionbar"
@@ -14,12 +14,10 @@
         <include layout="@layout/layout_status_bar"></include>
 
         <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>-->
-
-    <include layout="@layout/near_fragment_header" />
+    </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_near_page"
+        android:id="@+id/srl_near_request_goods_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/common_bg">
@@ -32,7 +30,7 @@
             app:srlTextSizeTitle="@dimen/text_size_13sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_near_page"
+            android:id="@+id/rcv_request_goods_page"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -43,6 +41,5 @@
             app:srlDrawableProgressSize="@dimen/size_15dp"
             app:srlTextSizeTitle="@dimen/text_size_13sp"></com.scwang.smartrefresh.layout.footer.ClassicsFooter>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
 </LinearLayout>

@@ -2,6 +2,8 @@ package com.pt.module_near.delegate;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,6 +24,7 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
+import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.citychoose.db.DBManager;
 import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.module_near.R;
@@ -52,6 +55,9 @@ public class NearFragmentDelegate extends AppDelegate {
     private DBManager dbManager;
     private int cPage = 1;
     private String cityCode = "";
+    private LinearLayout near_search;
+    private TextView tv_user_search;
+    private LinearLayout near_header_layout_ll;
 
     @Override
     public int getRootLayoutId() {
@@ -68,12 +74,35 @@ public class NearFragmentDelegate extends AppDelegate {
     private void initView() {
         srl_near_page = get(R.id.srl_near_page);
         rcv_near_page = get(R.id.rcv_near_page);
-
+        near_search = get(R.id.near_search);
+        tv_user_search = get(R.id.tv_user_search);
+        near_header_layout_ll = get(R.id.near_header_layout_ll);
         rcv_near_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 2,
                 GridLayoutManager.VERTICAL, false));
+        near_header_layout_ll.setPadding(0,
+                Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
+                0, Utils.dip2px(this.getActivity(), 10f));
         nearAdapter = new NearAdapter(getActivity(), R.layout.fragment_near_item, nearItemDataBeans);
         rcv_near_page.setAdapter(nearAdapter);
         rcv_near_page.setItemAnimator(new DefaultItemAnimator());
+
+        near_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //去search 界面
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE,
+                        cityCode).navigation();
+            }
+        });
+
+        tv_user_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //大家都在搜索
+                ARouter.getInstance().build(ARouterPath.ALL_SEARCH_PATH)
+                        .withString(Constant.KEY_CITY_CODE, cityCode).navigation();
+            }
+        });
 
         srl_near_page.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -168,7 +197,7 @@ public class NearFragmentDelegate extends AppDelegate {
         String cityName = cityInfo.getCityName();
         dbManager = new DBManager(getActivity());
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
-        for (City city: allCities) {
+        for (City city : allCities) {
             if (city.getName().equals(cityName)) {
                 cityCode = city.getCode();
                 break;

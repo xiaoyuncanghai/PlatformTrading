@@ -293,7 +293,9 @@ public class GoodsModifyActDelegate extends AppDelegate {
                             public void onSuccess(int position, String imageUrl) {
                                 LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
                                 Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
-                                requestCreateGoods();
+                                if (position == imageBeans.size() - 1) {
+                                    requestCreateGoods();
+                                }
                             }
 
                             @Override
