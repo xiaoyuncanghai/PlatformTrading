@@ -21,4 +21,6 @@ public interface Constant {
     String CHOOSE_FUND_ITEM = "choose_fund_item";
     String KEY_CHOOSE_FUND = "choose_fund";
     String KEY_PUBLISH_STATUS = "publish_status";
+
+    int KEY_CLOSE_SPLASH = 100003;
 }

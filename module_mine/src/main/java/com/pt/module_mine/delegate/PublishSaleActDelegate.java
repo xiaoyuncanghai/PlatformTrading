@@ -29,6 +29,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -67,7 +68,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishSaleActDelegate extends AppDelegate {
 
-    private String cityCode = "";
+    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
     private EditText et_publish_sale_content;
     private RecyclerView rcv_publish_sale_image;
     private XEditText publish_sale_price;

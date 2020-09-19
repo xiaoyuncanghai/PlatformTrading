@@ -1,8 +1,10 @@
 package com.pt.lib_common.ui.delegate;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -41,6 +43,7 @@ import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.xw.repo.XEditText;
 
 import java.util.ArrayList;
 
@@ -253,8 +256,10 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .setCancelable(true)
                 .create();
         dialog.show();
-        final EditText input_name = (EditText) view.findViewById(R.id.input_name);
-        final EditText input_phone = (EditText) view.findViewById(R.id.input_phone);
+        final XEditText input_name = (XEditText) view.findViewById(R.id.input_name);
+        final XEditText input_phone = (XEditText) view.findViewById(R.id.input_phone);
+        input_phone.setPattern(new int[]{3, 4, 4}, " ");
+        input_phone.setInputType(InputType.TYPE_CLASS_PHONE);
         input_name.setText(name);
         input_phone.setText(phone);
         TextView cancel = view.findViewById(R.id.cancel_input);
@@ -294,8 +299,10 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .setCancelable(true)
                 .create();
         dialog.show();
-        final EditText input_name = (EditText) view.findViewById(R.id.input_name);
-        final EditText input_phone = (EditText) view.findViewById(R.id.input_phone);
+        final XEditText input_name = (XEditText) view.findViewById(R.id.input_name);
+        final XEditText input_phone = (XEditText) view.findViewById(R.id.input_phone);
+        input_phone.setPattern(new int[]{3, 4, 4}, " ");
+        input_phone.setInputType(InputType.TYPE_CLASS_PHONE);
         input_name.setText(name);
         input_phone.setText(phone);
         TextView cancel = view.findViewById(R.id.cancel_input);
@@ -394,7 +401,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         if (detailJsonBean.getData() != null) {
                             goodsType = detailJsonBean.getData().getGoodsType();
                             String phoneText = SPHelper.getString("phone", "", true);
-                            LogUtils.d("current user phone = "+ phoneText);
+                            LogUtils.d("current user phone = " + phoneText);
                             goodsStatus = detailJsonBean.getData().getGoodsStatus();
                             if (goodsType == 1) {
                                 //自己布求购商品, 上架  修改  删除

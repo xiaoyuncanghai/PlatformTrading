@@ -25,6 +25,8 @@ import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.lib_common.util.Utils;
+import com.pt.lib_common.view.citychoose.db.DBManager;
+import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.platformtrading_location.delegate.MainActDelegate;
 import com.pt.platformtrading_location.service.LocationService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -35,6 +37,7 @@ import org.xutils.common.util.LogUtil;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -153,7 +156,15 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                 LogUtils.d("city = " + location.getCity());
                 CityInfo cityInfo = new CityInfo();
                 cityInfo.setCityName(location.getCity());
-                cityInfo.setCityCode(location.getAdCode());
+                //cityInfo.setCityCode(location.getAdCode());
+                List<City> allCities = new DBManager(MainActivity.this).getCityByProvince();
+                for (City city: allCities) {
+                    if (city.getName().equals(location.getCity())) {
+                        String cityCode = city.getCode();
+                        cityInfo.setCityCode(cityCode);
+                        break;
+                    }
+                }
                 BaseApplication.getInstance().setCity(cityInfo);
                 LogUtils.d("onReceive Location");
                 if (location.getCity() != null && !location.getCity().equals("")) {

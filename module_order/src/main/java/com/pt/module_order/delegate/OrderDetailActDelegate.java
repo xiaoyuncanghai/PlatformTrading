@@ -1,6 +1,7 @@
 package com.pt.module_order.delegate;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,6 +49,7 @@ public class OrderDetailActDelegate extends AppDelegate {
     private TextView order_detail_title;
     private TextView order_detail_description;
     private TextView order_detail_type_des;
+    private String phoneNumber;
 
     @Override
     public int getRootLayoutId() {
@@ -73,6 +75,15 @@ public class OrderDetailActDelegate extends AppDelegate {
         //获取当前的类型
         user_type = getActivity().getIntent().getIntExtra(ORDER_USER_TYPE, 1);
         requestOrderDetail();
+
+        order_detail_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                getActivity().startActivity(intent);
+            }
+        });
 
         order_apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +176,7 @@ public class OrderDetailActDelegate extends AppDelegate {
                 .addConverterFactory(GsonConverterFactory.create())
                 .upObject(requestBean)
                 .execute(new SimpleCallBack<String>() {
+
                     @Override
                     public void onError(ApiException e) {
 
@@ -210,6 +222,7 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                             if (user_type == 1) {
                                 //买入的情况
+                                order_detail_phone.setEnabled(false);
                                 if (jsonBean.getData().getOrderStatus() == 0) {
                                     //取消和申请资金方
                                     order_cancel.setVisibility(View.VISIBLE);
@@ -228,6 +241,8 @@ public class OrderDetailActDelegate extends AppDelegate {
                                 }
                             } else if (user_type == 2) {
                                 //卖的情况, 显示取消
+                                order_detail_phone.setEnabled(true);
+                                phoneNumber = jsonBean.getData().getPhone();
                                 if (jsonBean.getData().getOrderStatus() == 0) {
                                     order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.GONE);
@@ -239,6 +254,7 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                             } else if (user_type == 3) {
                                 //资金方
+                                order_detail_phone.setEnabled(false);
                                 if (jsonBean.getData().getOrderStatus() == 10) {
                                     order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.VISIBLE);

@@ -37,14 +37,14 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                 TextView goods_detail_status = helper.getView(R.id.goods_detail_status);
                 TextView goods_detail_category = helper.getView(R.id.goods_detail_category);
                 TextView goods_detail_time = helper.getView(R.id.goods_detail_time);
-                TextView goods_detail_phone = helper.getView(R.id.goods_detail_phone);
+                //TextView goods_detail_phone = helper.getView(R.id.goods_detail_phone);
                 TextView goods_detail_description = helper.getView(R.id.goods_detail_description);
                 TextView goods_detail_price = helper.getView(R.id.goods_detail_price);
                 goods_detail_title.setText(item.getTitle());
                 goods_detail_status.setText("状态: " + item.getGoodsStatusDes());
                 goods_detail_category.setText("所属分类: " + item.getCategory());
                 goods_detail_time.setText("时间: " + item.getUpdateTime());
-                goods_detail_phone.setText("电话" + item.getCreatePhone());
+                //goods_detail_phone.setText("电话" + item.getCreatePhone());
                 goods_detail_description.setText("描述: " + item.getDescription());
                 goods_detail_price.setText("价格: " + item.getPrice());
                 break;

@@ -76,6 +76,9 @@ public class PublishGoodsActDelegate extends AppDelegate {
     private ImageChooseAdapter adapter;
     private OssService mService;
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
+    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
+    private String chooseCategory = "";
+    private ListDialog listDialog;
 
     @Override
     public int getRootLayoutId() {
@@ -104,9 +107,6 @@ public class PublishGoodsActDelegate extends AppDelegate {
         requestCategroy();
     }
 
-    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
-    private String chooseCategory = "";
-    private ListDialog listDialog;
     private void initClickEvent() {
         //启动定位
         publish_goods_location.setOnClickListener(new View.OnClickListener() {

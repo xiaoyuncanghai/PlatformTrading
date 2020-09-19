@@ -33,7 +33,7 @@
             android:textColor="@color/primaryText"
             android:textSize="13sp" />
 
-        <EditText
+        <com.xw.repo.XEditText
             android:id="@+id/input_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -65,7 +65,7 @@
             android:textColor="@color/primaryText"
             android:textSize="13sp" />
 
-        <EditText
+        <com.xw.repo.XEditText
             android:id="@+id/input_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"

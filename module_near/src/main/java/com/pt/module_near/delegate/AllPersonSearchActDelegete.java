@@ -2,6 +2,7 @@ package com.pt.module_near.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
@@ -78,6 +80,16 @@ public class AllPersonSearchActDelegete extends AppDelegate {
             }
         });
         srl_near_request_goods_page.autoRefresh();
+
+        nearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String product_id = nearRequestDataBeans.get(position).getId();
+                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                        .withString(Constant.KEY_GOODS_ID, product_id)
+                        .navigation();
+            }
+        });
     }
 
     /**

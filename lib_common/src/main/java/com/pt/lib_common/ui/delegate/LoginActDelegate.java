@@ -197,6 +197,7 @@ public class LoginActDelegate extends AppDelegate {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bt_login.setEnabled(false);
                 final SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
                 dataBean.setSmsCode(et_pwd.getText().toString().replace(" ", ""));
@@ -206,11 +207,13 @@ public class LoginActDelegate extends AppDelegate {
                         .execute(new SimpleCallBack<String>() {
                             @Override
                             public void onError(ApiException e) {
+                                bt_login.setEnabled(true);
                                 Snackbar.make(srl_login_acc, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onSuccess(String loginMsgJsonBean) {
+                                bt_login.setEnabled(true);
                                 SmsLoginJsonBean smsLoginJsonBean = new Gson().fromJson(loginMsgJsonBean, SmsLoginJsonBean.class);
                                 if (smsLoginJsonBean.getCode() == 0 && !smsLoginJsonBean.getData().isEmpty()) {
                                     SPHelper.putString("token", smsLoginJsonBean.getData(), true);
