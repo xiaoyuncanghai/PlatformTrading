@@ -107,6 +107,10 @@ public class FundSideListActDelegate extends AppDelegate {
                                 }
                             }
                         } else {
+                            if (srl_fund_side_list.isRefreshing()) {
+                                srl_fund_side_list.finishRefresh();
+                                srl_fund_side_list.resetNoMoreData();
+                            }
                             ((TextView) emptyView.findViewById(R.id.tv_empty)).setText("暂时没有资金方入驻~");
                             ((ImageView) emptyView.findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_common_excited_yuu1_cat);
                             adapter.setEmptyView(emptyView);
