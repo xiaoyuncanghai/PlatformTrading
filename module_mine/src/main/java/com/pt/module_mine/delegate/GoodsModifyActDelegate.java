@@ -25,6 +25,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -77,6 +78,12 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private OssService mService;
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private String id;
+    private ModifyInfoDataBean info;
+    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
+    private String chooseCategory = "";
+    private ListDialog listDialog;
+    private int usrType;
+
 
     @Override
     public int getRootLayoutId() {
@@ -95,20 +102,34 @@ public class GoodsModifyActDelegate extends AppDelegate {
         modify_goods_location = get(R.id.modify_goods_location);
         tv_modify_goods_upload = get(R.id.tv_modify_goods_upload);
         id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
-
+        info = getDataFromIntent();
         rcv_modify_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
         adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
         rcv_modify_goods_image.setAdapter(adapter);
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
+        requestInitData();
         initClickEvent();
         requestCategroy();
     }
 
-    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
-    private String chooseCategory = "";
-    private ListDialog listDialog;
+    private void requestInitData() {
+        if (info != null) {
+            et_modify_goods_title.setText(info.getTitle());
+            et_modify_goods_content.setText(info.getDescription());
+            modify_goods_cate.setText(info.getCategory());
+            modify_goods_price.setText(info.getPrice());
+            usrType = info.getUserType();
+        }
+    }
+
+    private ModifyInfoDataBean getDataFromIntent() {
+        Bundle bundle = getActivity().getIntent().getBundleExtra(Constant.KEY_MODIFY_INFO_SERIALIZABLE);
+        ModifyInfoDataBean infoDataBean = (ModifyInfoDataBean) bundle.getSerializable(Constant.KEY_MODIFY_INFO);
+        return infoDataBean;
+    }
+
     private void initClickEvent() {
         //启动定位
         modify_goods_location.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +182,8 @@ public class GoodsModifyActDelegate extends AppDelegate {
                                 if (aBoolean) {
                                     startAction();
                                 } else {
-                                    Toast.makeText(getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(), R.string.permission_request_denied,
+                                            Toast.LENGTH_LONG)
                                             .show();
                                 }
                             }
@@ -277,12 +299,20 @@ public class GoodsModifyActDelegate extends AppDelegate {
         tv_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String upload_dic = "";
+                if (usrType == 1) {
+                    //求购
+                    upload_dic = "pic/";
+                } else {
+                    //售卖
+                    upload_dic = "user/";
+                }
                 //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
                         String pictureName = imageBeans.get(i).getImageName();
-                        mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
+                        mService.asyncPutImage(pictureName, upload_dic, picturePath, i, new OssService.OnUploadListener() {
                             @Override
                             public void onProgress(int position, long currentSize, long totalSize) {
                                 int progress = (int) (100 * currentSize / totalSize);

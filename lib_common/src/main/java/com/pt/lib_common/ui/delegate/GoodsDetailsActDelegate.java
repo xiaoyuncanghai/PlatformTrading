@@ -22,6 +22,7 @@ import com.pt.lib_common.adapter.GoodsDetailAdapter;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.bean.databean.GoodsDetailDateBean;
+import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
 import com.pt.lib_common.bean.jsonbean.ApplyFunderSaleJsonBean;
 import com.pt.lib_common.bean.jsonbean.CreateOrderJson;
 import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
@@ -59,13 +60,12 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private TextView order_modified;
     private TextView order_delete_or_transaction;
     private ArrayList<GoodsDetailDateBean> detailList = new ArrayList<>();
+    private ModifyInfoDataBean infoData = new ModifyInfoDataBean();
     private GoodsDetailAdapter goodsDetailAdapter;
     private String goods_id;
     private int goodsType;
     private String phone;
     private String name;
-    private String phone_input;
-    private String name_input;
     private TextView order_apply_money;
     private int goodsStatus;
     private TextView order_exchange;
@@ -114,7 +114,10 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             public void onClick(View v) {
                 //修改订单
                 order_modified.setEnabled(false);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
                 ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
+                        .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
                         .withString(Constant.KEY_GOODS_ID, goods_id).navigation();
             }
         });
@@ -505,20 +508,29 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                     order_exchange.setText("交易");
                                 }
                             }
+                            infoData.setUserType(goodsType);
                             GoodsDetailDateBean titleItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIIL_TITLE);
                             titleItem.setTitle(detailJsonBean.getData().getTitle());
+                            infoData.setTitle(detailJsonBean.getData().getTitle());
                             titleItem.setDescription(detailJsonBean.getData().getDescription());
+                            infoData.setDescription(detailJsonBean.getData().getDescription());
                             titleItem.setGoodsStatusDes(detailJsonBean.getData().getGoodsStatusDes());
                             titleItem.setCategory(detailJsonBean.getData().getCateName1());
+                            infoData.setCategory(detailJsonBean.getData().getCateName1());
+                            infoData.setCateId(detailJsonBean.getData().getCateId1());
                             titleItem.setUpdateTime(detailJsonBean.getData().getUpdateTime());
                             titleItem.setCreatePhone(detailJsonBean.getData().getCreateUserPhone());
                             titleItem.setPrice(detailJsonBean.getData().getPrice());
+                            infoData.setPrice(detailJsonBean.getData().getPrice());
                             titleItem.setGoodsStatus(detailJsonBean.getData().getGoodsStatus());
                             detailList.add(titleItem);
                             GoodsDetailDateBean picItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY);
                             picItem.setPic1Url(detailJsonBean.getData().getPic1Url());
+                            infoData.setPic1Url(detailJsonBean.getData().getPic1Url());
                             picItem.setPic2Url(detailJsonBean.getData().getPic2Url());
+                            infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
                             picItem.setPic3Url(detailJsonBean.getData().getPic3Url());
+                            infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
                             detailList.add(picItem);
                             goodsDetailAdapter.notifyDataSetChanged();
                         } else {

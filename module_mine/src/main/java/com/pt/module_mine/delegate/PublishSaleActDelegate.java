@@ -322,6 +322,7 @@ public class PublishSaleActDelegate extends AppDelegate {
         tv_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tv_publish_sale_upload.setEnabled(false);
                 //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
@@ -346,6 +347,7 @@ public class PublishSaleActDelegate extends AppDelegate {
 
                             @Override
                             public void onFailure(int position) {
+                                tv_publish_sale_upload.setEnabled(true);
                             }
                         });
                     }
@@ -394,11 +396,13 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
+                        tv_publish_sale_upload.setEnabled(true);
                         Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        tv_publish_sale_upload.setEnabled(true);
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
