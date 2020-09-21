@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
+import com.pt.lib_common.bean.jsonbean.ModifyGoodsJsonBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -79,7 +80,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private String id;
     private ModifyInfoDataBean info;
-    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
+    private String cityCode = "";
     private String chooseCategory = "";
     private ListDialog listDialog;
     private int usrType;
@@ -121,6 +122,15 @@ public class GoodsModifyActDelegate extends AppDelegate {
             modify_goods_cate.setText(info.getCategory());
             modify_goods_price.setText(info.getPrice());
             usrType = info.getUserType();
+            chooseCategory = info.getCateId();
+        }
+        if (et_modify_goods_title.getText().toString().length() > 0
+                && et_modify_goods_content.getText().toString().length() > 0
+                && !chooseCategory.equals("")
+                && modify_goods_price.getText().toString().length() > 0) {
+            tv_modify_goods_upload.setEnabled(true);
+        } else {
+            tv_modify_goods_upload.setEnabled(false);
         }
     }
 
@@ -202,28 +212,25 @@ public class GoodsModifyActDelegate extends AppDelegate {
             }
         });
 
-        modify_goods_cate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContentAdapter adapter = new ContentAdapter(getActivity(), categoryList, new ContentItemListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        listDialog.dismiss();
-                        modify_goods_cate.setText(categoryList.get(position).getCategoryName());
-                        chooseCategory = categoryList.get(position).getCategoryId();
-                        if (et_modify_goods_title.getText().toString().length() > 0
-                                && et_modify_goods_content.getText().toString().length() > 0
-                                && !chooseCategory.equals("")
-                                && modify_goods_price.getText().toString().length() > 0) {
-                            tv_modify_goods_upload.setEnabled(true);
-                        } else {
-                            tv_modify_goods_upload.setEnabled(false);
-                        }
+        modify_goods_cate.setOnClickListener(v -> {
+            ContentAdapter adapter = new ContentAdapter(getActivity(), categoryList, new ContentItemListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    listDialog.dismiss();
+                    modify_goods_cate.setText(categoryList.get(position).getCategoryName());
+                    chooseCategory = categoryList.get(position).getCategoryId();
+                    if (et_modify_goods_title.getText().toString().length() > 0
+                            && et_modify_goods_content.getText().toString().length() > 0
+                            && !chooseCategory.equals("")
+                            && modify_goods_price.getText().toString().length() > 0) {
+                        tv_modify_goods_upload.setEnabled(true);
+                    } else {
+                        tv_modify_goods_upload.setEnabled(false);
                     }
-                });
-                listDialog = new ListDialog(getActivity(), R.style.MyDialog, "选择上传的类别", adapter);
-                listDialog.show();
-            }
+                }
+            });
+            listDialog = new ListDialog(getActivity(), R.style.MyDialog, "", adapter);
+            listDialog.show();
         });
         et_modify_goods_title.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,6 +306,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
         tv_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tv_modify_goods_upload.setEnabled(false);
                 String upload_dic = "";
                 if (usrType == 1) {
                     //求购
@@ -323,13 +331,14 @@ public class GoodsModifyActDelegate extends AppDelegate {
                             public void onSuccess(int position, String imageUrl) {
                                 LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
                                 Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
-                                if (position == imageBeans.size() - 1) {
+                                while (position == imageBeans.size() - 1) {
                                     requestCreateGoods();
                                 }
                             }
 
                             @Override
                             public void onFailure(int position) {
+                                tv_modify_goods_upload.setEnabled(true);
                             }
                         });
                     }
@@ -371,12 +380,14 @@ public class GoodsModifyActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
+                        tv_modify_goods_upload.setEnabled(true);
                         Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String s) {
-                        CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
+                        tv_modify_goods_upload.setEnabled(true);
+                        ModifyGoodsJsonBean jsonBean = new Gson().fromJson(s, ModifyGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "修改商品成功", Snackbar.LENGTH_SHORT).show();
                             getActivity().finish();

@@ -242,7 +242,7 @@ public class PublishSaleActDelegate extends AppDelegate {
                         }
                     }
                 });
-                listDialog = new ListDialog(getActivity(), R.style.MyDialog, "选择上传的类别", adapter);
+                listDialog = new ListDialog(getActivity(), R.style.MyDialog, "", adapter);
                 listDialog.show();
             }
         });
