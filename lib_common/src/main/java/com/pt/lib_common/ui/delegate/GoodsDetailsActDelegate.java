@@ -1,14 +1,11 @@
 package com.pt.lib_common.ui.delegate;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -42,6 +39,7 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
+import com.pt.lib_common.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.xw.repo.XEditText;
 
@@ -50,7 +48,6 @@ import java.util.ArrayList;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
-import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER;
 import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_RESULT;
 import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_SALER;
 
@@ -102,6 +99,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_off_shelf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                order_off_shelf.setEnabled(false);
                 if (goodsStatus == 0) {
                     //执行上架操作
                     requestOnShelf();
@@ -115,6 +113,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //修改订单
+                order_modified.setEnabled(false);
                 ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
                         .withString(Constant.KEY_GOODS_ID, goods_id).navigation();
             }
@@ -124,13 +123,15 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_apply_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSaleDialog();
+                ARouter.getInstance().build(ARouterPath.FUND_SIDE)
+                        .navigation(getActivity(), KEY_ORDER_FUNDER_SALER);
             }
         });
 
         order_delete_or_transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                order_delete_or_transaction.setEnabled(false);
                 deleteGoods();
             }
         });
@@ -138,6 +139,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                order_exchange.setEnabled(false);
                 showDialog();
             }
         });
@@ -155,11 +157,12 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        order_delete_or_transaction.setEnabled(true);
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        order_delete_or_transaction.setEnabled(true);
                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
@@ -182,7 +185,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        order_off_shelf.setEnabled(true);
                     }
 
                     @Override
@@ -209,11 +213,12 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        order_off_shelf.setEnabled(true);
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        //order_off_shelf.setEnabled(true);
                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "上架成功", Snackbar.LENGTH_SHORT).show();
@@ -249,6 +254,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 });
     }
 
+    /*不需要传person & phone了
     private void showSaleDialog() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dilog_input_user_phone, null);
         final Dialog dialog = new AlertDialog.Builder(getActivity())
@@ -286,8 +292,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                     Snackbar.make(getRootView(), "请先输入姓名和电话号码", Snackbar.LENGTH_SHORT).show();
                 }
             }
-        });
-    }
+        });}*/
+    
 
     /**
      * 弹出对话框输入求购者的姓名和电话
@@ -311,15 +317,22 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                order_exchange.setEnabled(true);
             }
         });
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (input_name.getText().toString() != "" && input_phone.getText().toString() != "") {
-                    requestExchangeInternet(goodsType, input_name.getText().toString(),
-                            input_phone.getText().toString());
-                    dialog.dismiss();
+                    if (Utils.isMobile(input_phone.getText().toString().replace(" ", ""))) {
+                        requestExchangeInternet(goodsType, input_name.getText().toString(),
+                                input_phone.getText().toString());
+                        dialog.dismiss();
+                    } else {
+                        Utils.closeSoftInput(getActivity());
+                        Snackbar.make(srl_order_detail, "手机号码格式错误, 请重新输入", Snackbar.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Snackbar.make(getRootView(), "请先输入姓名和电话号码", Snackbar.LENGTH_SHORT).show();
                 }
@@ -340,11 +353,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                     .execute(new SimpleCallBack<String>() {
                         @Override
                         public void onError(ApiException e) {
-
+                            order_exchange.setEnabled(true);
+                            Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onSuccess(String s) {
+                            order_exchange.setEnabled(true);
                             CreateOrderJson order = new Gson().fromJson(s, CreateOrderJson.class);
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
@@ -362,11 +377,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                     .execute(new SimpleCallBack<String>() {
                         @Override
                         public void onError(ApiException e) {
-
+                            order_exchange.setEnabled(true);
+                            Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onSuccess(String s) {
+                            order_exchange.setEnabled(true);
                             CreateOrderJson order = new Gson().fromJson(s, CreateOrderJson.class);
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
@@ -518,8 +535,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             ApplyFunderSalerRequestBean requestBean = new ApplyFunderSalerRequestBean();
             requestBean.setFunderPhone(item.getPhone());
             requestBean.setGid(goods_id);
-            requestBean.setPerson(name_input);
-            requestBean.setPhone(phone_input);
 
             EasyHttp.post(HttpConstant.API_APPLY_SALE_FUNDER).headers("Content-Type", "application/json")
                     .addConverterFactory(GsonConverterFactory.create())

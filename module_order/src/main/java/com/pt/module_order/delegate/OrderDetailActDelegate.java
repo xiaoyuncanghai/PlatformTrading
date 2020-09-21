@@ -97,6 +97,7 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                 if (user_type == 3) {
                     //资金方确认
+                    order_apply.setEnabled(false);
                     requestMoneyConfirm();
                 }
             }
@@ -106,10 +107,10 @@ public class OrderDetailActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //买入
-                if (order_cancel.isEnabled()) {
-                    //取消订单
-                    requestCancelOrder(user_type);
-                }
+                order_cancel.setEnabled(false);
+                //取消订单
+                requestCancelOrder(user_type);
+
             }
         });
     }
@@ -126,11 +127,13 @@ public class OrderDetailActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        order_apply.setEnabled(true);
+                        Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        order_apply.setEnabled(true);
                         OrderOpratelJsonBean jsonBean = new Gson().fromJson(s, OrderOpratelJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "资金方已同意", Snackbar.LENGTH_SHORT).show();
@@ -150,11 +153,12 @@ public class OrderDetailActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        order_cancel.setEnabled(true);
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        order_cancel.setEnabled(true);
                         OrderOpratelJsonBean jsonBean = new Gson().fromJson(s, OrderOpratelJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "订单已取消", Snackbar.LENGTH_SHORT).show();

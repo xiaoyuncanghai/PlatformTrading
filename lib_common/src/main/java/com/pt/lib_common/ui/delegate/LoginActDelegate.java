@@ -31,6 +31,7 @@ import com.pt.lib_common.rxEasyhttp.model.HttpHeaders;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.DeviceUuidFactory;
 import com.pt.lib_common.util.SPHelper;
+import com.pt.lib_common.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -163,6 +164,12 @@ public class LoginActDelegate extends AppDelegate {
         tv_send_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //验证电话号码格式
+                if (!Utils.isMobile(et_acc.getText().toString().replace(" ", ""))) {
+                    Utils.closeSoftInput(getActivity());
+                    Snackbar.make(srl_login_acc, "手机号码格式错误, 请重新输入", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 SendSmsParasDataBean dataBean = new SendSmsParasDataBean();
                 dataBean.setMachineCode(new DeviceUuidFactory(getActivity()).getUuid().toString());
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
@@ -198,6 +205,7 @@ public class LoginActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 bt_login.setEnabled(false);
+                Utils.closeSoftInput(getActivity());
                 final SmsLoginParasDataBean dataBean = new SmsLoginParasDataBean();
                 dataBean.setPhone(et_acc.getText().toString().replace(" ", ""));
                 dataBean.setSmsCode(et_pwd.getText().toString().replace(" ", ""));
@@ -225,9 +233,8 @@ public class LoginActDelegate extends AppDelegate {
                                             .navigation();
                                     getActivity().finish();
                                 } else {
-                                    Snackbar.make(srl_login_acc, smsLoginJsonBean.getData(), Snackbar.LENGTH_SHORT).show();
-                                }
-                            }
+                                    Snackbar.make(srl_login_acc, smsLoginJsonBean.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }                            }
                         });
             }
         });

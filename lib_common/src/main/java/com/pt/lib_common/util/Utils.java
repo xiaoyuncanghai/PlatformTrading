@@ -14,7 +14,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -31,6 +33,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>Utils初始化相关 </p>
@@ -483,6 +487,26 @@ public class Utils {
 
     }
 
+    public static boolean isMobile(String input) {
+        //第一位1开头，后边10位是数字
+        Pattern pattern = Pattern.compile("1\\d{10}");
+        Matcher matcher = pattern.matcher(input);
+        return !TextUtils.isEmpty(input) && matcher.matches();
+    }
+
+    public static void closeSoftInput(Context context){
+        if (context != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null
+                    && ((Activity) context).getCurrentFocus() != null) {
+                inputMethodManager.hideSoftInputFromWindow(((Activity) context)
+                                .getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
+
     /**
      * 通过隐式意图调用系统安装程序安装APK
      */
@@ -504,13 +528,4 @@ public class Utils {
         }
         context.startActivity(intent);
     }
-
-
-
-
-
-
-
-
-
 }

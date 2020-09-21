@@ -64,7 +64,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private TextView tv_location;
     private LinearLayout edit_search;
     private ImageView tv_icon_search;
-    private ImageView iv_user_info;
     private SmartRefreshLayout srl_home_page;
     private RecyclerView rcv_home_page;
     private int cpage = 1;
@@ -80,7 +79,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private List<HotCity> hotCities;
     private String code = "";
     private String cityName = "";
-
 
     @Override
     public int getRootLayoutId() {
@@ -108,7 +106,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
         tv_location = get(R.id.tv_location);
         edit_search = get(R.id.edit_search);
         tv_icon_search = get(R.id.tv_icon_search);
-        iv_user_info = get(R.id.iv_user_info);
         coo_location = get(R.id.coo_location);
         srl_home_page = get(R.id.srl_home_page);
         rcv_home_page = get(R.id.rcv_home_page);
@@ -232,6 +229,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
+                        Snackbar.make(srl_home_page, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -294,8 +292,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     private void requestGoodIndex() {
         HomePageIndexRequestBean homePageIndexRequestBean = new HomePageIndexRequestBean();
-        //首页商品的citycode不传
-        //homePageIndexRequestBean.setCityCode("");
         homePageIndexRequestBean.setCurrent(cpage);
         EasyHttp.post(HttpConstant.API_HOME_PAGE).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -345,10 +341,10 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 srl_home_page.finishLoadmore();
                             }
                         } else if (promoteJsonBean.getCode() == 500) {
-                            //请求参数有误
                             Snackbar.make(srl_home_page, "服务端返回数据有误", Snackbar.LENGTH_SHORT).show();
                         } else if (promoteJsonBean.getCode() == 401) {
                             //accesstoekn过期
+                            Snackbar.make(srl_home_page, "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
                             SPHelper.putString("token", "", true);
                             SPHelper.putString("phone", "", true);
                             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
@@ -362,8 +358,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
     public void updateCityName(CityInfo cityInfo) {
         cityName = cityInfo.getCityName();
         tv_location.setText(cityInfo.getCityName());
-        LogUtils.d("current cityName = "+cityName);
-        //根据cityCode 去查找对应的code
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
         for (City city: allCities) {
             if (city.getName().equals(cityName)) {
@@ -371,8 +365,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
                 break;
             }
         }
-        //定位成功了之后重新刷新界面
-        LogUtils.d("current location code = "+code);
         srl_home_page.autoRefresh();
     }
 }

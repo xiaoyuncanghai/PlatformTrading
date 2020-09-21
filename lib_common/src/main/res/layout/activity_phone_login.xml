@@ -6,19 +6,6 @@
     android:background="@color/common_bg"
     android:orientation="vertical">
 
-    <!--<LinearLayout
-        android:id="@+id/ll_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_actionbar"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <include layout="@layout/layout_status_bar"></include>
-
-        <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>-->
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_login_acc"
         android:layout_width="match_parent"
@@ -130,14 +117,9 @@
                             android:text="获取验证码"
                             android:textColor="@color/colorPrimary"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
-
                 </LinearLayout>
-
-
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/bt_login"

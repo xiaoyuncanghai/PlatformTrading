@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_marginLeft="@dimen/size_75dp"
-        android:layout_marginRight="@dimen/size_75dp"
+        android:layout_marginRight="@dimen/size_25dp"
         android:background="@drawable/share_background_shape"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/size_15dp"
@@ -73,7 +73,7 @@
             android:textSize="@dimen/text_size_12sp" />
     </LinearLayout>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/iv_user_info"
         android:layout_width="@dimen/size_20dp"
         android:layout_height="@dimen/size_20dp"
@@ -81,6 +81,6 @@
         android:src="@drawable/user_info_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
