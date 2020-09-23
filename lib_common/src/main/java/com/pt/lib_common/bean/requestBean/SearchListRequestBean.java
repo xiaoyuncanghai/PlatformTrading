@@ -1,17 +1,8 @@
 package com.pt.lib_common.bean.requestBean;
 
 public class SearchListRequestBean {
-    private String cityCode;
     private int current;
     private String keyword;
-
-    public String getCityCode() {
-        return cityCode;
-    }
-
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
-    }
 
     public int getCurrent() {
         return current;

@@ -216,7 +216,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         edit_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE, cityCode).navigation();
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).navigation();
             }
         });
     }

@@ -91,7 +91,6 @@ public class OrderCategoryActDelegate extends AppDelegate {
     private void requestList() {
         CategoryListRequestBean bean = new CategoryListRequestBean();
         bean.setCateId1(id);
-        bean.setCityCode(BaseApplication.getInstance().getCity().getCityCode());
         bean.setCurrent(cpage);
         //goodType & keyword为可选参数不传
         EasyHttp.post(HttpConstant.API_CATEGORY_LIST).headers("Content-Type", "application/json")

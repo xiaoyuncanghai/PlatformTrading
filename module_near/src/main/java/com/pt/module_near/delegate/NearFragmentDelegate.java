@@ -90,8 +90,7 @@ public class NearFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //去search 界面
-                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE,
-                        cityCode).navigation();
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).navigation();
             }
         });
 

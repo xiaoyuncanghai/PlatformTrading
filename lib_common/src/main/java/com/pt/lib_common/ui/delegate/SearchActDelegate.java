@@ -59,7 +59,6 @@ public class SearchActDelegate extends AppDelegate {
     private SearchAdapter searchAdapter;
     private String keyword = "";
     private int cpage = 1;
-    private String cityCode = "";
 
     @Override
     public int getRootLayoutId() {
@@ -69,7 +68,6 @@ public class SearchActDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        cityCode = getActivity().getIntent().getStringExtra(Constant.KEY_CITY_CODE);
         tv_cancel = get(R.id.tv_cancel);
         srl_search = get(R.id.srl_search);
         rv_search = get(R.id.rv_search);
@@ -122,7 +120,7 @@ public class SearchActDelegate extends AppDelegate {
                 }
                 if (et_search.getText().toString().length() > 0) {
                     keyword = et_search.getText().toString();
-                    requestList(1, keyword, cityCode, false);
+                    requestList(1, keyword, false);
                 } else {
                     searchList.clear();
                     labels.clear();
@@ -160,19 +158,19 @@ public class SearchActDelegate extends AppDelegate {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 cpage++;
-                requestList(cpage, keyword, cityCode, true);
+                requestList(cpage, keyword, true);
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 cpage = 1;
-                requestList(cpage, keyword, cityCode, true);
+                requestList(cpage, keyword, true);
             }
         });
         searchAdapter.setOnLabelClickListener(new SearchAdapter.OnLabelClickListener() {
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
-                requestList(1, (String) data, cityCode, false);
+                requestList(1, (String) data, false);
             }
         });
 
@@ -203,11 +201,10 @@ public class SearchActDelegate extends AppDelegate {
         });
     }
 
-    private void requestList(int cpage, final String keyword, String cityCode, final boolean isLoadMore) {
+    private void requestList(int cpage, final String keyword, final boolean isLoadMore) {
         SearchListRequestBean requestBean = new SearchListRequestBean();
         requestBean.setCurrent(cpage);
         requestBean.setKeyword(keyword);
-        requestBean.setCityCode(cityCode);
         EasyHttp.post(HttpConstant.API_SEARCH).headers("Content-Type", "application/json")
                 .addConverterFactory(GsonConverterFactory.create())
                 .upObject(requestBean)
