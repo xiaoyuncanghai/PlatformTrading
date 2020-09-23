@@ -33,7 +33,7 @@ public class NearFragment extends FragmentPresenter<NearFragmentDelegate> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //initHeader();
+        initHeader();
     }
 
     public void initHeader() {

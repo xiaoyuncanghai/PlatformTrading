@@ -95,16 +95,6 @@ public class DBManager {
         return result;
     }
 
-    /*public String searchCityForName (final String cityName) {
-        String sql = "select * from " + TABLE_NAME + " where "
-                + COLUMN_C_NAME + " like ? ";
-        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
-        Cursor cursor = db.rawQuery(sql, new String[]{"%"+cityName+"%"});
-        //"select * from addr where PARENT_ID=?", new String[]{String.valueOf(0)}
-        String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
-        return code;
-    }*/
-
     public List<City> searchCity(final String keyword){
         String sql = "select * from " + TABLE_NAME + " where "
                 + COLUMN_C_NAME + " like ? ";

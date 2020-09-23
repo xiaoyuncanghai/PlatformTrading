@@ -83,7 +83,7 @@
                 android:text="修改"
                 android:textSize="@dimen/size_15dp" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/order_apply_money"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -95,7 +95,7 @@
                 android:background="@drawable/order_detail_bg_background"
                 android:gravity="center"
                 android:text="资金"
-                android:textSize="@dimen/size_15dp" />
+                android:textSize="@dimen/size_15dp" />-->
 
             <TextView
                 android:id="@+id/order_delete_or_transaction"

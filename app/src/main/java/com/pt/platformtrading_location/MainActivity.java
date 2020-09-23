@@ -153,10 +153,7 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         public void onReceiveLocation(BDLocation location) {
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 start++;
-                LogUtils.d("city = " + location.getCity());
                 CityInfo cityInfo = new CityInfo();
-                cityInfo.setCityName(location.getCity());
-                //cityInfo.setCityCode(location.getAdCode());
                 List<City> allCities = new DBManager(MainActivity.this).getCityByProvince();
                 for (City city: allCities) {
                     if (city.getName().equals(location.getCity())) {
@@ -165,17 +162,16 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
                         break;
                     }
                 }
+                //不管定位成功或者失败, 将city的信息放在BaseApplication中去, cityInfo可能为null
                 BaseApplication.getInstance().setCity(cityInfo);
                 LogUtils.d("onReceive Location");
                 if (location.getCity() != null && !location.getCity().equals("")) {
-                    //说明获取到了城市信息
-                    locationService.unregisterListener(mListener); //注销掉监听
-                    locationService.stop(); //停止定位服务
+                    locationService.unregisterListener(mListener);
+                    locationService.stop();
                     start = 0;
-                    //传递cityInfo
-                    EventBus.getDefault().post(cityInfo);
+                    //将cityName 传过去
+                    EventBus.getDefault().post(location.getCity());
                 } else {
-                    //说明没有定位到
                     LogUtils.d("定位失败");
                 }
             }

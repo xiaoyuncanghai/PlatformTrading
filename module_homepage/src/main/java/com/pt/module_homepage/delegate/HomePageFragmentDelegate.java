@@ -77,7 +77,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private ArrayList<HomePageDataBean> homePageCategoryTemp = new ArrayList<HomePageDataBean>();
     private HomePageAdapter homePageAdapter;
     private List<HotCity> hotCities;
-    private String code = "";
+    private String cityCode = "";
     private String cityName = "";
 
     @Override
@@ -97,7 +97,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         hotCities = new ArrayList<>();
         hotCities.add(new HotCity("北京市", "110100"));
         hotCities.add(new HotCity("天津市", "120100"));
-        hotCities.add(new HotCity("武汉市", "420110"));
+        hotCities.add(new HotCity("武汉市", "420100"));
     }
 
     private void initView() {
@@ -162,9 +162,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 final LocatedCity locatedCity;
-                LogUtils.d("current click code = "+code);
-                if (code != "" && cityName != "") {
-                    locatedCity = new LocatedCity(cityName, code);
+                if (cityCode != "" && cityName != "") {
+                    locatedCity = new LocatedCity(cityName, cityCode);
                 } else {
                     locatedCity = null;
                 }
@@ -176,7 +175,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                         .setOnPickListener(new OnPickListener() {
                             @Override
                             public void onPick(int position, City data) {
-                                code = data.getCode();
+                                cityCode = data.getCode();
                                 cityName = data.getName();
                                 tv_location.setText(cityName);
                                 Toast.makeText(
@@ -217,7 +216,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         edit_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE, code).navigation();
+                ARouter.getInstance().build(ARouterPath.SEARCH_PATH).withString(Constant.KEY_CITY_CODE, cityCode).navigation();
             }
         });
     }
@@ -355,13 +354,12 @@ public class HomePageFragmentDelegate extends AppDelegate {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateCityName(CityInfo cityInfo) {
-        cityName = cityInfo.getCityName();
-        tv_location.setText(cityInfo.getCityName());
+    public void updateCityName(String cityName) {
+        tv_location.setText(cityName);
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
         for (City city: allCities) {
             if (city.getName().equals(cityName)) {
-                code = city.getCode();
+                cityCode = city.getCode();
                 break;
             }
         }

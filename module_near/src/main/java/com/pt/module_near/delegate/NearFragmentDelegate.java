@@ -193,16 +193,15 @@ public class NearFragmentDelegate extends AppDelegate {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateCityName(CityInfo cityInfo) {
-        String cityName = cityInfo.getCityName();
+    public void updateCityName(String cityName) {
         dbManager = new DBManager(getActivity());
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
         for (City city : allCities) {
             if (city.getName().equals(cityName)) {
                 cityCode = city.getCode();
+                LogUtils.d("NearFgt rec cityCode = "+ cityCode);
                 break;
             }
         }
-        LogUtils.d("near code = " + cityCode);
     }
 }

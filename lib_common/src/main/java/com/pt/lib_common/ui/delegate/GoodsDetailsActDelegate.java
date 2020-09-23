@@ -66,9 +66,11 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private int goodsType;
     private String phone;
     private String name;
-    private TextView order_apply_money;
+    //private TextView order_apply_money;
     private int goodsStatus;
     private TextView order_exchange;
+    private XEditText input_name;
+    private XEditText input_phone;
 
     @Override
     public int getRootLayoutId() {
@@ -83,7 +85,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         rcv_order_detail = get(R.id.rcv_order_detail);
         order_off_shelf = get(R.id.order_off_shelf);
         order_modified = get(R.id.order_modified);
-        order_apply_money = get(R.id.order_apply_money);
+        //order_apply_money = get(R.id.order_apply_money);
         order_delete_or_transaction = get(R.id.order_delete_or_transaction);
         order_exchange = get(R.id.order_exchange);
         rcv_order_detail.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
@@ -113,7 +115,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 //修改订单
-                order_modified.setEnabled(false);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
                 ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
@@ -123,13 +124,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         });
 
         //资金抵押
-        order_apply_money.setOnClickListener(new View.OnClickListener() {
+        /*order_apply_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(ARouterPath.FUND_SIDE)
                         .navigation(getActivity(), KEY_ORDER_FUNDER_SALER);
             }
-        });
+        });*/
 
         order_delete_or_transaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,7 +297,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 }
             }
         });}*/
-    
+
 
     /**
      * 弹出对话框输入求购者的姓名和电话
@@ -308,8 +309,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .setCancelable(true)
                 .create();
         dialog.show();
-        final XEditText input_name = (XEditText) view.findViewById(R.id.input_name);
-        final XEditText input_phone = (XEditText) view.findViewById(R.id.input_phone);
+        input_name = (XEditText) view.findViewById(R.id.input_name);
+        input_phone = (XEditText) view.findViewById(R.id.input_phone);
         input_phone.setPattern(new int[]{3, 4, 4}, " ");
         input_phone.setInputType(InputType.TYPE_CLASS_PHONE);
         input_name.setText(name);
@@ -327,15 +328,14 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 if (input_name.getText().toString() != "" && input_phone.getText().toString() != "") {
-                    if (Utils.isMobile(input_phone.getText().toString().replace(" ", ""))) {
-                        requestExchangeInternet(goodsType, input_name.getText().toString(),
-                                input_phone.getText().toString());
-                        dialog.dismiss();
-                    } else {
+                    if (!Utils.isMobile(input_phone.getText().toString().replace(" ", ""))) {
                         Utils.closeSoftInput(getActivity());
                         Snackbar.make(srl_order_detail, "手机号码格式错误, 请重新输入", Snackbar.LENGTH_SHORT).show();
+                        return;
                     }
-
+                    requestExchangeInternet(goodsType, input_name.getText().toString(),
+                            input_phone.getText().toString().replace(" ", ""));
+                    dialog.dismiss();
                 } else {
                     Snackbar.make(getRootView(), "请先输入姓名和电话号码", Snackbar.LENGTH_SHORT).show();
                 }
@@ -369,6 +369,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
                                         .withInt(Constant.ORDER_USER_TYPE, 1)
                                         .navigation();
+                                getActivity().finish();
                             }
                         }
                     });
@@ -393,6 +394,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
                                         .withInt(Constant.ORDER_USER_TYPE, 2)
                                         .navigation();
+                                getActivity().finish();
                             }
                         }
                     });
@@ -433,7 +435,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setText("上架");
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.GONE);
+                                        //order_apply_money.setVisibility(View.GONE);
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -442,7 +444,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setText("下架");
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.GONE);
+                                        //order_apply_money.setVisibility(View.GONE);
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -450,7 +452,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setVisibility(View.GONE);
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.GONE);
+                                        //order_apply_money.setVisibility(View.GONE);
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -458,7 +460,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                 } else {
                                     order_off_shelf.setVisibility(View.GONE);
                                     order_modified.setVisibility(View.GONE);
-                                    order_apply_money.setVisibility(View.GONE);
+                                    //order_apply_money.setVisibility(View.GONE);
                                     order_delete_or_transaction.setVisibility(View.GONE);
                                     order_exchange.setVisibility(View.VISIBLE);
                                     order_exchange.setText("交易");
@@ -474,8 +476,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setText("上架");
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.VISIBLE);
-                                        order_apply_money.setText("资金");
+                                        //order_apply_money.setVisibility(View.VISIBLE);
+                                        //order_apply_money.setText("资金");
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -485,8 +487,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setText("下架");
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.VISIBLE);
-                                        order_apply_money.setText("资金");
+                                        //order_apply_money.setVisibility(View.VISIBLE);
+                                        //order_apply_money.setText("资金");
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -494,7 +496,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         order_off_shelf.setVisibility(View.GONE);
                                         order_modified.setVisibility(View.VISIBLE);
                                         order_modified.setText("修改");
-                                        order_apply_money.setVisibility(View.GONE);
+                                        //order_apply_money.setVisibility(View.GONE);
                                         order_delete_or_transaction.setVisibility(View.VISIBLE);
                                         order_delete_or_transaction.setText("删除");
                                         order_exchange.setVisibility(View.GONE);
@@ -502,7 +504,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                 } else {
                                     order_off_shelf.setVisibility(View.GONE);
                                     order_modified.setVisibility(View.GONE);
-                                    order_apply_money.setVisibility(View.GONE);
+                                    //order_apply_money.setVisibility(View.GONE);
                                     order_delete_or_transaction.setVisibility(View.GONE);
                                     order_exchange.setVisibility(View.VISIBLE);
                                     order_exchange.setText("交易");
@@ -541,7 +543,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == KEY_ORDER_FUNDER_SALER && resultCode == KEY_ORDER_FUNDER_RESULT) {
+        /*if (requestCode == KEY_ORDER_FUNDER_SALER && resultCode == KEY_ORDER_FUNDER_RESULT) {
             Bundle bundle = data.getBundleExtra(Constant.KEY_CHOOSE_FUND);
             FundSideItem item = (FundSideItem) bundle.getSerializable(CHOOSE_FUND_ITEM);
             ApplyFunderSalerRequestBean requestBean = new ApplyFunderSalerRequestBean();
@@ -566,7 +568,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             }
                         }
                     });
-        }
+        }*/
 
     }
 }
