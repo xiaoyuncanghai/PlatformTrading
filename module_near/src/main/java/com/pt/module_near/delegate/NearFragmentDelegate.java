@@ -56,7 +56,7 @@ public class NearFragmentDelegate extends AppDelegate {
     private int cPage = 1;
     private String cityCode = "";
     private LinearLayout near_search;
-    private TextView tv_user_search;
+    private LinearLayout ll_user_search;
     private LinearLayout near_header_layout_ll;
 
     @Override
@@ -75,7 +75,7 @@ public class NearFragmentDelegate extends AppDelegate {
         srl_near_page = get(R.id.srl_near_page);
         rcv_near_page = get(R.id.rcv_near_page);
         near_search = get(R.id.near_search);
-        tv_user_search = get(R.id.tv_user_search);
+        ll_user_search = get(R.id.ll_user_search);
         near_header_layout_ll = get(R.id.near_header_layout_ll);
         rcv_near_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 2,
                 GridLayoutManager.VERTICAL, false));
@@ -94,7 +94,7 @@ public class NearFragmentDelegate extends AppDelegate {
             }
         });
 
-        tv_user_search.setOnClickListener(new View.OnClickListener() {
+        ll_user_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //大家都在搜索
