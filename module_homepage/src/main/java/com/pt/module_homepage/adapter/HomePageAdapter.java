@@ -58,7 +58,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                                 .load(((BannerItemDataBean) model).getXBannerUrl())
                                 .placeholder(R.drawable.banner_placeholder)
                                 .error(R.drawable.banner_placeholder)
-                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                                 .into((ImageView) view);
                     }
                 });
