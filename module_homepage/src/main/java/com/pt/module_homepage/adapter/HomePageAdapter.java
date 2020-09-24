@@ -98,6 +98,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 homepage_promote_tv_description.setText(item.getPromote_description());
                 Glide.with(context).load(item.getPromote_pic()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
                         .error(R.drawable.ic_common_happy_yuu1_cat1).into(homepage_promote_iv);
+                helper.addOnClickListener(R.id.homepage_promote_tv_see);
                 break;
         }
     }

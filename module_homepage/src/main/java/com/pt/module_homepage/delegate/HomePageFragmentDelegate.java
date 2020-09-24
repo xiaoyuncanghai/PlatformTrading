@@ -146,12 +146,24 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 .navigation();
                         break;
 
-                    case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
+                    /*case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
                         String product_id = homePageItemList.get(position).getPromote_id();
                         ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                                 .withString(Constant.KEY_GOODS_ID, product_id)
                                 .navigation();
-                        break;
+                        break;*/
+                }
+            }
+        });
+
+        homePageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.homepage_promote_tv_see) {
+                    String product_id = homePageItemList.get(position).getPromote_id();
+                    ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                            .withString(Constant.KEY_GOODS_ID, product_id)
+                            .navigation();
                 }
             }
         });
