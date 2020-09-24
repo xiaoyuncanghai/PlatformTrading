@@ -102,11 +102,15 @@ public class DBManager {
         Cursor cursor = db.rawQuery(sql, new String[]{"%"+keyword+"%"});
         List<City> result = new ArrayList<>();
         while (cursor.moveToNext()){
-            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
-            String pinyin = Pinyin.toPinyin(name, "");
-            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
-            City city = new City(name, pinyin, code);
-            result.add(city);
+            String parent_id = cursor.getString(cursor.getColumnIndex(COLUMN_C_PID));
+            //当parent_id不等于0再加到集合里面去
+            if (!parent_id.equals("0")) {
+                String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+                String pinyin = Pinyin.toPinyin(name, "");
+                String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+                City city = new City(name, pinyin, code);
+                result.add(city);
+            }
         }
         cursor.close();
         db.close();

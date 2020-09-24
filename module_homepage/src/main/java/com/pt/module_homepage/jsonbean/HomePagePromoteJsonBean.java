@@ -4,10 +4,11 @@ import java.util.List;
 
 public class HomePagePromoteJsonBean {
 
+
     /**
      * message : null
      * code : 0
-     * data : {"records":[{"id":488,"title":"test003","price":192,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":484,"title":"product test 001","price":92,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":483,"title":"test发布","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":479,"title":"需要买台电脑","price":200,"pic1":"","pic1Url":"","goodsType":1},{"id":477,"title":"联想电脑","price":5000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2}],"total":6,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
+     * data : {"records":[{"id":552,"title":"电脑","price":1000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"卖破烂勒"},{"id":551,"title":"电脑","price":1000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"卖破烂勒"},{"id":549,"title":"考虑考虑","price":100,"pic1":"","pic1Url":"","goodsType":1,"description":"考虑考虑"},{"id":548,"title":"阿里了","price":100,"pic1":"E863231A-9CE5-4B01-B2C5-183507F1406D.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/E863231A-9CE5-4B01-B2C5-183507F1406D.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"考虑"}],"total":4,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
@@ -50,8 +51,8 @@ public class HomePagePromoteJsonBean {
 
     public static class DataBean {
         /**
-         * records : [{"id":488,"title":"test003","price":192,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":487,"title":"test","price":1000000,"pic1":"storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1599650592023.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":484,"title":"product test 001","price":92,"pic1":"CC95F08C-88C3-4012-9D6D-64A413D254B3.heic","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3.heic?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":483,"title":"test发布","price":1000,"pic1":"storageemulated0PicturesWeiXinmmexport1599476030839.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinmmexport1599476030839.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2},{"id":479,"title":"需要买台电脑","price":200,"pic1":"","pic1Url":"","goodsType":1},{"id":477,"title":"联想电脑","price":5000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2}]
-         * total : 6
+         * records : [{"id":552,"title":"电脑","price":1000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"卖破烂勒"},{"id":551,"title":"电脑","price":1000,"pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"卖破烂勒"},{"id":549,"title":"考虑考虑","price":100,"pic1":"","pic1Url":"","goodsType":1,"description":"考虑考虑"},{"id":548,"title":"阿里了","price":100,"pic1":"E863231A-9CE5-4B01-B2C5-183507F1406D.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/E863231A-9CE5-4B01-B2C5-183507F1406D.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":2,"description":"考虑"}]
+         * total : 4
          * size : 10
          * current : 1
          * orders : []
@@ -135,12 +136,13 @@ public class HomePagePromoteJsonBean {
 
         public static class RecordsBean {
             /**
-             * id : 488
-             * title : test003
-             * price : 192.0
-             * pic1 : CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic
-             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/CC95F08C-88C3-4012-9D6D-64A413D254B3_1.heic?x-oss-process=image/resize,m_fill,h_150,w_150
+             * id : 552
+             * title : 电脑
+             * price : 1000.0
+             * pic1 : storageemulated0DCIMCameraIMG_20200913_153149.jpg
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg?x-oss-process=image/resize,m_fill,h_150,w_150
              * goodsType : 2
+             * description : 卖破烂勒
              */
 
             private String id;
@@ -149,6 +151,7 @@ public class HomePagePromoteJsonBean {
             private String pic1;
             private String pic1Url;
             private int goodsType;
+            private String description;
 
             public String getId() {
                 return id;
@@ -196,6 +199,14 @@ public class HomePagePromoteJsonBean {
 
             public void setGoodsType(int goodsType) {
                 this.goodsType = goodsType;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
             }
         }
     }

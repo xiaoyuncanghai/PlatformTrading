@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,8 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.pt.lib_common.view.circle.CircleImageView;
 import com.pt.module_homepage.R;
 import com.pt.module_homepage.databean.BannerItemDataBean;
 import com.pt.module_homepage.databean.HomePageDataBean;
@@ -44,11 +48,12 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
         switch (helper.getItemViewType()) {
             case HomePageDataBean.TYPE_HOME_PAGE_BANNER:
                 XBanner banner = helper.getView(R.id.xBanner);
-                banner.setBannerData(item.getBannerItemList());
                 banner.setAutoPlayAble(item.getBannerItemList().size() > 1);
+                banner.setBannerData(item.getBannerItemList());
                 banner.loadImage(new XBanner.XBannerAdapter() {
                     @Override
                     public void loadBanner(XBanner banner, Object model, View view, int position) {
+                        //加圆角
                         Glide.with(context)
                                 .load(((BannerItemDataBean) model).getXBannerUrl())
                                 .placeholder(R.drawable.banner_placeholder)
@@ -58,7 +63,6 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
-                        //Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
                         if (!((BannerItemDataBean) model).getLinkUrl().equals("")
                                 && (((BannerItemDataBean) model).getLinkUrl().startsWith("http") ||
                                 ((BannerItemDataBean) model).getLinkUrl().startsWith("https")
@@ -75,6 +79,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 ImageView home_cate_iv = helper.getView(R.id.home_cate_iv);
                 TextView home_cate_tv = helper.getView(R.id.home_cate_tv);
                 Glide.with(context).load(item.getCate_icon())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .placeholder(R.drawable.ic_common_fb)
                         .error(R.drawable.ic_common_fb).into(home_cate_iv);
                 home_cate_tv.setText(item.getCate_name());
@@ -82,12 +87,17 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
 
             case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
                 ImageView homepage_promote_iv = helper.getView(R.id.homepage_promote_iv);
+                ViewGroup.LayoutParams lp = homepage_promote_iv.getLayoutParams();
+                lp.height = lp.width;
+                homepage_promote_iv.setLayoutParams(lp);
                 TextView homepage_promote_tv_title = helper.getView(R.id.homepage_promote_tv_title);
                 TextView homepage_promote_tv_price = helper.getView(R.id.homepage_promote_tv_price);
-                Glide.with(context).load(item.getPromote_pic()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
-                        .error(R.drawable.ic_common_happy_yuu1_cat1).into(homepage_promote_iv);
+                TextView homepage_promote_tv_description = helper.getView(R.id.homepage_promote_tv_description);
                 homepage_promote_tv_title.setText(item.getPromote_title());
                 homepage_promote_tv_price.setText(item.getPromote_price());
+                homepage_promote_tv_description.setText(item.getPromote_description());
+                Glide.with(context).load(item.getPromote_pic()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
+                        .error(R.drawable.ic_common_happy_yuu1_cat1).into(homepage_promote_iv);
                 break;
         }
     }
@@ -106,7 +116,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     switch (type) {
                         case HomePageDataBean.TYPE_HOME_PAGE_BANNER:
                         case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
-                            return 3;
+                            return 4;
                         case HomePageDataBean.TYPE_HOME_PAGE_CATEGORY:
                             return 1;
                         default:

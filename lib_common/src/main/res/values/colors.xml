@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--APP的主题色-->
-    <color name="colorPrimary">#FC6306</color>
-    <color name="colorPrimaryDark">#FC6306</color>
-    <color name="colorAccent">#FC6306</color>
-    <color name="lightPrimaryColor">#aaFC6306</color>
+    <color name="colorPrimary">#5F71FF</color>
+    <color name="colorPrimaryDark">#5F71FF</color>
+    <color name="colorAccent">#5F71FF</color>
+    <color name="lightPrimaryColor">#aa5F71FF</color>
 
-    <color name="cp_colorPrimary">#FC6306</color>
+    <!--<color name="cp_colorPrimary">#FC6306</color>
     <color name="cp_colorPrimaryDark">#FC6306</color>
-    <color name="cp_colorAccent">#FC6306</color>
+    <color name="cp_colorAccent">#FC6306</color>-->
 
     <color name="cp_color_gray_light">#cdcdcd</color>
     <color name="cp_color_gray">#999999</color>
@@ -128,5 +128,6 @@
     <color name="gray_f6">#fff6f6f6</color>
     <color name="gray_fc">#fffcfcfc</color>
     <color name="gray_e0">#e0e0e0</color>
+    <color name="gray_blue">#5F72FF</color>
 
 </resources>

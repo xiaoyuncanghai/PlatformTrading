@@ -23,6 +23,7 @@ public class MainActDelegate extends AppDelegate {
 
     private SupportFragment[] mFragments = new SupportFragment[4];
     private NavigationController navigationController;
+
     @Override
     public int getRootLayoutId() {
         return R.layout.activity_main;
@@ -56,10 +57,10 @@ public class MainActDelegate extends AppDelegate {
     private void initView() {
         pageNavigationView = get(R.id.bottom_tab);
         navigationController = pageNavigationView.material()
-                .addItem(R.drawable.tab_homepage_dark, "首页")
-                .addItem(R.drawable.tab_near_dark, "附近")
-                .addItem(R.drawable.tab_order_dark, "订单")
-                .addItem(R.drawable.tab_mine_dark, "我的")
+                .addItem(R.drawable.tab_homepage, R.drawable.tab_homepage_press, "首页")
+                .addItem(R.drawable.tab_near, R.drawable.tab_near_press, "附近")
+                .addItem(R.drawable.tab_order, R.drawable.tab_order_press, "订单")
+                .addItem(R.drawable.tab_mine, R.drawable.tab_mine_press, "我的")
                 .build();
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override

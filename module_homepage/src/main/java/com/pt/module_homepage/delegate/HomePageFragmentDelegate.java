@@ -60,16 +60,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomePageFragmentDelegate extends AppDelegate {
 
-    private CircleImageView iv_location;
+    private ImageView iv_location;
     private TextView tv_location;
     private LinearLayout edit_search;
     private ImageView tv_icon_search;
     private SmartRefreshLayout srl_home_page;
     private RecyclerView rcv_home_page;
     private int cpage = 1;
-    private ConstraintLayout fragment_header_layout;
+    private LinearLayout fragment_header_layout;
     private ConstraintLayout coo_location;
-
     private ArrayList<BannerItemDataBean> bannerItemList = new ArrayList<BannerItemDataBean>();
     private ArrayList<HomePageDataBean> homePageItemList = new ArrayList<HomePageDataBean>();
     private ArrayList<HomePageDataBean> homePageItemListTemp = new ArrayList<HomePageDataBean>();
@@ -113,7 +112,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
         fragment_header_layout.setPadding(0,
                 Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
                 0, Utils.dip2px(this.getActivity(), 10f));
-        rcv_home_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
+        rcv_home_page.setLayoutManager(new GridLayoutManager(this.getActivity(), 4,
                 GridLayoutManager.VERTICAL, false));
         homePageAdapter = new HomePageAdapter(getActivity(), homePageItemList);
         rcv_home_page.setAdapter(homePageAdapter);
@@ -147,12 +146,12 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 .navigation();
                         break;
 
-                     case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
-                         String product_id = homePageItemList.get(position).getPromote_id();
-                         ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
-                                 .withString(Constant.KEY_GOODS_ID, product_id)
-                                 .navigation();
-                         break;
+                    case HomePageDataBean.TYPE_HOME_PAGE_PROMOTE:
+                        String product_id = homePageItemList.get(position).getPromote_id();
+                        ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                                .withString(Constant.KEY_GOODS_ID, product_id)
+                                .navigation();
+                        break;
                 }
             }
         });
@@ -316,6 +315,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                     homepagePromoteDataBean.setPromote_price(promoteJsonBean.getData().getRecords().get(i).getPrice());
                                     homepagePromoteDataBean.setPromote_type(promoteJsonBean.getData().getRecords().get(i).getGoodsType());
                                     homepagePromoteDataBean.setPromote_title(promoteJsonBean.getData().getRecords().get(i).getTitle());
+                                    homepagePromoteDataBean.setPromote_description(promoteJsonBean.getData().getRecords().get(i).getDescription());
                                     homePageItemListTemp.add(homepagePromoteDataBean);
                                 }
                             } else {
@@ -355,9 +355,10 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(String cityName) {
+        this.cityName = cityName;
         tv_location.setText(cityName);
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
-        for (City city: allCities) {
+        for (City city : allCities) {
             if (city.getName().equals(cityName)) {
                 cityCode = city.getCode();
                 break;

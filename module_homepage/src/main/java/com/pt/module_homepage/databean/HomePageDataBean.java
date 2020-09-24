@@ -64,6 +64,15 @@ public class HomePageDataBean implements MultiItemEntity {
     private String promote_pic;
     private String promote_id;
     private int promote_type;
+    private String promote_description;
+
+    public String getPromote_description() {
+        return promote_description;
+    }
+
+    public void setPromote_description(String promote_description) {
+        this.promote_description = promote_description;
+    }
 
     public int getPromote_type() {
         return promote_type;

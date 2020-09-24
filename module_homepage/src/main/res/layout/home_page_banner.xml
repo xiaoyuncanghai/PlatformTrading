@@ -2,22 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/size_130dp"
+    android:background="@drawable/home_page_banner_background">
 
     <com.stx.xhb.androidx.XBanner
         android:id="@+id/xBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_180dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="@dimen/size_24dp"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_marginEnd="@dimen/size_24dp"
         app:AutoPlayTime="3000"
-        app:pointsContainerBackground="#44aaaaaa"
+        app:isShowIndicatorOnlyOne="true"
+        app:isShowNumberIndicator="true"
+        app:isShowTips="true"
+        app:pageChangeDuration="800"
         app:pointNormal="@drawable/shape_noraml"
         app:pointSelect="@drawable/shape_selected"
+        app:pointsContainerBackground="#44aaaaaa"
         app:pointsPosition="RIGHT"
-        app:tipTextSize="12sp"
         app:tipTextColor="@color/white"
-        app:isShowTips="true"
-        app:isShowNumberIndicator="true"
-        app:isShowIndicatorOnlyOne="true"
-        app:pageChangeDuration="800" />
-
+        app:tipTextSize="12sp" />
 </LinearLayout>
