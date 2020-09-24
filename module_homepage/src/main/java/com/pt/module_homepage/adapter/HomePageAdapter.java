@@ -49,21 +49,23 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
         switch (helper.getItemViewType()) {
             case HomePageDataBean.TYPE_HOME_PAGE_BANNER:
                 XBanner banner = helper.getView(R.id.xBanner);
-                banner.setAutoPlayAble(item.getBannerItemList().size() > 1);
                 banner.setBannerData(item.getBannerItemList());
+                banner.setAutoPlayAble(item.getBannerItemList().size() > 1);
                 banner.loadImage(new XBanner.XBannerAdapter() {
                     @Override
                     public void loadBanner(XBanner banner, Object model, View view, int position) {
-                        //加圆角
                         Glide.with(context)
                                 .load(((BannerItemDataBean) model).getXBannerUrl())
                                 .placeholder(R.drawable.banner_placeholder)
-                                .error(R.drawable.banner_placeholder).into((ImageView) view);
+                                .error(R.drawable.banner_placeholder)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                .into((ImageView) view);
                     }
                 });
                 banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
                     @Override
                     public void onItemClick(XBanner banner, Object model, View view, int position) {
+                        //Toast.makeText(context, "点击了第" + position + "图片", Toast.LENGTH_SHORT).show();
                         if (!((BannerItemDataBean) model).getLinkUrl().equals("")
                                 && (((BannerItemDataBean) model).getLinkUrl().startsWith("http") ||
                                 ((BannerItemDataBean) model).getLinkUrl().startsWith("https")
@@ -76,6 +78,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                     }
                 });
                 break;
+
             case HomePageDataBean.TYPE_HOME_PAGE_CATEGORY:
                 ImageView home_cate_iv = helper.getView(R.id.home_cate_iv);
                 TextView home_cate_tv = helper.getView(R.id.home_cate_tv);
