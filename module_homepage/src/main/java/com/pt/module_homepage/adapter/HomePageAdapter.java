@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -96,13 +97,14 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 homepage_promote_tv_title.setText(item.getPromote_title());
                 homepage_promote_tv_price.setText(item.getPromote_price());
                 homepage_promote_tv_description.setText(item.getPromote_description());
-                Glide.with(context).load(item.getPromote_pic()).placeholder(R.drawable.ic_common_happy_yuu1_cat1)
+                Glide.with(context).load(item.getPromote_pic())
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                        .placeholder(R.drawable.ic_common_happy_yuu1_cat1)
                         .error(R.drawable.ic_common_happy_yuu1_cat1).into(homepage_promote_iv);
                 helper.addOnClickListener(R.id.homepage_promote_tv_see);
                 break;
         }
     }
-
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
