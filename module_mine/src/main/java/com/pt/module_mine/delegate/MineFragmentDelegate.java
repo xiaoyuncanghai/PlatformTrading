@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.ToastUtils;
+import com.pt.lib_common.util.Utils;
 import com.pt.module_mine.R;
 import com.pt.module_mine.bean.json.CheckJsonBean;
 import com.pt.module_mine.bean.json.LogoutJsonBean;
@@ -31,13 +33,15 @@ import java.lang.reflect.Field;
 
 public class MineFragmentDelegate extends AppDelegate {
 
-    private ImageView fgt_mine_user;
-    private TextView publish_message_sale;
-    private TextView publish_message_product;
-    private TextView publish_message_sale_list;
-    private TextView publish_message_product_list;
-    private TextView current_user;
     private ConstraintLayout loading_layout;
+    private TextView mine_user_phone;
+    private LinearLayout publish_message_sale;
+    private LinearLayout publish_message_product;
+    private LinearLayout publish_message_sale_list;
+    private LinearLayout publish_message_product_list;
+    private TextView tv_logout;
+    private ImageView iv_user_mine;
+    private ConstraintLayout coo_mine;
 
     @Override
     public int getRootLayoutId() {
@@ -47,17 +51,22 @@ public class MineFragmentDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        fgt_mine_user = get(R.id.fgt_mine_user);
-        current_user = get(R.id.current_user);
+        coo_mine = get(R.id.coo_mine);
+        mine_user_phone = get(R.id.mine_user_phone);
         publish_message_sale = get(R.id.publish_message_sale);
         publish_message_product = get(R.id.publish_message_product);
         publish_message_sale_list = get(R.id.publish_message_sale_list);
         publish_message_product_list = get(R.id.publish_message_product_list);
+        tv_logout = get(R.id.tv_logout);
+        iv_user_mine = get(R.id.iv_user_mine);
+
         loading_layout = get(R.id.loading_layout);
         loading_layout.setVisibility(View.GONE);
-
-        current_user.setText("当前用户为: " + SPHelper.getString("phone", "", true));
-        fgt_mine_user.setOnClickListener(new View.OnClickListener() {
+        coo_mine.setPadding(0,
+                Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
+                0, Utils.dip2px(this.getActivity(), 10f));
+        mine_user_phone.setText(SPHelper.getString("phone", "", true));
+        tv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //弹出退出当前用户的dialog

@@ -28,13 +28,4 @@ public class MineFragment extends FragmentPresenter<MineFragmentDelegate> {
         return MineFragmentDelegate.class;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initHeader();
-    }
-
-    private void initHeader() {
-        setTitle("我的");
-    }
 }
