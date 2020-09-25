@@ -116,13 +116,16 @@ public class NearFragmentDelegate extends AppDelegate {
                 requestList();
             }
         });
-        nearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+        nearAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String product_id = nearItemDataBeans.get(position).getId();
-                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
-                        .withString(Constant.KEY_GOODS_ID, product_id)
-                        .navigation();
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.near_promote_iv_to_details) {
+                    String product_id = nearItemDataBeans.get(position).getId();
+                    ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                            .withString(Constant.KEY_GOODS_ID, product_id)
+                            .navigation();
+                }
             }
         });
     }

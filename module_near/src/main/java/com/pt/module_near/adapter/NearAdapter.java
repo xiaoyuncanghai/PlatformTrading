@@ -1,6 +1,7 @@
 package com.pt.module_near.adapter;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class NearAdapter extends BaseQuickAdapter<NearItemDataBean, BaseViewHolder> {
 
     private Context context;
+
     public NearAdapter(Context context, int layoutResId, @Nullable List<NearItemDataBean> data) {
         super(layoutResId, data);
         this.context = context;
@@ -33,5 +35,6 @@ public class NearAdapter extends BaseQuickAdapter<NearItemDataBean, BaseViewHold
                 .load(item.getPic_url())
                 .placeholder(R.drawable.default_error)
                 .error(R.drawable.default_error).into(near_promote_iv);
+        helper.addOnClickListener(R.id.near_promote_iv_to_details);
     }
 }
