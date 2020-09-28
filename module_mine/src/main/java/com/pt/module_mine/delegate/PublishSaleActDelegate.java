@@ -80,15 +80,16 @@ public class PublishSaleActDelegate extends AppDelegate {
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
+    private ArrayList<ImageBean> imageBeansTemp = new ArrayList<>();
     //OSS 相关
     private OssService mService;
-    private ConstraintLayout loading_coo;
-    private LinearLayout ll_content;
     private TextView publish_sale_cate;
     private String chooseCategory = "";
     private ListDialog listDialog;
     private EditText et_publish_sale_title;
     private PhotoAdapter photoAdapter;
+    private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
+    private static final int MAX_PIC_NUM = 3;
 
     @Override
     public int getRootLayoutId() {
@@ -108,20 +109,10 @@ public class PublishSaleActDelegate extends AppDelegate {
         publish_sale_price = get(R.id.publish_sale_price);
         publish_sale_location = get(R.id.publish_sale_location);
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
-        loading_coo = get(R.id.loading_coo);
-        ll_content = get(R.id.ll_content);
         publish_sale_cate = get(R.id.publish_sale_cate);
-
-
         photoAdapter = new PhotoAdapter(getActivity(), imageBeans);
         rcv_publish_sale_image.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
         rcv_publish_sale_image.setAdapter(photoAdapter);
-        /*rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
-                GridLayoutManager.VERTICAL, false));
-        adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
-        rcv_publish_sale_image.setAdapter(adapter);*/
-
-
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
         initClickEvent();
@@ -131,8 +122,6 @@ public class PublishSaleActDelegate extends AppDelegate {
     /**
      * 请求分类信息
      */
-    ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
-
     private void requestCategroy() {
         EasyHttp.post(HttpConstant.API_ADD_CATE_SEARCH)
                 .timeStamp(true)
@@ -457,7 +446,7 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .theme(R.style.Matisse_Dracula)
                 .countable(false)
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-                .maxSelectable(3)
+                .maxSelectable(MAX_PIC_NUM - imageBeans.size())
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .imageEngine(new PicassoEngine())
@@ -466,8 +455,9 @@ public class PublishSaleActDelegate extends AppDelegate {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
-            imageBeans.clear();
-            if (data != null && Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
+            imageBeansTemp.clear();
+            if (data != null && Matisse.obtainResult(data) != null
+                    && Matisse.obtainResult(data).size() > 0) {
                 List<Uri> UriList = Matisse.obtainResult(data);
                 List<String> pathList = Matisse.obtainPathResult(data);
                 for (int i = 0; i < UriList.size(); i++) {
@@ -475,8 +465,9 @@ public class PublishSaleActDelegate extends AppDelegate {
                     bean.setImageUri(UriList.get(i));
                     bean.setImagePath(pathList.get(i));
                     bean.setImageName(pathList.get(i).replaceAll("/", ""));
-                    imageBeans.add(bean);
+                    imageBeansTemp.add(bean);
                 }
+                imageBeans.addAll(imageBeansTemp);
             }
             photoAdapter.notifyDataSetChanged();
         }
