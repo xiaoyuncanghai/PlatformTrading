@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.oss.ClientConfiguration;
@@ -44,6 +46,8 @@ import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
 import com.pt.module_mine.adpter.ContentItemListener;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
+import com.pt.module_mine.adpter.PhotoAdapter;
+import com.pt.module_mine.adpter.RecyclerItemClickListener;
 import com.pt.module_mine.bean.CategoryDatebean;
 import com.pt.module_mine.bean.ImageBean;
 import com.pt.module_mine.bean.json.CategoryJsonBean;
@@ -73,11 +77,9 @@ public class PublishSaleActDelegate extends AppDelegate {
     private RecyclerView rcv_publish_sale_image;
     private XEditText publish_sale_price;
     private TextView publish_sale_location;
-    private ImageView img_publish_sale_upload;
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
-    private ImageChooseAdapter adapter;
     //OSS 相关
     private OssService mService;
     private ConstraintLayout loading_coo;
@@ -86,6 +88,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     private String chooseCategory = "";
     private ListDialog listDialog;
     private EditText et_publish_sale_title;
+    private PhotoAdapter photoAdapter;
 
     @Override
     public int getRootLayoutId() {
@@ -102,7 +105,6 @@ public class PublishSaleActDelegate extends AppDelegate {
         et_publish_sale_title = get(R.id.et_publish_sale_title);
         et_publish_sale_content = get(R.id.et_publish_sale_content);
         rcv_publish_sale_image = get(R.id.rcv_publish_sale_image);
-        img_publish_sale_upload = get(R.id.img_publish_sale_upload);
         publish_sale_price = get(R.id.publish_sale_price);
         publish_sale_location = get(R.id.publish_sale_location);
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
@@ -110,10 +112,16 @@ public class PublishSaleActDelegate extends AppDelegate {
         ll_content = get(R.id.ll_content);
         publish_sale_cate = get(R.id.publish_sale_cate);
 
-        rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
+
+        photoAdapter = new PhotoAdapter(getActivity(), imageBeans);
+        rcv_publish_sale_image.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
+        rcv_publish_sale_image.setAdapter(photoAdapter);
+        /*rcv_publish_sale_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
         adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
-        rcv_publish_sale_image.setAdapter(adapter);
+        rcv_publish_sale_image.setAdapter(adapter);*/
+
+
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
         initClickEvent();
@@ -188,40 +196,40 @@ public class PublishSaleActDelegate extends AppDelegate {
             }
         });
 
-        img_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RxPermissions rxPermissions = new RxPermissions(PublishSaleActDelegate.this.getActivity());
-                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
-                        new Observer<Boolean>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                            }
+        rcv_publish_sale_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
+                (view, position) -> {
+                    if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
+                        RxPermissions rxPermissions = new RxPermissions(PublishSaleActDelegate.this.getActivity());
+                        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
+                                new Observer<Boolean>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+                                    }
 
-                            @Override
-                            public void onNext(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    startAction();
-                                } else {
-                                    Toast.makeText(PublishSaleActDelegate.this.getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
-                                            .show();
+                                    @Override
+                                    public void onNext(Boolean aBoolean) {
+                                        if (aBoolean) {
+                                            startAction();
+                                        } else {
+                                            Toast.makeText(PublishSaleActDelegate.this.getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                                    .show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
                                 }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        }
-                );
-            }
-        });
+                        );
+                    }
+                }));
 
         publish_sale_cate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,21 +426,6 @@ public class PublishSaleActDelegate extends AppDelegate {
                 });
     }
 
-    /*private void showProgressDialog(int position, int progress) {
-        builder = new  AlertDialog.Builder(getActivity());
-        View v = View.inflate(getActivity(), R.layout.dialog_loading, null);
-        builder.setView(v);
-        if (dialog == null) {
-            dialog = builder.create();
-            dialog.show();
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
-        }
-        if (progress == 100) {
-            dialog.dismiss();
-        }
-    }
-*/
     private void startAction() {
         /*Matisse.from(PublishSaleActDelegate.this.getActivity())
                 .choose(MimeType.ofImage(), false)
@@ -474,7 +467,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
             imageBeans.clear();
-            if (Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
+            if (data != null && Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
                 List<Uri> UriList = Matisse.obtainResult(data);
                 List<String> pathList = Matisse.obtainPathResult(data);
                 for (int i = 0; i < UriList.size(); i++) {
@@ -485,12 +478,7 @@ public class PublishSaleActDelegate extends AppDelegate {
                     imageBeans.add(bean);
                 }
             }
-            adapter.notifyDataSetChanged();
-            if (imageBeans.size() > 2) {
-                img_publish_sale_upload.setVisibility(View.GONE);
-            } else {
-                img_publish_sale_upload.setVisibility(View.VISIBLE);
-            }
+            photoAdapter.notifyDataSetChanged();
         }
     }
 

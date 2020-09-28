@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/size_100dp"
+    android:layout_height="@dimen/size_100dp"
+    android:layout_marginRight="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:background="@drawable/default_error"
+        android:padding="1dip"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/v_selected"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:layout_marginRight="@dimen/size_5dp"
+        android:clickable="true"
+        android:paddingLeft="5dip"
+        android:paddingTop="5dip"
+        android:paddingRight="5dip"
+        android:paddingBottom="5dip"
+        android:src="@drawable/picker_checkbox_bg" />
+
+</RelativeLayout>
