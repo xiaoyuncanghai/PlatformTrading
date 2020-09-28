@@ -40,8 +40,7 @@ public class MineFragmentDelegate extends AppDelegate {
     private LinearLayout publish_message_sale_list;
     private LinearLayout publish_message_product_list;
     private TextView tv_logout;
-    private ImageView iv_user_mine;
-    private ConstraintLayout coo_mine;
+    private LinearLayout ll_mine_title;
 
     @Override
     public int getRootLayoutId() {
@@ -51,18 +50,17 @@ public class MineFragmentDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        coo_mine = get(R.id.coo_mine);
+        ll_mine_title = get(R.id.ll_mine_title);
         mine_user_phone = get(R.id.mine_user_phone);
         publish_message_sale = get(R.id.publish_message_sale);
         publish_message_product = get(R.id.publish_message_product);
         publish_message_sale_list = get(R.id.publish_message_sale_list);
         publish_message_product_list = get(R.id.publish_message_product_list);
         tv_logout = get(R.id.tv_logout);
-        iv_user_mine = get(R.id.iv_user_mine);
 
         loading_layout = get(R.id.loading_layout);
         loading_layout.setVisibility(View.GONE);
-        coo_mine.setPadding(0,
+        ll_mine_title.setPadding(0,
                 Utils.getStatusBarHeight(this.getActivity()) + Utils.dip2px(this.getActivity(), 5f),
                 0, Utils.dip2px(this.getActivity(), 10f));
         mine_user_phone.setText(SPHelper.getString("phone", "", true));

@@ -41,6 +41,8 @@ import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
 import com.pt.module_mine.adpter.ContentItemListener;
 import com.pt.module_mine.adpter.ImageChooseAdapter;
+import com.pt.module_mine.adpter.PhotoAdapter;
+import com.pt.module_mine.adpter.RecyclerItemClickListener;
 import com.pt.module_mine.bean.CategoryDatebean;
 import com.pt.module_mine.bean.ImageBean;
 import com.pt.module_mine.bean.ModifyRequestBean;
@@ -68,14 +70,13 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private TextView et_modify_goods_title;
     private TextView et_modify_goods_content;
     private RecyclerView rcv_modify_goods_image;
-    private ImageView img_modify_goods_upload;
     private TextView modify_goods_cate;
     private XEditText modify_goods_price;
     private TextView modify_goods_location;
     private TextView tv_modify_goods_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private ArrayList<ImageBean> imageBeans = new ArrayList<>();
-    private ImageChooseAdapter adapter;
+    private ArrayList<ImageBean> imageBeansTemp = new ArrayList<>();
     private OssService mService;
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private String id;
@@ -84,6 +85,8 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private String chooseCategory = "";
     private ListDialog listDialog;
     private int usrType;
+    private PhotoAdapter photoAdapter;
+    private static final int MAX_PIC_NUM = 3;
 
 
     @Override
@@ -97,17 +100,18 @@ public class GoodsModifyActDelegate extends AppDelegate {
         et_modify_goods_title = get(R.id.et_modify_goods_title);
         et_modify_goods_content = get(R.id.et_modify_goods_content);
         rcv_modify_goods_image = get(R.id.rcv_modify_goods_image);
-        img_modify_goods_upload = get(R.id.img_modify_goods_upload);
         modify_goods_cate = get(R.id.modify_goods_cate);
         modify_goods_price = get(R.id.modify_goods_price);
         modify_goods_location = get(R.id.modify_goods_location);
         tv_modify_goods_upload = get(R.id.tv_modify_goods_upload);
         id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
         info = getDataFromIntent();
+
+        photoAdapter = new PhotoAdapter(getActivity(), imageBeans);
         rcv_modify_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
                 GridLayoutManager.VERTICAL, false));
-        adapter = new ImageChooseAdapter(getActivity(), R.layout.publish_sale_image_item, imageBeans);
-        rcv_modify_goods_image.setAdapter(adapter);
+        rcv_modify_goods_image.setAdapter(photoAdapter);
+
         mService = initOSS(Config.OSS_ENDPOINT);
         mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
         requestInitData();
@@ -176,41 +180,43 @@ public class GoodsModifyActDelegate extends AppDelegate {
             }
         });
 
-        img_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
+        rcv_modify_goods_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                RxPermissions rxPermissions = new RxPermissions(getActivity());
-                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
-                        new Observer<Boolean>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                            }
+            public void onItemClick(View view, int position) {
+                if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
+                    RxPermissions rxPermissions = new RxPermissions(getActivity());
+                    rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
+                            new Observer<Boolean>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                }
 
-                            @Override
-                            public void onNext(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    startAction();
-                                } else {
-                                    Toast.makeText(getActivity(), R.string.permission_request_denied,
-                                            Toast.LENGTH_LONG)
-                                            .show();
+                                @Override
+                                public void onNext(Boolean aBoolean) {
+                                    if (aBoolean) {
+                                        startAction();
+                                    } else {
+                                        Toast.makeText(getActivity(), R.string.permission_request_denied,
+                                                Toast.LENGTH_LONG)
+                                                .show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
                                 }
                             }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        }
-                );
+                    );
+                }
             }
-        });
+        }));
 
         modify_goods_cate.setOnClickListener(v -> {
             ContentAdapter adapter = new ContentAdapter(getActivity(), categoryList, new ContentItemListener() {
@@ -405,7 +411,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
                 .theme(R.style.Matisse_Dracula)
                 .countable(false)
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-                .maxSelectable(3)
+                .maxSelectable(MAX_PIC_NUM - imageBeans.size())
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .imageEngine(new PicassoEngine())
@@ -414,7 +420,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
-            imageBeans.clear();
+            imageBeansTemp.clear();
             if (Matisse.obtainResult(data) != null && Matisse.obtainResult(data).size() > 0) {
                 List<Uri> UriList = Matisse.obtainResult(data);
                 List<String> pathList = Matisse.obtainPathResult(data);
@@ -423,14 +429,10 @@ public class GoodsModifyActDelegate extends AppDelegate {
                     bean.setImageUri(UriList.get(i));
                     bean.setImagePath(pathList.get(i));
                     bean.setImageName(pathList.get(i).replaceAll("/", ""));
-                    imageBeans.add(bean);
+                    imageBeansTemp.add(bean);
                 }
-            }
-            adapter.notifyDataSetChanged();
-            if (imageBeans.size() > 2) {
-                img_modify_goods_upload.setVisibility(View.GONE);
-            } else {
-                img_modify_goods_upload.setVisibility(View.VISIBLE);
+                imageBeans.addAll(imageBeansTemp);
+                photoAdapter.notifyDataSetChanged();
             }
         }
     }
