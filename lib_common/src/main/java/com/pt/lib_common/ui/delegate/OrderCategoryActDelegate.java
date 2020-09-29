@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.CategoryListAdapter;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.CategoryItemDateBean;
 import com.pt.lib_common.bean.jsonbean.CategoryListJsonBean;
 import com.pt.lib_common.bean.requestBean.CategoryListRequestBean;

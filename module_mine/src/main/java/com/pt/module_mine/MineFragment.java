@@ -1,9 +1,6 @@
 package com.pt.module_mine;
 
 import android.os.Bundle;
-import android.view.View;
-
-import androidx.annotation.Nullable;
 
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_mine.delegate.MineFragmentDelegate;

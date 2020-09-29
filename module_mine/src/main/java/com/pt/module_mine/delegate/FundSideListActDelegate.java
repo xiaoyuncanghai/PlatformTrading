@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -20,7 +21,6 @@ import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.FundSideAdapter;
-import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.module_mine.bean.json.FuncSideJsonBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

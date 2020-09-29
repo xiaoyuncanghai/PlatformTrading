@@ -4,7 +4,6 @@ import com.alibaba.sdk.android.oss.common.utils.CaseInsensitiveHashMap;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

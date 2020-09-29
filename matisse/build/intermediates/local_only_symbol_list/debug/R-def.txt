@@ -113,7 +113,6 @@ layout fragment_preview_item
 layout media_grid_content
 layout media_grid_item
 layout photo_capture_item
-plurals error_over_count
 string album_name_all
 string button_apply
 string button_apply_default

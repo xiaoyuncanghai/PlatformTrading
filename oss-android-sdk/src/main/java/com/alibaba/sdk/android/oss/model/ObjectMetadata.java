@@ -8,7 +8,6 @@ import com.alibaba.sdk.android.oss.common.utils.DateUtil;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

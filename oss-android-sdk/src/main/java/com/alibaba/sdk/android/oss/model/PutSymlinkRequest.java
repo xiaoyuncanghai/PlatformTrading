@@ -1,10 +1,5 @@
 package com.alibaba.sdk.android.oss.model;
 
-import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.callback.OSSRetryCallback;
-
-import java.util.Map;
-
 public class PutSymlinkRequest extends OSSRequest {
     private String bucketName;
     private String objectKey;

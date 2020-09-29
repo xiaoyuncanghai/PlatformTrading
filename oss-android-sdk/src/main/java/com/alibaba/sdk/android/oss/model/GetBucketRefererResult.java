@@ -1,7 +1,6 @@
 package com.alibaba.sdk.android.oss.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GetBucketRefererResult extends OSSResult {
     private String mAllowEmpty;

@@ -4,16 +4,13 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.module_near.R;
 import com.pt.module_near.bean.data.NearItemDataBean;
-import com.pt.module_near.bean.data.NearRequestDataBean;
 
 import java.util.List;
 

@@ -20,15 +20,12 @@ import com.google.gson.Gson;
 import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.GoodsDetailAdapter;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.bean.databean.GoodsDetailDateBean;
 import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
-import com.pt.lib_common.bean.jsonbean.ApplyFunderSaleJsonBean;
 import com.pt.lib_common.bean.jsonbean.CreateOrderJson;
 import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
 import com.pt.lib_common.bean.jsonbean.PhoneRequestJsonBean;
-import com.pt.lib_common.bean.requestBean.ApplyFunderSalerRequestBean;
 import com.pt.lib_common.bean.requestBean.ExchangeRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsDetailRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
@@ -47,10 +44,6 @@ import com.xw.repo.XEditText;
 import java.util.ArrayList;
 
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
-import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_RESULT;
-import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_SALER;
 
 public class GoodsDetailsActDelegate extends AppDelegate {
 

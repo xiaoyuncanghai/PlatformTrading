@@ -1,7 +1,6 @@
 package com.alibaba.sdk.android.oss.model;
 
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.common.OSSConstants;
 
 import java.util.Map;
 

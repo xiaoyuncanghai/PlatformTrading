@@ -23,7 +23,6 @@ import com.pt.lib_common.R;
 import com.pt.lib_common.adapter.SearchAdapter;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.SearchJsonBean;
-import com.pt.lib_common.base.request.SearchRequestBean;
 import com.pt.lib_common.bean.databean.SearchBean;
 import com.pt.lib_common.bean.requestBean.SearchListRequestBean;
 import com.pt.lib_common.constants.Constant;

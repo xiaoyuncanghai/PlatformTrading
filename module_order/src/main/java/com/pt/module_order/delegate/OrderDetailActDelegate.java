@@ -31,7 +31,11 @@ import com.pt.module_order.bean.rquest.OrderMoneyRequestBean;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.pt.lib_common.constants.Constant.*;
+import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_RESULT;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_ID;
+import static com.pt.lib_common.constants.Constant.ORDER_USER_TYPE;
 
 public class OrderDetailActDelegate extends AppDelegate {
 

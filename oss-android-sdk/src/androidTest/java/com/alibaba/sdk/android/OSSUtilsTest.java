@@ -5,7 +5,6 @@ import android.test.AndroidTestCase;
 import android.text.TextUtils;
 
 import com.alibaba.sdk.android.oss.common.LogThreadPoolManager;
-import com.alibaba.sdk.android.oss.common.OSSHeaders;
 import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.utils.BinaryUtil;
 import com.alibaba.sdk.android.oss.common.utils.DateUtil;
@@ -17,13 +16,11 @@ import com.alibaba.sdk.android.oss.common.utils.VersionInfoUtils;
 
 import org.apache.commons.codec.binary.Base64;
 
-
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
-import java.net.URI;
 
 /**
  * Created by jingdan on 2017/8/25.

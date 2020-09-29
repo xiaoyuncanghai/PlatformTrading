@@ -13,7 +13,6 @@ import com.alibaba.sdk.android.oss.model.OSSRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.apkfuns.logutils.LogUtils;
-import com.pt.lib_common.rxEasyhttp.cache.stategy.OnlyCacheStrategy;
 
 import java.io.File;
 import java.util.HashMap;

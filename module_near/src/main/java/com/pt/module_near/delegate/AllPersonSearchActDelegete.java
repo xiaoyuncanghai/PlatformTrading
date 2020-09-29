@@ -3,7 +3,6 @@ package com.pt.module_near.delegate;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.base.SearchJsonBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -22,7 +20,6 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.module_near.R;
 import com.pt.module_near.adapter.AllPersonAdapter;
-import com.pt.module_near.adapter.NearRequestAdapter;
 import com.pt.module_near.bean.data.NearItemDataBean;
 import com.pt.module_near.bean.json.NearJsonBean;
 import com.pt.module_near.bean.request.NearRequestRequestBean;

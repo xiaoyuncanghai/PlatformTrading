@@ -12,8 +12,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.module_mine.R;
 import com.pt.module_mine.bean.PublishItemDataBean;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class PublistListAdapter extends BaseQuickAdapter<PublishItemDataBean, BaseViewHolder> {

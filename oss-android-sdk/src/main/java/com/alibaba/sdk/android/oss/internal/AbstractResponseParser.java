@@ -10,8 +10,6 @@ import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.zip.CheckedInputStream;
 
 import okhttp3.Headers;

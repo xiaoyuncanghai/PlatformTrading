@@ -170,13 +170,16 @@ public class SelectedItemCollection {
         if (maxSelectableReached()) {
             int maxSelectable = currentMaxSelectable();
             String cause;
-
             try {
-                cause = mContext.getResources().getQuantityString(
+                cause = mContext.getString(
+                        R.string.error_over_count,
+                        maxSelectable
+                );
+                /*cause = mContext.getResources().getQuantityString(
                         R.plurals.error_over_count,
                         maxSelectable,
                         maxSelectable
-                );
+                );*/
             } catch (Resources.NotFoundException e) {
                 cause = mContext.getString(
                         R.string.error_over_count,

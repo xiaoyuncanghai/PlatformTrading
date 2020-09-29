@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.apkfuns.logutils.LogUtils;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.Constant;

@@ -7,8 +7,8 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.pt.module_mine.R;
 import com.pt.lib_common.bean.databean.FundSideItem;
+import com.pt.module_mine.R;
 
 import java.util.List;
 

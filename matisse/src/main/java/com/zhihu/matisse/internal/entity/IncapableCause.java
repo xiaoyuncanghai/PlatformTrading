@@ -16,9 +16,10 @@
 package com.zhihu.matisse.internal.entity;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import androidx.annotation.IntDef;
 import androidx.fragment.app.FragmentActivity;
-import android.widget.Toast;
 
 import com.zhihu.matisse.internal.ui.widget.IncapableDialog;
 

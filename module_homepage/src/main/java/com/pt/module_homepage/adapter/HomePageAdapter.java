@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +17,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.pt.lib_common.view.circle.CircleImageView;
 import com.pt.module_homepage.R;
 import com.pt.module_homepage.databean.BannerItemDataBean;
 import com.pt.module_homepage.databean.HomePageDataBean;
 import com.stx.xhb.androidx.XBanner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean, BaseViewHolder> {

@@ -12,7 +12,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.module_order.R;
-import com.pt.module_order.fragment.Order1AllFragment;
 import com.pt.module_order.fragment.Order2BuyFragment;
 import com.pt.module_order.fragment.Order3SaleFragment;
 import com.pt.module_order.fragment.Order4MoneyFragment;

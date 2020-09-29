@@ -1,7 +1,6 @@
 package com.pt.module_near.adapter;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 

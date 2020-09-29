@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
-import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.lib_common.ui.delegate.SplashActDelegate;
 

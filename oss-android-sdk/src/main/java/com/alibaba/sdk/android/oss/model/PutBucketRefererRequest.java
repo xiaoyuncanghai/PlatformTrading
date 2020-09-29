@@ -1,7 +1,6 @@
 package com.alibaba.sdk.android.oss.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PutBucketRefererRequest extends OSSRequest {
     private String mBucketName;

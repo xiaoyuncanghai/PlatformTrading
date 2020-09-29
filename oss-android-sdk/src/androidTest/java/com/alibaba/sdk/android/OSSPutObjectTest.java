@@ -1,9 +1,5 @@
 package com.alibaba.sdk.android;
 
-import android.util.Log;
-
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.callback.OSSRetryCallback;
 import com.alibaba.sdk.android.oss.common.OSSLog;
@@ -19,7 +15,6 @@ import com.alibaba.sdk.android.oss.model.HeadObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

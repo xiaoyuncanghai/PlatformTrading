@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.pt.lib_common.R;
-import com.pt.lib_common.constants.Constant;
 
 
 /**
