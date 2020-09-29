@@ -3,7 +3,6 @@ package com.pt.module_near.delegate;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -153,7 +152,7 @@ public class NearFragmentDelegate extends AppDelegate {
                             nearItemDataBeansTemp.clear();
                             if (nearJsonBean.getData() != null && nearJsonBean.getData().getRecords() != null
                                     && nearJsonBean.getData().getRecords().size() > 0) {
-                                for (SearchJsonBean.DataBean.RecordsBean recordsBean : nearJsonBean.getData().getRecords()) {
+                                for (NearJsonBean.DataBean.RecordsBean recordsBean : nearJsonBean.getData().getRecords()) {
                                     NearItemDataBean itemDataBean = new NearItemDataBean();
                                     itemDataBean.setTitle(recordsBean.getTitle());
                                     itemDataBean.setPrice(recordsBean.getPrice());

@@ -72,9 +72,9 @@
         <ImageView
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/size_12dp"
-            android:layout_width="5dp"
-            android:layout_height="8dp"
-            android:src="@drawable/ic_choose" />
+            android:layout_width="8dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_turn" />
 
     </LinearLayout>
 

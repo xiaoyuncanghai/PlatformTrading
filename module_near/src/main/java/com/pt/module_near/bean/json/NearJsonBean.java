@@ -1,22 +1,28 @@
 package com.pt.module_near.bean.json;
 
-import com.pt.lib_common.base.SearchJsonBean;
-
 import java.util.List;
 
 public class NearJsonBean {
 
     /**
+     * message : null
      * code : 0
-     * data : {"current":0,"hitCount":true,"orders":[{"asc":true,"column":""}],"pages":0,"records":[{"goodsType":0,"id":0,"pic1":"","pic1Url":"","price":0,"title":""}],"searchCount":true,"size":0,"total":0}
-     * message :
+     * data : {"records":[{"id":567,"title":"测试图片","price":123456,"pic1":"storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":565,"title":"求购3","price":500,"pic1":"storageemulated0Pictures1600753993985.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0Pictures1600753993985.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":563,"title":"求购123456","price":123456,"pic1":"storageemulated0PicturesJDImage03f417e1ef442b39a4534f78f3e2df60.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesJDImage03f417e1ef442b39a4534f78f3e2df60.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1}],"total":3,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1}
      * success : true
      */
 
+    private String message;
     private int code;
     private DataBean data;
-    private String message;
     private boolean success;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getCode() {
         return code;
@@ -34,14 +40,6 @@ public class NearJsonBean {
         this.data = data;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public boolean isSuccess() {
         return success;
     }
@@ -52,24 +50,40 @@ public class NearJsonBean {
 
     public static class DataBean {
         /**
-         * current : 0
-         * hitCount : true
-         * orders : [{"asc":true,"column":""}]
-         * pages : 0
-         * records : [{"goodsType":0,"id":0,"pic1":"","pic1Url":"","price":0,"title":""}]
+         * records : [{"id":567,"title":"测试图片","price":123456,"pic1":"storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":565,"title":"求购3","price":500,"pic1":"storageemulated0Pictures1600753993985.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0Pictures1600753993985.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1},{"id":563,"title":"求购123456","price":123456,"pic1":"storageemulated0PicturesJDImage03f417e1ef442b39a4534f78f3e2df60.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesJDImage03f417e1ef442b39a4534f78f3e2df60.jpg?x-oss-process=image/resize,m_fill,h_150,w_150","goodsType":1}]
+         * total : 3
+         * size : 10
+         * current : 1
+         * orders : []
+         * hitCount : false
          * searchCount : true
-         * size : 0
-         * total : 0
+         * pages : 1
          */
 
+        private int total;
+        private int size;
         private int current;
         private boolean hitCount;
-        private int pages;
         private boolean searchCount;
-        private int size;
-        private int total;
-        private List<SearchJsonBean.DataBean.OrdersBean> orders;
-        private List<SearchJsonBean.DataBean.RecordsBean> records;
+        private int pages;
+        private List<RecordsBean> records;
+        private List<?> orders;
+
+        public int getTotal() {
+            return total;
+        }
+
+        public void setTotal(int total) {
+            this.total = total;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
 
         public int getCurrent() {
             return current;
@@ -87,14 +101,6 @@ public class NearJsonBean {
             this.hitCount = hitCount;
         }
 
-        public int getPages() {
-            return pages;
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
-
         public boolean isSearchCount() {
             return searchCount;
         }
@@ -103,95 +109,87 @@ public class NearJsonBean {
             this.searchCount = searchCount;
         }
 
-        public int getSize() {
-            return size;
+        public int getPages() {
+            return pages;
         }
 
-        public void setSize(int size) {
-            this.size = size;
+        public void setPages(int pages) {
+            this.pages = pages;
         }
 
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public List<SearchJsonBean.DataBean.OrdersBean> getOrders() {
-            return orders;
-        }
-
-        public void setOrders(List<SearchJsonBean.DataBean.OrdersBean> orders) {
-            this.orders = orders;
-        }
-
-        public List<SearchJsonBean.DataBean.RecordsBean> getRecords() {
+        public List<RecordsBean> getRecords() {
             return records;
         }
 
-        public void setRecords(List<SearchJsonBean.DataBean.RecordsBean> records) {
+        public void setRecords(List<RecordsBean> records) {
             this.records = records;
         }
 
-        public static class OrdersBean {
-            /**
-             * asc : true
-             * column :
-             */
+        public List<?> getOrders() {
+            return orders;
+        }
 
-            private boolean asc;
-            private String column;
-
-            public boolean isAsc() {
-                return asc;
-            }
-
-            public void setAsc(boolean asc) {
-                this.asc = asc;
-            }
-
-            public String getColumn() {
-                return column;
-            }
-
-            public void setColumn(String column) {
-                this.column = column;
-            }
+        public void setOrders(List<?> orders) {
+            this.orders = orders;
         }
 
         public static class RecordsBean {
             /**
-             * goodsType : 0
-             * id : 0
-             * pic1 :
-             * pic1Url :
-             * price : 0
-             * title :
+             * id : 567
+             * title : 测试图片
+             * price : 123456.0
+             * pic1 : storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg
+             * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesWeiXinwx_camera_1601174526668.jpg?x-oss-process=image/resize,m_fill,h_150,w_150
+             * goodsType : 1
              */
 
-            private int goodsType;
-            private int id;
+            private String id;
+            private String title;
+            private String price;
             private String pic1;
             private String pic1Url;
-            private String price;
-            private String title;
+            private String pic2Url;
+            private String pic3Url;
+            private int goodsType;
 
-            public int getGoodsType() {
-                return goodsType;
+            public String getPic2Url() {
+                return pic2Url;
             }
 
-            public void setGoodsType(int goodsType) {
-                this.goodsType = goodsType;
+            public void setPic2Url(String pic2Url) {
+                this.pic2Url = pic2Url;
             }
 
-            public int getId() {
+            public String getPic3Url() {
+                return pic3Url;
+            }
+
+            public void setPic3Url(String pic3Url) {
+                this.pic3Url = pic3Url;
+            }
+
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
             }
 
             public String getPic1() {
@@ -210,20 +208,12 @@ public class NearJsonBean {
                 this.pic1Url = pic1Url;
             }
 
-            public String getPrice() {
-                return price;
+            public int getGoodsType() {
+                return goodsType;
             }
 
-            public void setPrice(String price) {
-                this.price = price;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
+            public void setGoodsType(int goodsType) {
+                this.goodsType = goodsType;
             }
         }
     }

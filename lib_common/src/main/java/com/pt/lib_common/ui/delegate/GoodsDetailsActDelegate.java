@@ -85,7 +85,6 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         rcv_order_detail = get(R.id.rcv_order_detail);
         order_off_shelf = get(R.id.order_off_shelf);
         order_modified = get(R.id.order_modified);
-        //order_apply_money = get(R.id.order_apply_money);
         order_delete_or_transaction = get(R.id.order_delete_or_transaction);
         order_exchange = get(R.id.order_exchange);
         rcv_order_detail.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
