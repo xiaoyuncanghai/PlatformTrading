@@ -9,6 +9,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_near_page"
+        android:background="@drawable/near_fgt_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
