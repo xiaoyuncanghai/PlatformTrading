@@ -14,29 +14,22 @@
         android:layout_marginTop="@dimen/size_20dp"
         android:gravity="center"
         android:text="温馨提示"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/size_20dp" />
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_18dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_marginTop="@dimen/size_30dp"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="@dimen/size_60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="@dimen/size_10dp"
-            android:gravity="center|start"
-            android:paddingStart="@dimen/size_20dp"
-            android:text="姓名: "
-            android:textColor="@color/primaryText"
-            android:textSize="13sp" />
 
         <com.xw.repo.XEditText
             android:id="@+id/input_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/size_25dp"
+            android:layout_marginEnd="@dimen/size_25dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:hint="请输入您的姓名"
@@ -55,26 +48,18 @@
         android:layout_marginTop="@dimen/size_5dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="@dimen/size_60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="@dimen/size_10dp"
-            android:gravity="center|start"
-            android:paddingStart="@dimen/size_20dp"
-            android:text="电话: "
-            android:textColor="@color/primaryText"
-            android:textSize="13sp" />
-
         <com.xw.repo.XEditText
             android:id="@+id/input_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/size_25dp"
+            android:layout_marginEnd="@dimen/size_25dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:hint="请输入您的电话"
+            android:inputType="phone"
             android:maxLines="1"
             android:paddingStart="@dimen/size_5dp"
-            android:inputType="phone"
             android:textColor="@color/primaryText"
             android:textColorHint="@color/thirdText"
             android:textSize="@dimen/text_size_13sp" />
@@ -82,31 +67,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/size_25dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/cancel_input"
-            android:layout_width="@dimen/size_60dp"
-            android:layout_height="60dp"
+            android:id="@+id/confirm_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/size_10dp"
             android:layout_weight="1"
+            android:background="@color/gray_blue"
             android:gravity="center"
             android:paddingStart="@dimen/size_20dp"
-            android:text="取消 "
+            android:text="确定 "
             android:textColor="@color/primaryText"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/confirm_input"
-            android:layout_width="@dimen/size_60dp"
-            android:layout_height="60dp"
+            android:id="@+id/cancel_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/size_10dp"
             android:layout_weight="1"
+            android:background="@color/gray_f6"
             android:gravity="center"
             android:paddingStart="@dimen/size_20dp"
-            android:text="确认"
+            android:text="取消 "
             android:textColor="@color/primaryText"
             android:textSize="15sp" />
     </LinearLayout>
