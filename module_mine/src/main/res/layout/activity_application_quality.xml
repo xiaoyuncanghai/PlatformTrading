@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,107 +16,125 @@
         <include layout="@layout/layout_actionbar"></include>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginTop="@dimen/size_20dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|start"
-            android:text="请上传营业执照:"
-            android:textColor="@color/primaryText"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/show_business_license"
-            android:layout_width="@dimen/size_200dp"
-            android:layout_height="@dimen/size_120dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_10dp"
-            android:scaleType="fitXY"
-            android:background="@null" />
-
-        <ImageView
-            android:id="@+id/upload_business_license"
-            android:layout_width="@dimen/size_200dp"
-            android:layout_height="@dimen/size_120dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_10dp"
-            android:background="@drawable/add_image_upload" />
-
-        <TextView
-            android:layout_marginTop="@dimen/size_20dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|start"
-            android:text="请输入公司名称:"
-            android:textColor="@color/primaryText"
-            android:textSize="15sp" />
-
-        <com.xw.repo.XEditText
-            android:id="@+id/et_input_company_name"
-            android:layout_marginTop="@dimen/dp_10"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_45dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:hint="请输入您的公司全称(如杭州XX有限公司)"
-            android:paddingStart="@dimen/size_5dp"
-            android:textColor="@color/primaryText"
-            android:textColorHint="@color/thirdText"
-            android:textSize="@dimen/text_size_14sp" />
-
-        <TextView
-            android:layout_marginTop="@dimen/size_20dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
-            android:text="请输入社会信用代码:"
-            android:textColor="@color/primaryText"
-            android:textSize="15sp" />
+            android:orientation="vertical">
 
-        <com.xw.repo.XEditText
-            android:id="@+id/et_input_company_code"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_45dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:hint="请输入您的公司社会信用代码"
-            android:paddingStart="@dimen/size_5dp"
-            android:textColor="@color/primaryText"
-            android:textColorHint="@color/thirdText"
-            android:textSize="@dimen/text_size_14sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/size_15dp"
+                android:background="@drawable/apply_quality_background"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_upload_application_quality"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_45dp"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_20dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:background="@drawable/selector_btn"
-            android:enabled="false"
-            android:gravity="center"
-            android:text="提交"
-            android:textSize="@dimen/text_size_15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/size_20dp"
+                    android:layout_marginEnd="@dimen/size_20dp"
+                    android:gravity="center|start"
+                    android:text="公司名称:"
+                    android:textColor="@color/gray_34"
+                    android:textSize="17sp" />
 
-    </LinearLayout>
+                <com.xw.repo.XEditText
+                    android:id="@+id/et_input_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/size_20dp"
+                    android:background="@color/white"
+                    android:ellipsize="end"
+                    android:hint="请输入您的公司全称(如杭州XX有限公司)"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/size_5dp"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/gray_9a"
+                    android:textSize="@dimen/text_size_15sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/size_20dp"
+                    android:layout_marginEnd="@dimen/size_20dp"
+                    android:gravity="center|start"
+                    android:text="请输入社会信用代码:"
+                    android:textColor="@color/gray_34"
+                    android:textSize="17sp" />
+
+                <com.xw.repo.XEditText
+                    android:id="@+id/et_input_company_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/size_20dp"
+                    android:background="@color/white"
+                    android:ellipsize="end"
+                    android:hint="请输入您的公司社会信用代码"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/size_5dp"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/gray_9a"
+                    android:textSize="@dimen/text_size_15sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/size_20dp"
+                    android:layout_marginEnd="@dimen/size_20dp"
+                    android:gravity="center|start"
+                    android:text="上传营业执照:"
+                    android:textColor="@color/gray_34"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/show_business_license"
+                    android:layout_width="@dimen/size_100dp"
+                    android:layout_height="@dimen/size_100dp"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/upload_business_license"
+                    android:layout_width="@dimen/size_100dp"
+                    android:layout_height="@dimen/size_100dp"
+                    android:layout_marginStart="@dimen/size_20dp"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_marginBottom="@dimen/size_15dp"
+                    android:background="@drawable/add_image_upload" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_upload_application_quality"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_45dp"
+                android:layout_marginStart="@dimen/size_20dp"
+                android:layout_marginTop="@dimen/size_20dp"
+                android:layout_marginEnd="@dimen/size_20dp"
+                android:background="@drawable/selector_btn"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="提交"
+                android:textSize="@dimen/text_size_15sp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

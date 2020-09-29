@@ -132,5 +132,7 @@
     <color name="gray_blue">#5F72FF</color>
     <color name="gray_yellow">#FF9C00</color>
     <color name="gray_red">#FF1212</color>
+    <color name="gray_34">#343434</color>
+    <color name="gray_9a">#9A9A9A</color>
 
 </resources>
