@@ -1,141 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:background="@drawable/goods_detail_text_background"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/goods_detail_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_20dp"
-        android:layout_marginEnd="@dimen/size_20dp"
-        android:text="标题"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/size_15dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:background="@color/text_908f94"
-        android:layerType="software" />
-
-    <TextView
-        android:id="@+id/goods_detail_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginEnd="@dimen/size_20dp"
-        android:text="上架"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/size_15dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:background="@color/text_908f94"
-        android:layerType="software" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/goods_detail_category"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_10dp"
-            android:layout_marginEnd="@dimen/size_5dp"
-            android:text="类别"
-            android:ellipsize="end"
-            android:textColor="@color/secondaryText"
-            android:textSize="@dimen/size_10dp" />
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:background="@drawable/goods_detail_category_background"
+            android:paddingStart="@dimen/size_5dp"
+            android:paddingTop="@dimen/size_2dp"
+            android:paddingEnd="@dimen/size_5dp"
+            android:paddingBottom="@dimen/size_2dp"
+            android:text="一点公益"
+            android:textAlignment="viewStart"
+            android:textColor="@color/gray_blue"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/goods_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_5dp"
-            android:layout_marginTop="@dimen/size_10dp"
-            android:layout_marginEnd="@dimen/size_20dp"
-            android:text="时间"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/secondaryText"
-            android:textSize="@dimen/size_10dp" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:background="@color/text_908f94"
-        android:layerType="software" />
-
-    <!--<TextView
-        android:id="@+id/goods_detail_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginEnd="@dimen/size_20dp"
-        android:text="商品创建者:"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/size_15dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:background="@color/text_908f94"
-        android:layerType="software" />-->
+            android:layout_marginTop="@dimen/size_15dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:text="20010000"
+            android:textColor="@color/bg_999999"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/goods_detail_description"
+        android:id="@+id/goods_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/size_15dp"
         android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginEnd="@dimen/size_20dp"
-        android:text="商品描述:"
-        android:textColor="@color/secondaryText"
-        android:textSize="@dimen/size_13dp" />
+        android:layout_marginEnd="@dimen/size_15dp"
+        android:text="标题"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/size_18dp"
+        android:textStyle="bold" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:background="@color/text_908f94"
-        android:layerType="software" />
 
     <TextView
         android:id="@+id/goods_detail_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginEnd="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/size_15dp"
+        android:layout_marginTop="@dimen/size_15dp"
+        android:layout_marginEnd="@dimen/size_15dp"
         android:text="价格:"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/size_15dp" />
+        android:textColor="@color/gray_blue"
+        android:textSize="@dimen/size_17dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginTop="@dimen/size_15dp"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:background="@color/gray_EE"
+        android:layerType="software" />
+
+    <TextView
+        android:id="@+id/goods_detail_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_15dp"
+        android:layout_marginTop="@dimen/size_15dp"
+        android:layout_marginEnd="@dimen/size_15dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="描述:"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/size_14dp" />
 
 </LinearLayout>

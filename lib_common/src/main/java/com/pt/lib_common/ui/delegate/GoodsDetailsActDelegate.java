@@ -519,11 +519,11 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             titleItem.setCategory(detailJsonBean.getData().getCateName1());
                             infoData.setCategory(detailJsonBean.getData().getCateName1());
                             infoData.setCateId(detailJsonBean.getData().getCateId1());
-                            titleItem.setUpdateTime(detailJsonBean.getData().getUpdateTime());
-                            titleItem.setCreatePhone(detailJsonBean.getData().getCreateUserPhone());
+                            titleItem.setCreateTime(detailJsonBean.getData().getCreateTime());
+                            //titleItem.setCreatePhone(detailJsonBean.getData().getCreateUserPhone());
                             titleItem.setPrice(detailJsonBean.getData().getPrice());
                             infoData.setPrice(detailJsonBean.getData().getPrice());
-                            titleItem.setGoodsStatus(detailJsonBean.getData().getGoodsStatus());
+                            //titleItem.setGoodsStatus(detailJsonBean.getData().getGoodsStatus());
                             detailList.add(titleItem);
                             GoodsDetailDateBean picItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY);
                             picItem.setPic1Url(detailJsonBean.getData().getPic1Url());

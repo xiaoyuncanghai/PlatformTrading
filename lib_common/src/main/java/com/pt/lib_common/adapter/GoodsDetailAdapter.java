@@ -1,11 +1,14 @@
 package com.pt.lib_common.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.lib_common.R;
@@ -34,19 +37,16 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
         switch (helper.getItemViewType()) {
             case GoodsDetailDateBean.KEY_GOODS_DETAIIL_TITLE:
                 TextView goods_detail_title = helper.getView(R.id.goods_detail_title);
-                TextView goods_detail_status = helper.getView(R.id.goods_detail_status);
                 TextView goods_detail_category = helper.getView(R.id.goods_detail_category);
                 TextView goods_detail_time = helper.getView(R.id.goods_detail_time);
-                //TextView goods_detail_phone = helper.getView(R.id.goods_detail_phone);
                 TextView goods_detail_description = helper.getView(R.id.goods_detail_description);
                 TextView goods_detail_price = helper.getView(R.id.goods_detail_price);
                 goods_detail_title.setText(item.getTitle());
-                goods_detail_status.setText("状态: " + item.getGoodsStatusDes());
-                goods_detail_category.setText("所属分类: " + item.getCategory());
-                goods_detail_time.setText("时间: " + item.getUpdateTime());
-                //goods_detail_phone.setText("电话" + item.getCreatePhone());
-                goods_detail_description.setText("描述: " + item.getDescription());
-                goods_detail_price.setText("价格: " + item.getPrice());
+                goods_detail_category.setText(item.getCategory());
+                goods_detail_time.setText(item.getCreateTime());
+                goods_detail_description.setText(Html.fromHtml("<font color=\"#999999\">描述:</font>"
+                        + item.getDescription()));
+                goods_detail_price.setText("￥" + item.getPrice());
                 break;
 
             case GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY:
@@ -59,6 +59,7 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                             .load(item.getPic1Url())
                             .placeholder(R.drawable.ic_place_holder)
                             .centerCrop()
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(5)))
                             .error(R.drawable.ic_place_holder).into(category_body_pic);
                 }
 
@@ -68,6 +69,7 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                             .load(item.getPic2Url())
                             .placeholder(R.drawable.ic_place_holder)
                             .centerCrop()
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(5)))
                             .error(R.drawable.ic_place_holder).into(category_body_pic2);
                 }
 
@@ -77,9 +79,9 @@ public class GoodsDetailAdapter extends BaseMultiItemQuickAdapter<GoodsDetailDat
                             .load(item.getPic3Url())
                             .placeholder(R.drawable.ic_place_holder)
                             .centerCrop()
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(5)))
                             .error(R.drawable.ic_place_holder).into(category_body_pic3);
                 }
-
                 break;
 
         }

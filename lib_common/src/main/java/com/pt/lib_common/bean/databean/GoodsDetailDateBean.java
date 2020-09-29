@@ -44,7 +44,7 @@ public class GoodsDetailDateBean implements MultiItemEntity {
 
     private String goodsStatusDes;
     private String category;
-    private String updateTime;
+    private String createTime;
     private String createPhone;
     private int goodsStatus;
     private int goodsType;
@@ -89,12 +89,12 @@ public class GoodsDetailDateBean implements MultiItemEntity {
         this.category = category;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getCreatePhone() {
