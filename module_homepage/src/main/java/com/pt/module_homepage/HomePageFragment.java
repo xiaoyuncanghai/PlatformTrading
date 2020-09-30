@@ -37,11 +37,7 @@ public class HomePageFragment extends FragmentPresenter<HomePageFragmentDelegate
         return HomePageFragmentDelegate.class;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        viewDelegate.onActivityResult(requestCode, resultCode, data);
+    public void refreshDeleteData() {
+        viewDelegate.refreshDeleteData();
     }
-
-
 }

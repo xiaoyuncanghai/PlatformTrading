@@ -54,6 +54,14 @@ public class MainActDelegate extends AppDelegate {
         initView();
     }
 
+    public HomePageFragment getHomepageFragment(){
+        return findFragment(HomePageFragment.class);
+    }
+
+    public NearFragment getNearFragment() {
+        return findFragment(NearFragment.class);
+    }
+
     private void initView() {
         pageNavigationView = get(R.id.bottom_tab);
         navigationController = pageNavigationView.material()

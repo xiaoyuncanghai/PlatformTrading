@@ -27,4 +27,5 @@ public interface Constant {
     String KEY_MODIFY_INFO_SERIALIZABLE = "modify_info_serializable";
 
     int KEY_FROM_HOMEPAGE_REQUEST = 1010;
+    int KEY_FROM_NEAR_REQUEST = 1011;
 }

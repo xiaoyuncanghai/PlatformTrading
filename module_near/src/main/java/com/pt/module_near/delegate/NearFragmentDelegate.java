@@ -55,6 +55,7 @@ public class NearFragmentDelegate extends AppDelegate {
     private LinearLayout near_search;
     private LinearLayout ll_user_search;
     private LinearLayout near_header_layout_ll;
+    private int need_position = -1;
 
     @Override
     public int getRootLayoutId() {
@@ -114,15 +115,14 @@ public class NearFragmentDelegate extends AppDelegate {
             }
         });
 
-        nearAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        nearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.near_promote_iv_to_details) {
-                    String product_id = nearItemDataBeans.get(position).getId();
-                    ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
-                            .withString(Constant.KEY_GOODS_ID, product_id)
-                            .navigation();
-                }
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                need_position = position;
+                String product_id = nearItemDataBeans.get(position).getId();
+                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                        .withString(Constant.KEY_GOODS_ID, product_id)
+                        .navigation(getActivity(), Constant.KEY_FROM_NEAR_REQUEST);
             }
         });
     }
@@ -198,9 +198,18 @@ public class NearFragmentDelegate extends AppDelegate {
         for (City city : allCities) {
             if (city.getName().equals(cityName)) {
                 cityCode = city.getCode();
-                LogUtils.d("NearFgt rec cityCode = "+ cityCode);
+                LogUtils.d("NearFgt rec cityCode = " + cityCode);
                 break;
             }
+        }
+    }
+
+    public void refreshDeleteData() {
+        LogUtils.d("activity code 3");
+        if (need_position != -1) {
+            LogUtils.d("activity code 4");
+            nearItemDataBeans.remove(need_position);
+            nearAdapter.notifyItemRemoved(need_position);
         }
     }
 }

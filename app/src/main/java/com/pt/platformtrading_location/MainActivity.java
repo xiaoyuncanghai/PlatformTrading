@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -23,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.CityInfo;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.citychoose.db.DBManager;
@@ -295,5 +297,21 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(14f);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Constant.KEY_FROM_NEAR_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    viewDelegate.getNearFragment().refreshDeleteData();
+                }
+                break;
 
+            case Constant.KEY_FROM_HOMEPAGE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    viewDelegate.getHomepageFragment().refreshDeleteData();
+                }
+                break;
+        }
+    }
 }

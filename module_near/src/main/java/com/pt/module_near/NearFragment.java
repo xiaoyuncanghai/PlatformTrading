@@ -1,5 +1,6 @@
 package com.pt.module_near;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,5 +51,9 @@ public class NearFragment extends FragmentPresenter<NearFragmentDelegate> {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         viewDelegate.srl_near_page.autoRefresh();
+    }
+
+    public void refreshDeleteData(){
+        viewDelegate.refreshDeleteData();
     }
 }

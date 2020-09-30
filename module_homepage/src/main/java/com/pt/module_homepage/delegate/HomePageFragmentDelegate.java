@@ -372,9 +372,8 @@ public class HomePageFragmentDelegate extends AppDelegate {
         srl_home_page.autoRefresh();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constant.KEY_FROM_HOMEPAGE_REQUEST
-                && need_position != -1 && resultCode == getActivity().RESULT_OK) {
+    public void refreshDeleteData() {
+        if ( need_position != -1) {
             //表示存在删除
             homePageItemList.remove(need_position);
             homePageAdapter.notifyItemRemoved(need_position);
