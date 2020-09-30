@@ -25,4 +25,6 @@ public interface Constant {
 
     String KEY_MODIFY_INFO = "modify_info";
     String KEY_MODIFY_INFO_SERIALIZABLE = "modify_info_serializable";
+
+    int KEY_FROM_HOMEPAGE_REQUEST = 1010;
 }

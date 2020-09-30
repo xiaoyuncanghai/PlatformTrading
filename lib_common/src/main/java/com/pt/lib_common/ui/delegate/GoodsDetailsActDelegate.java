@@ -162,6 +162,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
+                            getActivity().setResult(getActivity().RESULT_OK);
                             getActivity().finish();
                         }
                     }

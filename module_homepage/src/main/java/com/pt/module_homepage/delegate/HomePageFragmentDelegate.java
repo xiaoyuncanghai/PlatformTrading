@@ -1,5 +1,6 @@
 package com.pt.module_homepage.delegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -75,6 +76,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     private List<HotCity> hotCities;
     private String cityCode = "";
     private String cityName = "";
+    private int need_position = -1;
 
     @Override
     public int getRootLayoutId() {
@@ -150,10 +152,11 @@ public class HomePageFragmentDelegate extends AppDelegate {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.homepage_promote_tv_see) {
+                    need_position = position;
                     String product_id = homePageItemList.get(position).getPromote_id();
                     ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                             .withString(Constant.KEY_GOODS_ID, product_id)
-                            .navigation();
+                            .navigation(getActivity(), Constant.KEY_FROM_HOMEPAGE_REQUEST);
                 }
             }
         });
@@ -367,5 +370,14 @@ public class HomePageFragmentDelegate extends AppDelegate {
             }
         }
         srl_home_page.autoRefresh();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constant.KEY_FROM_HOMEPAGE_REQUEST
+                && need_position != -1 && resultCode == getActivity().RESULT_OK) {
+            //表示存在删除
+            homePageItemList.remove(need_position);
+            homePageAdapter.notifyItemRemoved(need_position);
+        }
     }
 }
