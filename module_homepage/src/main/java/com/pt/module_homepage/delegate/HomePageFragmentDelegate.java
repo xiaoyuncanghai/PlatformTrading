@@ -19,6 +19,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.bean.CityInfo;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -187,6 +189,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                         String.format("点击的数据：%s，%s", data.getName(), data.getCode()),
                                         Toast.LENGTH_SHORT)
                                         .show();
+                                BaseApplication.getInstance().setCity(new CityInfo(cityName, cityCode));
                                 srl_home_page.autoRefresh();
                             }
 
@@ -373,7 +376,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     }
 
     public void refreshDeleteData() {
-        if ( need_position != -1) {
+        if (need_position != -1) {
             //表示存在删除
             homePageItemList.remove(need_position);
             homePageAdapter.notifyItemRemoved(need_position);

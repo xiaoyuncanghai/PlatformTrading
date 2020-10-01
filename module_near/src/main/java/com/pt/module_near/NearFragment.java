@@ -30,23 +30,6 @@ public class NearFragment extends FragmentPresenter<NearFragmentDelegate> {
         return NearFragmentDelegate.class;
     }
 
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //initHeader();
-    }
-
-    public void initHeader() {
-        setTitle("附近");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-    }
-
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
@@ -55,5 +38,10 @@ public class NearFragment extends FragmentPresenter<NearFragmentDelegate> {
 
     public void refreshDeleteData(){
         viewDelegate.refreshDeleteData();
+    }
+
+    //每次切换的时候刷新数据
+    public void  refreshData(){
+        viewDelegate.srl_near_page.autoRefresh();
     }
 }

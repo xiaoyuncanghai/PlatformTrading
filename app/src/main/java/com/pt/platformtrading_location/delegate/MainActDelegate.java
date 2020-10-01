@@ -74,6 +74,9 @@ public class MainActDelegate extends AppDelegate {
             @Override
             public void onSelected(int index, int old) {
                 showHideFragment(mFragments[index]);
+                if (index == 1) {
+                    getNearFragment().refreshData();
+                }
             }
 
             @Override

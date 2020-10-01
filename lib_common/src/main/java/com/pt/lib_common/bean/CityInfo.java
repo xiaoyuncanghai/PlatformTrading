@@ -4,6 +4,14 @@ public class CityInfo {
     private String cityName;
     private String cityCode;
 
+    public CityInfo() {
+    }
+
+    public CityInfo(String cityName, String cityCode) {
+        this.cityName = cityName;
+        this.cityCode = cityCode;
+    }
+
     public String getCityName() {
         return cityName;
     }

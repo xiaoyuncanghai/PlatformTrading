@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -65,7 +66,7 @@ public class NearFragmentDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
         initView();
     }
 
@@ -131,6 +132,7 @@ public class NearFragmentDelegate extends AppDelegate {
      * 请求列表
      */
     private void requestList() {
+        cityCode = BaseApplication.getInstance().getCity().getCityCode();
         NearRequestBean requestBean = new NearRequestBean();
         requestBean.setCurrent(cPage);
         requestBean.setCityCode(cityCode);
@@ -191,7 +193,7 @@ public class NearFragmentDelegate extends AppDelegate {
                 });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    /*@Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCityName(String cityName) {
         dbManager = new DBManager(getActivity());
         List<City> allCities = new DBManager(getActivity()).getCityByProvince();
@@ -202,12 +204,10 @@ public class NearFragmentDelegate extends AppDelegate {
                 break;
             }
         }
-    }
+    }*/
 
     public void refreshDeleteData() {
-        LogUtils.d("activity code 3");
         if (need_position != -1) {
-            LogUtils.d("activity code 4");
             nearItemDataBeans.remove(need_position);
             nearAdapter.notifyItemRemoved(need_position);
         }
