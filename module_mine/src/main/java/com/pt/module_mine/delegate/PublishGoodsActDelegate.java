@@ -65,6 +65,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishGoodsActDelegate extends AppDelegate {
 
+    private static final int MAX_PIC_NUM = 3;
     private TextView et_publish_goods_title;
     private TextView et_publish_goods_content;
     private RecyclerView rcv_publish_goods_image;
@@ -386,7 +387,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
                 .capture(true)
                 .captureStrategy(
                         new CaptureStrategy(true, "com.pt.platformtrading_location.fileprovider", "test"))
-                .maxSelectable(3)
+                .maxSelectable(MAX_PIC_NUM - imageBeans.size())
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .gridExpectedSize(
                         getActivity().getResources().getDimensionPixelSize(R.dimen.grid_expected_size))

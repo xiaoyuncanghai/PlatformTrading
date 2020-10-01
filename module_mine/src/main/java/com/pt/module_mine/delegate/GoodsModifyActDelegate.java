@@ -24,6 +24,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
 import com.pt.lib_common.bean.jsonbean.ModifyGoodsJsonBean;
 import com.pt.lib_common.constants.Constant;
@@ -410,7 +411,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
                 .capture(true)
                 .captureStrategy(
                         new CaptureStrategy(true, "com.pt.platformtrading_location.fileprovider", "test"))
-                .maxSelectable(3)
+                .maxSelectable(MAX_PIC_NUM - imageBeans.size())
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .gridExpectedSize(
                         getActivity().getResources().getDimensionPixelSize(R.dimen.grid_expected_size))

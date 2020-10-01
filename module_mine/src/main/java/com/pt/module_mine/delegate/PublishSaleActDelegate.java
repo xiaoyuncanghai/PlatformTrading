@@ -423,7 +423,7 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .capture(true)
                 .captureStrategy(
                         new CaptureStrategy(true, "com.pt.platformtrading_location.fileprovider", "test"))
-                .maxSelectable(3)
+                .maxSelectable(MAX_PIC_NUM - imageBeans.size())
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .gridExpectedSize(
                         getActivity().getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
