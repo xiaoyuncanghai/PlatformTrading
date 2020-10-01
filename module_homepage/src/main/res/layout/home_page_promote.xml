@@ -14,18 +14,17 @@
         android:layout_marginTop="@dimen/size_20dp"
         android:layout_marginEnd="@dimen/size_24dp"
         android:layout_marginBottom="@dimen/size_10dp"
-        android:background="@drawable/home_page_goods_list_background"
-        android:orientation="horizontal">
+        android:background="@drawable/home_page_goods_list_background">
 
         <ImageView
             android:id="@+id/homepage_promote_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/size_100dp"
+            android:layout_height="@dimen/size_100dp"
             android:layout_marginStart="@dimen/size_15dp"
             android:layout_marginTop="@dimen/size_15dp"
             android:layout_marginBottom="@dimen/size_15dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_common_happy_yuu1_cat1"
+            android:src="@drawable/default_error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,19 +37,24 @@
             android:layout_marginTop="@dimen/size_15dp"
             android:text="这是一个标题"
             android:textColor="@color/black"
+            android:textSize="@dimen/text_size_17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/homepage_promote_iv"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/homepage_promote_tv_description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginStart="@dimen/size_130dp"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/size_20dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="这是描述"
             android:textColor="@color/cp_color_gray"
             android:textSize="@dimen/sp_12"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/homepage_promote_iv"
             app:layout_constraintTop_toBottomOf="@+id/homepage_promote_tv_title" />
 
@@ -61,10 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_15dp"
             android:layout_marginBottom="@dimen/size_15dp"
-            android:text="$ 100000"
+            android:text="$100000"
             android:textColor="@color/gray_blue"
             android:textSize="@dimen/text_size_17sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/homepage_promote_iv" />
 
@@ -76,6 +79,8 @@
             android:layout_marginBottom="@dimen/size_15dp"
             android:background="@drawable/homepage_promote_button_shape"
             android:text="去看看"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

@@ -2,12 +2,14 @@ package com.pt.module_mine.delegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.Constant;
@@ -60,7 +62,7 @@ public class PublishListActDelegate extends AppDelegate {
         srl_mine_publish_list.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                cpage ++;
+                cpage++;
                 requestList();
             }
 
@@ -72,12 +74,14 @@ public class PublishListActDelegate extends AppDelegate {
         });
         srl_mine_publish_list.autoRefresh();
 
-        adapter.setOnItemClickListener((adapter, view, position) -> {
-            need_position = position;
-            String goods_id = publishList.get(position).getId();
-            ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
-                    .withString(Constant.KEY_GOODS_ID, goods_id)
-                    .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_REQUEST);
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.publish_item_tv_see) {
+                need_position = position;
+                String goods_id = publishList.get(position).getId();
+                ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                        .withString(Constant.KEY_GOODS_ID, goods_id)
+                        .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_REQUEST);
+            }
         });
     }
 
@@ -101,7 +105,7 @@ public class PublishListActDelegate extends AppDelegate {
                         PublishListJsonBean jsonBean = new Gson().fromJson(s, PublishListJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             if (jsonBean.getData() != null && jsonBean.getData().getRecords() != null
-                                && jsonBean.getData().getRecords().size() > 0) {
+                                    && jsonBean.getData().getRecords().size() > 0) {
                                 publishListTemp.clear();
                                 for (PublishListJsonBean.DataBean.RecordsBean recordsBean
                                         : jsonBean.getData().getRecords()) {

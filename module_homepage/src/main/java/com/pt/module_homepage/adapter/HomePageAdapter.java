@@ -95,7 +95,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 TextView homepage_promote_tv_price = helper.getView(R.id.homepage_promote_tv_price);
                 TextView homepage_promote_tv_description = helper.getView(R.id.homepage_promote_tv_description);
                 homepage_promote_tv_title.setText(item.getPromote_title());
-                homepage_promote_tv_price.setText(item.getPromote_price());
+                homepage_promote_tv_price.setText("￥:" + item.getPromote_price());
                 homepage_promote_tv_description.setText(item.getPromote_description());
                 Glide.with(context).load(item.getPromote_pic())
                         .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
