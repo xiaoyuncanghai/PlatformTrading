@@ -106,12 +106,14 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_modified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //修改订单
+                order_exchange.setEnabled(false);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
                 ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
                         .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
-                        .withString(Constant.KEY_GOODS_ID, goods_id).navigation();
+                        .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
+                        Constant.KEY_MODIFY_DETAIL_REQUEST);
+                order_modified.setEnabled(true);
             }
         });
 
@@ -536,6 +538,10 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constant.KEY_MODIFY_DETAIL_REQUEST && resultCode == getActivity().RESULT_OK) {
+            detailList.clear();
+            requestList();
+        }
         /*if (requestCode == KEY_ORDER_FUNDER_SALER && resultCode == KEY_ORDER_FUNDER_RESULT) {
             Bundle bundle = data.getBundleExtra(Constant.KEY_CHOOSE_FUND);
             FundSideItem item = (FundSideItem) bundle.getSerializable(CHOOSE_FUND_ITEM);

@@ -395,6 +395,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
                         ModifyGoodsJsonBean jsonBean = new Gson().fromJson(s, ModifyGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "修改商品成功", Snackbar.LENGTH_SHORT).show();
+                            getActivity().setResult(getActivity().RESULT_OK);
                             getActivity().finish();
                         } else {
                             Snackbar.make(getRootView(), "修改商品失败", Snackbar.LENGTH_SHORT).show();
