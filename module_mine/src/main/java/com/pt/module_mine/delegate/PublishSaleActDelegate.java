@@ -2,6 +2,7 @@ package com.pt.module_mine.delegate;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,8 +56,10 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,7 +187,7 @@ public class PublishSaleActDelegate extends AppDelegate {
             }
 
         });
-        //启动定位
+
         publish_sale_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,11 +221,6 @@ public class PublishSaleActDelegate extends AppDelegate {
                         }).show();
             }
         });
-
-        /*rcv_publish_sale_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
-                (view, position) -> {
-
-                }));*/
 
         publish_sale_cate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,7 +322,6 @@ public class PublishSaleActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 tv_publish_sale_upload.setEnabled(false);
-                //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
@@ -420,7 +417,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     }
 
     private void startAction() {
-        /*Matisse.from(PublishSaleActDelegate.this.getActivity())
+        Matisse.from(PublishSaleActDelegate.this.getActivity())
                 .choose(MimeType.ofImage(), false)
                 .countable(true)
                 .capture(true)
@@ -434,18 +431,16 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .thumbnailScale(0.85f)
                 .imageEngine(new GlideEngine())
                 .setOnSelectedListener((uriList, pathList) -> {
-                    Log.e("onSelected", "onSelected: pathList=" + pathList);
                 })
                 .showSingleMediaType(true)
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .autoHideToolbarOnSingleTap(true)
                 .setOnCheckedListener(isChecked -> {
-                    Log.e("isChecked", "onCheck: isChecked=" + isChecked);
                 })
-                .forResult(REQUEST_CODE_CHOOSE);*/
+                .forResult(REQUEST_CODE_CHOOSE);
 
-        Matisse.from(getActivity())
+        /*Matisse.from(getActivity())
                 .choose(MimeType.ofImage())
                 .theme(R.style.Matisse_Dracula)
                 .countable(false)
@@ -454,7 +449,7 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .imageEngine(new PicassoEngine())
-                .forResult(REQUEST_CODE_CHOOSE);
+                .forResult(REQUEST_CODE_CHOOSE);*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
