@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
@@ -37,8 +39,8 @@ public class PublishListActivity extends ActivityPresenter<PublishListActDelegat
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        viewDelegate.onNewIntent(intent);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        viewDelegate.onActivityResult(requestCode, resultCode, data);
     }
 }

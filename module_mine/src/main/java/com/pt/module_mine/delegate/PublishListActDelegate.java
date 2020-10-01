@@ -37,6 +37,7 @@ public class PublishListActDelegate extends AppDelegate {
     private ArrayList<PublishItemDataBean> publishList = new ArrayList<PublishItemDataBean>();
     private ArrayList<PublishItemDataBean> publishListTemp = new ArrayList<PublishItemDataBean>();
     private int cpage = 1;
+    private int need_position = -1;
 
     @Override
     public int getRootLayoutId() {
@@ -72,10 +73,11 @@ public class PublishListActDelegate extends AppDelegate {
         srl_mine_publish_list.autoRefresh();
 
         adapter.setOnItemClickListener((adapter, view, position) -> {
+            need_position = position;
             String goods_id = publishList.get(position).getId();
             ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                     .withString(Constant.KEY_GOODS_ID, goods_id)
-                    .navigation();
+                    .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_REQUEST);
         });
     }
 
@@ -138,9 +140,12 @@ public class PublishListActDelegate extends AppDelegate {
                 });
     }
 
-
-    public void onNewIntent(Intent intent) {
-        srl_mine_publish_list.autoRefresh();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constant.KEY_FROM_PUBLISH_LIST_REQUEST && resultCode == getActivity().RESULT_OK
+                && need_position != -1) {
+            publishList.remove(need_position);
+            adapter.notifyItemRemoved(need_position);
+        }
     }
 }
 

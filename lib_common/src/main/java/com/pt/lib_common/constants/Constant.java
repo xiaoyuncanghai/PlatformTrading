@@ -28,4 +28,5 @@ public interface Constant {
 
     int KEY_FROM_HOMEPAGE_REQUEST = 1010;
     int KEY_FROM_NEAR_REQUEST = 1011;
+    int KEY_FROM_PUBLISH_LIST_REQUEST = 1011;
 }
