@@ -107,6 +107,47 @@ public class PublishGoodsActDelegate extends AppDelegate {
     }
 
     private void initClickEvent() {
+        photoAdapter.setOnItemClickListener(new PhotoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (view.getId() == R.id.iv_close) {
+                    imageBeans.remove(position);
+                    photoAdapter.notifyDataSetChanged();
+                }
+
+                if (view.getId() == R.id.iv_add) {
+                    RxPermissions rxPermissions = new RxPermissions(getActivity());
+                    rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
+                            new Observer<Boolean>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                }
+
+                                @Override
+                                public void onNext(Boolean aBoolean) {
+                                    if (aBoolean) {
+                                        startAction();
+                                    } else {
+                                        Toast.makeText(getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                                .show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            }
+                    );
+                }
+            }
+        });
         //启动定位
         publish_goods_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,42 +183,14 @@ public class PublishGoodsActDelegate extends AppDelegate {
             }
         });
 
-        rcv_publish_goods_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+        /*rcv_publish_goods_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
-                    RxPermissions rxPermissions = new RxPermissions(getActivity());
-                    rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
-                            new Observer<Boolean>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-                                }
 
-                                @Override
-                                public void onNext(Boolean aBoolean) {
-                                    if (aBoolean) {
-                                        startAction();
-                                    } else {
-                                        Toast.makeText(getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            }
-                    );
                 }
             }
-        }));
+        }));*/
 
         publish_goods_cate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +289,6 @@ public class PublishGoodsActDelegate extends AppDelegate {
         tv_publish_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();

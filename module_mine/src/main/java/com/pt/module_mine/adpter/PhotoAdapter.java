@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.pt.module_mine.R;
@@ -36,9 +37,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         this.imageInfos = imageBeans;
         this.mContext = mContext;
         inflater = LayoutInflater.from(mContext);
-
     }
-
 
     @Override
     public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,7 +50,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 itemView = inflater.inflate(R.layout.picker_item_photo, parent, false);
                 break;
         }
-        return new PhotoViewHolder(itemView);
+        return new PhotoViewHolder(itemView, mOnItemClickListener);
     }
 
 
@@ -87,14 +86,48 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     public static class PhotoViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPhoto;
-        private View vSelected;
+        private ImageView ivClose;
+        private ImageView ivAdd;
 
-        public PhotoViewHolder(View itemView) {
+        public PhotoViewHolder(View itemView, final OnItemClickListener itemClickListener) {
             super(itemView);
             ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
-            vSelected = itemView.findViewById(R.id.v_selected);
-            if (vSelected != null) vSelected.setVisibility(View.GONE);
+            ivClose = (ImageView) itemView.findViewById(R.id.iv_close);
+            ivAdd = itemView.findViewById(R.id.iv_add);
+
+            if (ivClose != null) {
+                ivClose.setOnClickListener(v -> {
+                    if (itemClickListener != null) {
+                        int position = getAbsoluteAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(ivClose, position);
+                        }
+                    }
+                });
+            }
+
+            if (ivAdd != null) {
+                ivAdd.setOnClickListener(v -> {
+                    if (itemClickListener != null) {
+                        int position = getAbsoluteAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(ivAdd, position);
+                        }
+                    }
+                });
+            }
         }
     }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener clickListener) {
+        this.mOnItemClickListener = clickListener;
+    }
+
 
 }

@@ -184,11 +184,11 @@ public class HomePageFragmentDelegate extends AppDelegate {
                                 cityCode = data.getCode();
                                 cityName = data.getName();
                                 tv_location.setText(cityName);
-                                Toast.makeText(
+                                /*Toast.makeText(
                                         HomePageFragmentDelegate.this.getActivity(),
                                         String.format("点击的数据：%s，%s", data.getName(), data.getCode()),
                                         Toast.LENGTH_SHORT)
-                                        .show();
+                                        .show();*/
                                 BaseApplication.getInstance().setCity(new CityInfo(cityName, cityCode));
                                 srl_home_page.autoRefresh();
                             }

@@ -145,6 +145,45 @@ public class PublishSaleActDelegate extends AppDelegate {
     }
 
     private void initClickEvent() {
+        photoAdapter.setOnItemClickListener((view, position) -> {
+            if (view.getId() == R.id.iv_close) {
+                imageBeans.remove(position);
+                photoAdapter.notifyDataSetChanged();
+            }
+
+            if (view.getId() == R.id.iv_add) {
+                RxPermissions rxPermissions = new RxPermissions(PublishSaleActDelegate.this.getActivity());
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
+                        new Observer<Boolean>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
+
+                            @Override
+                            public void onNext(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    startAction();
+                                } else {
+                                    Toast.makeText(PublishSaleActDelegate.this.getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        }
+                );
+            }
+
+        });
         //启动定位
         publish_sale_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,40 +219,10 @@ public class PublishSaleActDelegate extends AppDelegate {
             }
         });
 
-        rcv_publish_sale_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
+        /*rcv_publish_sale_image.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
                 (view, position) -> {
-                    if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
-                        RxPermissions rxPermissions = new RxPermissions(PublishSaleActDelegate.this.getActivity());
-                        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
-                                new Observer<Boolean>() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-                                    }
 
-                                    @Override
-                                    public void onNext(Boolean aBoolean) {
-                                        if (aBoolean) {
-                                            startAction();
-                                        } else {
-                                            Toast.makeText(PublishSaleActDelegate.this.getActivity(), R.string.permission_request_denied, Toast.LENGTH_LONG)
-                                                    .show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                }
-                        );
-                    }
-                }));
+                }));*/
 
         publish_sale_cate.setOnClickListener(new View.OnClickListener() {
             @Override
