@@ -119,6 +119,10 @@ public class AllPersonSearchActDelegete extends AppDelegate {
                                     itemDataBean.setPic3_url(recordsBean.getPic3Url());
                                     itemDataBean.setPicture(recordsBean.getPic1());
                                     itemDataBean.setId(recordsBean.getId());
+
+                                    itemDataBean.setUuid(recordsBean.getUserId());
+                                    itemDataBean.setLocation_code(recordsBean.getCityCode());
+                                    itemDataBean.setPublish_time(recordsBean.getCreateTime());
                                     nearRequestDataBeanTemps.add(itemDataBean);
                                 }
                                 if (srl_near_request_goods_page.isRefreshing()) {

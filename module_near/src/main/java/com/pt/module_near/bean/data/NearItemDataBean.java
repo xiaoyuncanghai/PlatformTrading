@@ -1,12 +1,39 @@
 package com.pt.module_near.bean.data;
 
 public class NearItemDataBean {
+    private String uuid;
+    private String location_code;
+    private String publish_time;
     private String title;
     private String price;
     private String picture;
     private String pic_url = "";
     private String pic2_url = "";
     private String pic3_url = "";
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getLocation_code() {
+        return location_code;
+    }
+
+    public void setLocation_code(String location_code) {
+        this.location_code = location_code;
+    }
+
+    public String getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(String publish_time) {
+        this.publish_time = publish_time;
+    }
 
     public String getPic2_url() {
         return pic2_url;

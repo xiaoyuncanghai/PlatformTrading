@@ -44,19 +44,19 @@ public class DBManager {
         copyDBFile();
     }
 
-    private void copyDBFile(){
+    private void copyDBFile() {
         File dir = new File(DB_PATH);
-        if (!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         //如果旧版数据库存在，则删除
         File dbV1 = new File(DB_PATH + DB_NAME_V1);
-        if (dbV1.exists()){
+        if (dbV1.exists()) {
             dbV1.delete();
         }
         //创建新版本数据库
         File dbFile = new File(DB_PATH + LATEST_DB_NAME);
-        if (!dbFile.exists()){
+        if (!dbFile.exists()) {
             InputStream is;
             OutputStream os;
             try {
@@ -64,7 +64,7 @@ public class DBManager {
                 os = new FileOutputStream(dbFile);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int length;
-                while ((length = is.read(buffer, 0, buffer.length)) > 0){
+                while ((length = is.read(buffer, 0, buffer.length)) > 0) {
                     os.write(buffer, 0, length);
                 }
                 os.flush();
@@ -76,12 +76,12 @@ public class DBManager {
         }
     }
 
-    public List<City> getAllCities(){
+    public List<City> getAllCities() {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
         List<City> result = new ArrayList<>();
         City city;
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
             String pinyin = Pinyin.toPinyin(name, "");
@@ -91,17 +91,34 @@ public class DBManager {
         cursor.close();
         db.close();
         Collections.sort(result, new CityComparator());
-        LogUtils.d("result = "+result.size());
+        LogUtils.d("result = " + result.size());
         return result;
     }
 
-    public List<City> searchCity(final String keyword){
+    public City searchCityByCode(final String code) {
+        String sql = "select * from " + TABLE_NAME + " where "
+                + COLUMN_C_CODE + " like ? ";
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + code + "%"});
+        City city = null;
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+            String pinyin = Pinyin.toPinyin(name, "");
+            String city_code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+            city = new City(name, pinyin, city_code);
+        }
+        cursor.close();
+        db.close();
+        return city;
+    }
+
+    public List<City> searchCity(final String keyword) {
         String sql = "select * from " + TABLE_NAME + " where "
                 + COLUMN_C_NAME + " like ? ";
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
-        Cursor cursor = db.rawQuery(sql, new String[]{"%"+keyword+"%"});
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + keyword + "%"});
         List<City> result = new ArrayList<>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String parent_id = cursor.getString(cursor.getColumnIndex(COLUMN_C_PID));
             //当parent_id不等于0再加到集合里面去
             if (!parent_id.equals("0")) {
@@ -121,13 +138,14 @@ public class DBManager {
 
     /**
      * 查找省的消息
+     *
      * @return
      */
-    public List<City> getCityByParentId(){
+    public List<City> getCityByParentId() {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery("select * from addr where PARENT_ID=?", new String[]{String.valueOf(0)});
         List<City> result = new ArrayList<>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
             String pinyin = Pinyin.toPinyin(name, "");
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
@@ -144,15 +162,16 @@ public class DBManager {
 
     /**
      * 通过省查找对应下面市的消息
+     *
      * @return
      */
-    public List<City> getCityByProvince(){
+    public List<City> getCityByProvince() {
         String[] parent_id = new String[getCityByParentId().size()];
         //获取到省份, 得到省份下的所有的城市
         StringBuilder builder = new StringBuilder(COLUMN_C_PID + " in (");
         for (int i = 0; i < getCityByParentId().size(); i++) {
             parent_id[i] = getCityByParentId().get(i).getAid();
-            if (i != getCityByParentId().size()-1) {
+            if (i != getCityByParentId().size() - 1) {
                 builder.append("? ,");
             } else {
                 builder.append("?");
@@ -160,9 +179,9 @@ public class DBManager {
         }
         builder.append(")");
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
-        Cursor cursor = db.rawQuery("select * from addr where "+ builder, parent_id);
+        Cursor cursor = db.rawQuery("select * from addr where " + builder, parent_id);
         List<City> result = new ArrayList<>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
             String pinyin = Pinyin.toPinyin(name, "");
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
@@ -180,7 +199,7 @@ public class DBManager {
     /**
      * sort by a-z
      */
-    private class CityComparator implements Comparator<City>{
+    private class CityComparator implements Comparator<City> {
         @Override
         public int compare(City lhs, City rhs) {
             String a = lhs.getPinyin().substring(0, 1);

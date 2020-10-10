@@ -80,7 +80,7 @@ public class HomePageAdapter extends BaseMultiItemQuickAdapter<HomePageDataBean,
                 ImageView home_cate_iv = helper.getView(R.id.home_cate_iv);
                 TextView home_cate_tv = helper.getView(R.id.home_cate_tv);
                 Glide.with(context).load(item.getCate_icon())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        //.apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .placeholder(R.drawable.ic_common_fb)
                         .error(R.drawable.ic_common_fb).into(home_cate_iv);
                 home_cate_tv.setText(item.getCate_name());
