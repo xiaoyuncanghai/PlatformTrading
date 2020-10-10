@@ -15,6 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -30,6 +36,8 @@ import com.pt.module_mine.R;
 import com.pt.module_mine.bean.ImageBean;
 import com.pt.module_mine.bean.json.ApplySaleJsonBean;
 import com.pt.module_mine.bean.request.ApplySaleRequestBean;
+import com.pt.module_mine.oss.Config;
+import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
@@ -59,6 +67,8 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
     private ImageView show_business_license;
     private static final int REQUEST_CODE_CHOOSE = 26;
     private String imageName = "";
+    private OssService mService;
+    private ArrayList<ImageBean> imageBeans = new ArrayList<>();
 
     @Override
     public int getRootLayoutId() {
@@ -73,6 +83,8 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
         et_input_company_code = get(R.id.et_input_company_code);
         show_business_license = get(R.id.show_business_license);
         tv_upload_application_quality = get(R.id.tv_upload_application_quality);
+        mService = initOSS(Config.OSS_ENDPOINT);
+        mService.setCallbackAddress(Config.OSS_CALLBACK_URL);
 
         upload_business_license.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,8 +170,38 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
         tv_upload_application_quality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //申请权限
-                requestPressie();
+                tv_upload_application_quality.setEnabled(false);
+                if (imageBeans != null && imageBeans.size() > 0) {
+                    for (int i = 0; i < imageBeans.size(); i++) {
+                        String picturePath = imageBeans.get(i).getImagePath();
+                        String pictureName = imageBeans.get(i).getImageName();
+                        mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
+                            @Override
+                            public void onProgress(int position, long currentSize, long totalSize) {
+                                int progress = (int) (100 * currentSize / totalSize);
+                                LogUtils.d("Lion. progress = " + progress);
+                            }
+
+                            @Override
+                            public void onSuccess(int position, String imageUrl) {
+                                LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
+                                Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
+                                if (position == imageBeans.size() - 1) {
+                                    //最后一张图片也上传成功
+                                    requestPressie();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int position) {
+                                tv_upload_application_quality.setEnabled(true);
+                            }
+                        });
+                    }
+                }/* else {
+                    //没有照片直接请求网络  没有照片都上传不了
+                    requestPressie();
+                }*/
             }
         });
     }
@@ -176,11 +218,13 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
                 .upObject(requestBean).execute(new SimpleCallBack<String>() {
             @Override
             public void onError(ApiException e) {
-
+                tv_upload_application_quality.setEnabled(true);
+                Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSuccess(String s) {
+                tv_upload_application_quality.setEnabled(true);
                 ApplySaleJsonBean jsonBean = new Gson().fromJson(s, ApplySaleJsonBean.class);
                 if (jsonBean.getCode() == 0) {
                     Snackbar.make(getRootView(), "资料提交成功, 请稍后",
@@ -236,7 +280,6 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
                 .forResult(REQUEST_CODE_CHOOSE);*/
     }
 
-    private ArrayList<ImageBean> imageBeans = new ArrayList<>();
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == getActivity().RESULT_OK) {
             imageBeans.clear();
@@ -306,5 +349,21 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
             }
         }
         return inSampleSize;
+    }
+
+
+    public OssService initOSS(String endpoint) {
+        //使用自己的获取STSToken的类
+        String stsServer = Config.STS_SERVER_URL;
+        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+        String editBucketName = Config.BUCKET_NAME;
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求书，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        OSS oss = new OSSClient(getActivity(), endpoint, credentialProvider, conf);
+        OSSLog.enableLog();
+        return new OssService(oss, editBucketName);
     }
 }
