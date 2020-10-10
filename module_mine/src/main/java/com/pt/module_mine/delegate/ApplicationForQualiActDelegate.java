@@ -175,7 +175,7 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
                         String pictureName = imageBeans.get(i).getImageName();
-                        mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
+                        mService.asyncPutImage(pictureName, "user/", picturePath, i, new OssService.OnUploadListener() {
                             @Override
                             public void onProgress(int position, long currentSize, long totalSize) {
                                 int progress = (int) (100 * currentSize / totalSize);
