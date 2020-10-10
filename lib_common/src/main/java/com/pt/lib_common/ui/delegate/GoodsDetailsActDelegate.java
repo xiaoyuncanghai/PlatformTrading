@@ -365,6 +365,14 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         .withInt(Constant.ORDER_USER_TYPE, 1)
                                         .navigation();
                                 getActivity().finish();
+                            } else if (order.getCode() == 401) {
+                                Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                                SPHelper.putString("token", "", true);
+                                SPHelper.putString("phone", "", true);
+                                ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                                getActivity().finish();
+                            } else {
+                                Snackbar.make(getRootView(), "交易失败", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -390,6 +398,14 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                         .withInt(Constant.ORDER_USER_TYPE, 2)
                                         .navigation();
                                 getActivity().finish();
+                            } else if (order.getCode() == 401) {
+                                Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                                SPHelper.putString("token", "", true);
+                                SPHelper.putString("phone", "", true);
+                                ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                                getActivity().finish();
+                            } else {
+                                Snackbar.make(getRootView(), "交易失败", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -415,123 +431,133 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                     @Override
                     public void onSuccess(String s) {
                         GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
-                        if (detailJsonBean.getData() != null) {
-                            goodsType = detailJsonBean.getData().getGoodsType();
-                            String phoneText = SPHelper.getString("phone", "", true);
-                            LogUtils.d("current user phone = " + phoneText);
-                            goodsStatus = detailJsonBean.getData().getGoodsStatus();
-                            if (goodsType == 1) {
-                                //自己布求购商品, 上架  修改  删除
-                                //别人发布的值存在交易
-                                //order_exchange.setText("交易");
-                                if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
-                                    if (goodsStatus == 0) {
-                                        order_off_shelf.setVisibility(View.VISIBLE);
-                                        order_off_shelf.setText("上架");
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
-                                        //order_apply_money.setVisibility(View.GONE);
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
-                                    } else if (goodsStatus == 1) {
-                                        order_off_shelf.setVisibility(View.VISIBLE);
-                                        order_off_shelf.setText("下架");
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
-                                        //order_apply_money.setVisibility(View.GONE);
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
-                                    } else if (goodsStatus == 3) {
+                        if (detailJsonBean.getCode() == 0) {
+                            if (detailJsonBean.getData() != null) {
+                                goodsType = detailJsonBean.getData().getGoodsType();
+                                String phoneText = SPHelper.getString("phone", "", true);
+                                LogUtils.d("current user phone = " + phoneText);
+                                goodsStatus = detailJsonBean.getData().getGoodsStatus();
+                                if (goodsType == 1) {
+                                    //自己布求购商品, 上架  修改  删除
+                                    //别人发布的值存在交易
+                                    //order_exchange.setText("交易");
+                                    if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
+                                        if (goodsStatus == 0) {
+                                            order_off_shelf.setVisibility(View.VISIBLE);
+                                            order_off_shelf.setText("上架");
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.GONE);
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        } else if (goodsStatus == 1) {
+                                            order_off_shelf.setVisibility(View.VISIBLE);
+                                            order_off_shelf.setText("下架");
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.GONE);
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        } else if (goodsStatus == 3) {
+                                            order_off_shelf.setVisibility(View.GONE);
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.GONE);
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        }
+                                    } else {
                                         order_off_shelf.setVisibility(View.GONE);
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
+                                        order_modified.setVisibility(View.GONE);
                                         //order_apply_money.setVisibility(View.GONE);
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
+                                        order_delete_or_transaction.setVisibility(View.GONE);
+                                        order_exchange.setVisibility(View.VISIBLE);
+                                        order_exchange.setText("交易");
                                     }
-                                } else {
-                                    order_off_shelf.setVisibility(View.GONE);
-                                    order_modified.setVisibility(View.GONE);
-                                    //order_apply_money.setVisibility(View.GONE);
-                                    order_delete_or_transaction.setVisibility(View.GONE);
-                                    order_exchange.setVisibility(View.VISIBLE);
-                                    order_exchange.setText("交易");
-                                }
-                            } else if (goodsType == 2) {
-                                //售卖商品,可以直接抵押
-                                //自己售卖还是别人售卖
-                                if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
-                                    //是自己售卖
-                                    if (goodsStatus == 0) {
-                                        //显示上架, 修改, 资金, 删除
-                                        order_off_shelf.setVisibility(View.VISIBLE);
-                                        order_off_shelf.setText("上架");
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
-                                        //order_apply_money.setVisibility(View.VISIBLE);
-                                        //order_apply_money.setText("资金");
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
-                                    } else if (goodsStatus == 1) {
-                                        //显示下架, 修改, 资金, 删除
-                                        order_off_shelf.setVisibility(View.VISIBLE);
-                                        order_off_shelf.setText("下架");
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
-                                        //order_apply_money.setVisibility(View.VISIBLE);
-                                        //order_apply_money.setText("资金");
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
-                                    } else if (goodsStatus == 3) {
+                                } else if (goodsType == 2) {
+                                    //售卖商品,可以直接抵押
+                                    //自己售卖还是别人售卖
+                                    if (detailJsonBean.getData().getCreateUserPhone().equals(phoneText)) {
+                                        //是自己售卖
+                                        if (goodsStatus == 0) {
+                                            //显示上架, 修改, 资金, 删除
+                                            order_off_shelf.setVisibility(View.VISIBLE);
+                                            order_off_shelf.setText("上架");
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.VISIBLE);
+                                            //order_apply_money.setText("资金");
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        } else if (goodsStatus == 1) {
+                                            //显示下架, 修改, 资金, 删除
+                                            order_off_shelf.setVisibility(View.VISIBLE);
+                                            order_off_shelf.setText("下架");
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.VISIBLE);
+                                            //order_apply_money.setText("资金");
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        } else if (goodsStatus == 3) {
+                                            order_off_shelf.setVisibility(View.GONE);
+                                            order_modified.setVisibility(View.VISIBLE);
+                                            order_modified.setText("修改");
+                                            //order_apply_money.setVisibility(View.GONE);
+                                            order_delete_or_transaction.setVisibility(View.VISIBLE);
+                                            order_delete_or_transaction.setText("删除");
+                                            order_exchange.setVisibility(View.GONE);
+                                        }
+                                    } else {
                                         order_off_shelf.setVisibility(View.GONE);
-                                        order_modified.setVisibility(View.VISIBLE);
-                                        order_modified.setText("修改");
+                                        order_modified.setVisibility(View.GONE);
                                         //order_apply_money.setVisibility(View.GONE);
-                                        order_delete_or_transaction.setVisibility(View.VISIBLE);
-                                        order_delete_or_transaction.setText("删除");
-                                        order_exchange.setVisibility(View.GONE);
+                                        order_delete_or_transaction.setVisibility(View.GONE);
+                                        order_exchange.setVisibility(View.VISIBLE);
+                                        order_exchange.setText("交易");
                                     }
-                                } else {
-                                    order_off_shelf.setVisibility(View.GONE);
-                                    order_modified.setVisibility(View.GONE);
-                                    //order_apply_money.setVisibility(View.GONE);
-                                    order_delete_or_transaction.setVisibility(View.GONE);
-                                    order_exchange.setVisibility(View.VISIBLE);
-                                    order_exchange.setText("交易");
                                 }
+                                infoData.setUserType(goodsType);
+                                GoodsDetailDateBean titleItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIIL_TITLE);
+                                titleItem.setTitle(detailJsonBean.getData().getTitle());
+                                infoData.setTitle(detailJsonBean.getData().getTitle());
+                                titleItem.setDescription(detailJsonBean.getData().getDescription());
+                                infoData.setDescription(detailJsonBean.getData().getDescription());
+                                titleItem.setGoodsStatusDes(detailJsonBean.getData().getGoodsStatusDes());
+                                titleItem.setCategory(detailJsonBean.getData().getCateName1());
+                                infoData.setCategory(detailJsonBean.getData().getCateName1());
+                                infoData.setCateId(detailJsonBean.getData().getCateId1());
+                                titleItem.setCreateTime(detailJsonBean.getData().getCreateTime());
+                                //titleItem.setCreatePhone(detailJsonBean.getData().getCreateUserPhone());
+                                titleItem.setPrice(detailJsonBean.getData().getPrice());
+                                infoData.setPrice(detailJsonBean.getData().getPrice());
+                                //titleItem.setGoodsStatus(detailJsonBean.getData().getGoodsStatus());
+                                detailList.add(titleItem);
+                                GoodsDetailDateBean picItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY);
+                                picItem.setPic1Url(detailJsonBean.getData().getPic1Url());
+                                infoData.setPic1Url(detailJsonBean.getData().getPic1Url());
+                                picItem.setPic2Url(detailJsonBean.getData().getPic2Url());
+                                infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
+                                picItem.setPic3Url(detailJsonBean.getData().getPic3Url());
+                                infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
+                                detailList.add(picItem);
+                                goodsDetailAdapter.notifyDataSetChanged();
+                            } else {
+                                //显示EmptyView
                             }
-                            infoData.setUserType(goodsType);
-                            GoodsDetailDateBean titleItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIIL_TITLE);
-                            titleItem.setTitle(detailJsonBean.getData().getTitle());
-                            infoData.setTitle(detailJsonBean.getData().getTitle());
-                            titleItem.setDescription(detailJsonBean.getData().getDescription());
-                            infoData.setDescription(detailJsonBean.getData().getDescription());
-                            titleItem.setGoodsStatusDes(detailJsonBean.getData().getGoodsStatusDes());
-                            titleItem.setCategory(detailJsonBean.getData().getCateName1());
-                            infoData.setCategory(detailJsonBean.getData().getCateName1());
-                            infoData.setCateId(detailJsonBean.getData().getCateId1());
-                            titleItem.setCreateTime(detailJsonBean.getData().getCreateTime());
-                            //titleItem.setCreatePhone(detailJsonBean.getData().getCreateUserPhone());
-                            titleItem.setPrice(detailJsonBean.getData().getPrice());
-                            infoData.setPrice(detailJsonBean.getData().getPrice());
-                            //titleItem.setGoodsStatus(detailJsonBean.getData().getGoodsStatus());
-                            detailList.add(titleItem);
-                            GoodsDetailDateBean picItem = new GoodsDetailDateBean(GoodsDetailDateBean.KEY_GOODS_DETAIL_BODY);
-                            picItem.setPic1Url(detailJsonBean.getData().getPic1Url());
-                            infoData.setPic1Url(detailJsonBean.getData().getPic1Url());
-                            picItem.setPic2Url(detailJsonBean.getData().getPic2Url());
-                            infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
-                            picItem.setPic3Url(detailJsonBean.getData().getPic3Url());
-                            infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
-                            detailList.add(picItem);
-                            goodsDetailAdapter.notifyDataSetChanged();
+                        } else if (detailJsonBean.getCode() == 401) {
+                            Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         } else {
-                            //显示EmptyView
+                            Snackbar.make(getRootView(), "获取数据失败", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

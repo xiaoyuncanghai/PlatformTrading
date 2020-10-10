@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
@@ -24,6 +25,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
 import com.pt.lib_common.bean.jsonbean.ModifyGoodsJsonBean;
@@ -34,6 +36,7 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
+import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.view.citychoose.CityPicker;
 import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
 import com.pt.lib_common.view.citychoose.model.City;
@@ -312,20 +315,12 @@ public class GoodsModifyActDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 tv_modify_goods_upload.setEnabled(false);
-                String upload_dic = "";
-                if (usrType == 1) {
-                    //求购
-                    upload_dic = "pic/";
-                } else {
-                    //售卖
-                    upload_dic = "user/";
-                }
                 //首先上传照片
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
                         String pictureName = imageBeans.get(i).getImageName();
-                        mService.asyncPutImage(pictureName, upload_dic, picturePath, i, new OssService.OnUploadListener() {
+                        mService.asyncPutImage(pictureName, "pic/", picturePath, i, new OssService.OnUploadListener() {
                             @Override
                             public void onProgress(int position, long currentSize, long totalSize) {
                                 int progress = (int) (100 * currentSize / totalSize);
@@ -397,7 +392,13 @@ public class GoodsModifyActDelegate extends AppDelegate {
                             Snackbar.make(getRootView(), "修改商品成功", Snackbar.LENGTH_SHORT).show();
                             getActivity().setResult(getActivity().RESULT_OK);
                             getActivity().finish();
-                        } else {
+                        } else if (jsonBean.getCode() == 401) {
+                            Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
+                        } else if (jsonBean.getCode() == 500) {
                             Snackbar.make(getRootView(), "修改商品失败", Snackbar.LENGTH_SHORT).show();
                         }
                     }

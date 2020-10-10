@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.Constant;
@@ -18,6 +19,7 @@ import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
+import com.pt.lib_common.util.SPHelper;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.PublistListAdapter;
 import com.pt.module_mine.bean.PublishItemDataBean;
@@ -139,6 +141,13 @@ public class PublishListActDelegate extends AppDelegate {
                                     srl_mine_publish_list.finishLoadmoreWithNoMoreData();
                                 }
                             }
+                        } else if (jsonBean.getCode() == 401) {
+                            //accesstoekn过期
+                            Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         }
                     }
                 });

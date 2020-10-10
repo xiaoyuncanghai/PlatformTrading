@@ -14,15 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.GifSizeFilter;
+import com.pt.lib_common.util.SPHelper;
 import com.pt.module_mine.R;
 import com.pt.module_mine.bean.ImageBean;
 import com.pt.module_mine.bean.json.ApplySaleJsonBean;
@@ -183,7 +186,14 @@ public class ApplicationForQualiActDelegate extends AppDelegate {
                     Snackbar.make(getRootView(), "资料提交成功, 请稍后",
                             Snackbar.LENGTH_SHORT).show();
                     getActivity().finish();
-                } else {
+                } else if (jsonBean.getCode() == 401) {
+                    //accesstoekn过期
+                    Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                    SPHelper.putString("token", "", true);
+                    SPHelper.putString("phone", "", true);
+                    ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                    getActivity().finish();
+                } else  {
                     Snackbar.make(getRootView(), "资料提交失败, 请重新输入",
                             Snackbar.LENGTH_SHORT).show();
                 }

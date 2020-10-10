@@ -122,7 +122,13 @@ public class MineFragmentDelegate extends AppDelegate {
                                 //审核被拒绝
                                 showNoticeDialog();
                             }
-                        } else {
+                        } else if (checkJsonBean.getData() == 401) {
+                            //accesstoekn过期
+                            Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         }
                     }
                 });
@@ -156,7 +162,13 @@ public class MineFragmentDelegate extends AppDelegate {
                                 //审核被拒绝
                                 showNoticeDialog();
                             }
-                        } else {
+                        } else if (checkJsonBean.getCode() == 401) {
+                            //accesstoekn过期
+                            Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
+                            SPHelper.putString("token", "", true);
+                            SPHelper.putString("phone", "", true);
+                            ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
+                            getActivity().finish();
                         }
                     }
                 });
