@@ -3,6 +3,7 @@ package com.pt.module_mine.delegate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +14,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
+import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
@@ -77,7 +80,30 @@ public class PublishListActDelegate extends AppDelegate {
         srl_mine_publish_list.autoRefresh();
 
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.publish_item_tv_see) {
+            if (view.getId() == R.id.publish_item_onSale) {
+                String goods_id = publishList.get(position).getId();
+                TextView publish_item_onSale = (TextView) adapter.getViewByPosition(rcv_mine_publish_list,
+                        position, R.id.publish_item_onSale);
+                //上架操作
+                if (publishList.get(position).getGoodsStatus() == 0) {
+                    requestOnShelf(goods_id, position, publish_item_onSale);
+                } else if (publishList.get(position).getGoodsStatus() == 1) {
+                    requestOffShelf(goods_id, position, publish_item_onSale);
+                }
+            }
+
+            if (view.getId() == R.id.publish_item_modify) {
+                //修改
+            }
+
+            if (view.getId() == R.id.publish_item_delete) {
+                //删除
+            }
+        });
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 need_position = position;
                 String goods_id = publishList.get(position).getId();
                 ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
@@ -86,6 +112,63 @@ public class PublishListActDelegate extends AppDelegate {
             }
         });
     }
+
+    /**
+     * 上架操作
+     *  @param goods_id
+     * @param position
+     * @param publish_item_onSale
+     */
+    private void requestOnShelf(String goods_id, int position, TextView publish_item_onSale) {
+        GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
+        requestBean.setId(goods_id);
+        EasyHttp.post(HttpConstant.API_ON_SHELF).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .headers("Authorization", SPHelper.getString("token", "", true))
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            //数据还是没有跟新, 需要直接将view
+                            publishList.get(position).setGoodsStatus(1);
+                            adapter.notifyItemChanged(position);
+                            publish_item_onSale.setText("下架");
+                        }
+                    }
+                });
+    }
+
+    private void requestOffShelf(String goods_id, int position, TextView publish_item_onSale) {
+        GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
+        requestBean.setId(goods_id);
+        EasyHttp.post(HttpConstant.API_OFF_SHELF).headers("Content-Type", "application/json")
+                .headers("Authorization", SPHelper.getString("token", "", true))
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            publishList.get(position).setGoodsStatus(0);
+                            adapter.notifyItemChanged(position);
+                            publish_item_onSale.setText("下架");
+                        }
+                    }
+                });
+    }
+
 
     /**
      * 请求网络
@@ -121,6 +204,7 @@ public class PublishListActDelegate extends AppDelegate {
                                     dataBean.setPic1(recordsBean.getPic1());
                                     dataBean.setPic1Url(recordsBean.getPic1Url());
                                     dataBean.setPrice(recordsBean.getPrice());
+                                    dataBean.setCreate_time(recordsBean.getCreateTime());
                                     publishListTemp.add(dataBean);
                                 }
                                 if (srl_mine_publish_list.isRefreshing()) {

@@ -3,6 +3,7 @@ package com.pt.module_mine.bean;
 public class PublishItemDataBean {
     private String title;
     private String description;
+    private String create_time;
     private int goodsStatus;
     private String goodsStatusDes;
     private int goodsType;
@@ -10,6 +11,14 @@ public class PublishItemDataBean {
     private String pic1;
     private String pic1Url;
     private String price;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
     public String getTitle() {
         return title;

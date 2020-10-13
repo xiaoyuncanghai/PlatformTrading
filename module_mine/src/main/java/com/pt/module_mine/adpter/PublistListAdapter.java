@@ -28,14 +28,26 @@ public class PublistListAdapter extends BaseQuickAdapter<PublishItemDataBean, Ba
         ImageView publish_item_image = helper.getView(R.id.publish_item_image);
         TextView publish_item_title = helper.getView(R.id.publish_item_title);
         TextView publish_item_description = helper.getView(R.id.publish_item_description);
+        TextView publish_item_create_time = helper.getView(R.id.publish_item_create_time);
         TextView publish_item_price = helper.getView(R.id.publish_item_price);
+        TextView publish_item_onSale = helper.getView(R.id.publish_item_onSale);
         publish_item_title.setText(item.getTitle());
         publish_item_description.setText(item.getDescription());
+        publish_item_create_time.setText(item.getCreate_time());
         publish_item_price.setText("￥:" + item.getPrice());
         Glide.with(context).load(item.getPic1Url())
                 .placeholder(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
                 .error(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
                 .into(publish_item_image);
-        helper.addOnClickListener(R.id.publish_item_tv_see);
+        if (item.getGoodsStatus() == 1) {
+            //上架状态
+            publish_item_onSale.setText("下架");
+        } else if (item.getGoodsStatus() == 0) {
+            //下架状态
+            publish_item_onSale.setText("上架");
+        }
+        helper.addOnClickListener(R.id.publish_item_onSale);
+        helper.addOnClickListener(R.id.publish_item_modify);
+        helper.addOnClickListener(R.id.publish_item_delete);
     }
 }

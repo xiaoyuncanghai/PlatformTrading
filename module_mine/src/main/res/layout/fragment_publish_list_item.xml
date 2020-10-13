@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_140dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_24dp"
         android:layout_marginTop="@dimen/size_20dp"
         android:layout_marginEnd="@dimen/size_24dp"
@@ -20,14 +20,13 @@
 
         <ImageView
             android:id="@+id/publish_item_image"
-            android:layout_width="@dimen/size_100dp"
-            android:layout_height="@dimen/size_100dp"
+            android:layout_width="@dimen/size_120dp"
+            android:layout_height="@dimen/size_120dp"
             android:layout_marginStart="@dimen/size_15dp"
             android:layout_marginTop="@dimen/size_15dp"
             android:layout_marginBottom="@dimen/size_15dp"
             android:scaleType="fitXY"
             android:src="@drawable/default_error"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +47,7 @@
             android:id="@+id/publish_item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_130dp"
+            android:layout_marginStart="@dimen/size_150dp"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/size_20dp"
             android:ellipsize="end"
@@ -60,30 +59,87 @@
             app:layout_constraintStart_toEndOf="@+id/publish_item_image"
             app:layout_constraintTop_toBottomOf="@+id/publish_item_title" />
 
+        <TextView
+            android:id="@+id/publish_item_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_marginBottom="@dimen/size_15dp"
+            android:text="2020-1-111"
+            android:textColor="@color/cp_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintStart_toEndOf="@+id/publish_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_description" />
+
 
         <TextView
             android:id="@+id/publish_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_15dp"
-            android:layout_marginBottom="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_10dp"
             android:text="$ 100000"
             android:textColor="@color/gray_blue"
             android:textSize="@dimen/text_size_17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/publish_item_image" />
+            app:layout_constraintStart_toEndOf="@+id/publish_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_create_time" />
+
+        <View
+            android:id="@+id/publish_item_spanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1dp"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:background="@color/gray_EE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_image" />
 
         <TextView
-            android:id="@+id/publish_item_tv_see"
+            android:id="@+id/publish_item_onSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginEnd="@dimen/size_15dp"
-            android:layout_marginBottom="@dimen/size_15dp"
-            android:background="@drawable/homepage_promote_button_shape"
-            android:text="去看看"
-            android:textSize="@dimen/sp_12"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_accent_button_shape"
+            android:text="上架"
             android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/publish_item_modify"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_spanner" />
+
+        <TextView
+            android:id="@+id/publish_item_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_accent_button_shape"
+            android:text="修改"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/publish_item_delete"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_spanner" />
+
+        <TextView
+            android:id="@+id/publish_item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_yellow_button_shape"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/publish_item_spanner" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
