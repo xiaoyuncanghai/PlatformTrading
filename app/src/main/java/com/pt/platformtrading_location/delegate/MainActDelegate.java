@@ -6,6 +6,7 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.module_homepage.HomePageFragment;
 import com.pt.module_mine.MineFragment;
 import com.pt.module_near.NearFragment;
+import com.pt.module_order.fragment.Order2BuyFragment;
 import com.pt.module_order.fragment.OrderFragment;
 import com.pt.platformtrading_location.R;
 
@@ -60,6 +61,10 @@ public class MainActDelegate extends AppDelegate {
 
     public NearFragment getNearFragment() {
         return findFragment(NearFragment.class);
+    }
+
+    public OrderFragment getOrder2Fragment() {
+        return findFragment(OrderFragment.class);
     }
 
     private void initView() {

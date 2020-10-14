@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_180dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_20dp"
         android:layout_marginEnd="@dimen/size_20dp"
         android:layout_marginBottom="@dimen/size_20dp"
@@ -18,46 +18,140 @@
             android:id="@+id/order_buy_item_image"
             android:layout_width="@dimen/size_120dp"
             android:layout_height="@dimen/size_120dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/list_common_item_background"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/order_buy_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_20dp"
-            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginStart="@dimen/size_15dp"
             android:text="title"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/text_size_17sp"
             app:layout_constraintStart_toEndOf="@+id/order_buy_item_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/order_buy_item_image" />
 
         <TextView
             android:id="@+id/order_buy_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_150dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/size_20dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述"
+            android:textColor="@color/cp_color_gray"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/order_buy_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_title" />
+
+        <TextView
+            android:id="@+id/order_buy_item_create_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_20dp"
-            android:text="description"
-            app:layout_constraintStart_toStartOf="@+id/order_buy_item_title"
-            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_title" />
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_marginBottom="@dimen/size_15dp"
+            android:text="2020-1-111"
+            android:textColor="@color/cp_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintStart_toEndOf="@+id/order_buy_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_description" />
 
         <TextView
             android:id="@+id/order_buy_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_20dp"
-            android:text="$1000"
-            app:layout_constraintStart_toStartOf="@+id/order_buy_item_description"
-            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_description" />
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:text="$ 100000"
+            android:textColor="@color/gray_blue"
+            android:textSize="@dimen/text_size_17sp"
+            app:layout_constraintStart_toEndOf="@+id/order_buy_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_create_time" />
+
+        <View
+            android:id="@+id/order_buy_item_spanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1dp"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:background="@color/gray_EE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_image" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/order_buy_item_cancel_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_stoke_cancel_button_shape"
+            android:text="已取消"
+            android:textColor="@color/bg_999999"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_buy_item_status"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_spanner" />
+
 
         <TextView
             android:id="@+id/order_buy_item_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_20dp"
-            android:text="已取消"
-            app:layout_constraintStart_toStartOf="@+id/order_buy_item_price"
-            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_price" />
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_stoke_button_shape"
+            android:text="卖方已确认"
+            android:textColor="@color/gray_blue"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_buy_item_confirm"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_spanner" />
+
+
+        <TextView
+            android:id="@+id/order_buy_item_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_accent_button_shape"
+            android:text="申请资金"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_buy_item_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_spanner" />
+
+
+        <TextView
+            android:id="@+id/order_buy_item_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:background="@drawable/common_yellow_button_shape"
+            android:text="取消订单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/order_buy_item_spanner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

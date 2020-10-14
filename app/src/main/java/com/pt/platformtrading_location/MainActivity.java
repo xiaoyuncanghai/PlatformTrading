@@ -24,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
 import com.pt.lib_common.bean.CityInfo;
+import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.lib_common.util.Utils;
@@ -43,6 +44,9 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
+import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER_RESULT;
 
 @Route(path = ARouterPath.MAIN_PATH)
 public class MainActivity extends ActivityPresenter<MainActDelegate> {
@@ -308,6 +312,14 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
             case Constant.KEY_FROM_HOMEPAGE_REQUEST:
                 if (resultCode == RESULT_OK) {
                     viewDelegate.getHomepageFragment().refreshDeleteData();
+                }
+                break;
+
+            case Constant.KEY_APPLY_MONEY_FROM_ORDER_LIST:
+                if (resultCode == KEY_ORDER_FUNDER_RESULT) {
+                    Bundle bundle = data.getBundleExtra(Constant.KEY_CHOOSE_FUND);
+                    FundSideItem item = (FundSideItem) bundle.getSerializable(CHOOSE_FUND_ITEM);
+                    viewDelegate.getOrder2Fragment().refreshData(item);
                 }
                 break;
         }

@@ -10,6 +10,15 @@ public class OrderItemBean {
     private int goodsType;
     private int orderStatus;
     private String orderStatusDes;
+    private String create_time;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
     public String getOrderStatusDes() {
         return orderStatusDes;

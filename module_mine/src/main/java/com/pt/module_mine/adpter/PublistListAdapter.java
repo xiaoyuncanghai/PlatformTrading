@@ -1,12 +1,15 @@
 package com.pt.module_mine.adpter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.module_mine.R;
@@ -36,15 +39,19 @@ public class PublistListAdapter extends BaseQuickAdapter<PublishItemDataBean, Ba
         publish_item_create_time.setText(item.getCreate_time());
         publish_item_price.setText("￥:" + item.getPrice());
         Glide.with(context).load(item.getPic1Url())
-                .placeholder(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
-                .error(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(4)))
+                .placeholder(com.pt.lib_common.R.drawable.default_error)
+                .error(com.pt.lib_common.R.drawable.default_error)
                 .into(publish_item_image);
         if (item.getGoodsStatus() == 1) {
-            //上架状态
+            publish_item_onSale.setVisibility(View.VISIBLE);
             publish_item_onSale.setText("下架");
         } else if (item.getGoodsStatus() == 0) {
             //下架状态
+            publish_item_onSale.setVisibility(View.VISIBLE);
             publish_item_onSale.setText("上架");
+        } else if (item.getGoodsStatus() == 3) {
+            publish_item_onSale.setVisibility(View.GONE);
         }
         helper.addOnClickListener(R.id.publish_item_onSale);
         helper.addOnClickListener(R.id.publish_item_modify);

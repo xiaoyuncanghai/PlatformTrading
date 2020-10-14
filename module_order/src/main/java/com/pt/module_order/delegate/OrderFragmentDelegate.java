@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.module_order.R;
 import com.pt.module_order.fragment.Order2BuyFragment;
 import com.pt.module_order.fragment.Order3SaleFragment;
 import com.pt.module_order.fragment.Order4MoneyFragment;
+import com.pt.module_order.fragment.OrderFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,10 @@ public class OrderFragmentDelegate extends AppDelegate {
         tl_order.getTabAt(0).select();
     }
 
+    public void refreshData(FundSideItem item) {
+        Order2BuyFragment fragment = (Order2BuyFragment) adapter.getItem(0);
+        fragment.refreshData(item);
+    }
 
     public class TabTitlePager extends FragmentStatePagerAdapter {
         private ArrayList<SupportFragment> mPageFragment = new ArrayList<>();
@@ -90,6 +96,5 @@ public class OrderFragmentDelegate extends AppDelegate {
             return mTitles.get(position);
         }
     }
-
 }
 

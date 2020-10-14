@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.pt.lib_common.bean.databean.FundSideItem;
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_order.delegate.OrderFragmentDelegate;
 
@@ -33,5 +34,9 @@ public class OrderFragment extends FragmentPresenter<OrderFragmentDelegate> {
 
     private void initHeader() {
         setTitle("订单");
+    }
+
+    public void refreshData(FundSideItem item) {
+        viewDelegate.refreshData(item);
     }
 }
