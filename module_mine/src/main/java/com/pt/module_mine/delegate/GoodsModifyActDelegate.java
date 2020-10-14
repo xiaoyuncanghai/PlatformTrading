@@ -83,7 +83,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private String id;
     private ModifyInfoDataBean info;
-    private String cityCode = "";
+    private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
     private String chooseCategory = "";
     private ListDialog listDialog;
     private int usrType;
@@ -132,7 +132,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
         }
         if (et_modify_goods_title.getText().toString().length() > 0
                 && et_modify_goods_content.getText().toString().length() > 0
-                && !chooseCategory.equals("")
+                && !("").equals(chooseCategory)
                 && modify_goods_price.getText().toString().length() > 0) {
             tv_modify_goods_upload.setEnabled(true);
         } else {
@@ -255,7 +255,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
             public void afterTextChanged(Editable s) {
                 if (et_modify_goods_title.getText().toString().length() > 0
                         && et_modify_goods_content.getText().toString().length() > 0
-                        && !chooseCategory.equals("")
+                        && !("").equals(chooseCategory)
                         && modify_goods_price.getText().toString().length() > 0) {
                     tv_modify_goods_upload.setEnabled(true);
                 } else {
@@ -278,7 +278,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
             public void afterTextChanged(Editable s) {
                 if (et_modify_goods_title.getText().toString().length() > 0
                         && et_modify_goods_content.getText().toString().length() > 0
-                        && !chooseCategory.equals("")
+                        && !"".equals(chooseCategory)
                         && modify_goods_price.getText().toString().length() > 0) {
                     tv_modify_goods_upload.setEnabled(true);
                 } else {
@@ -302,7 +302,7 @@ public class GoodsModifyActDelegate extends AppDelegate {
             public void afterTextChanged(Editable s) {
                 if (et_modify_goods_title.getText().toString().length() > 0
                         && et_modify_goods_content.getText().toString().length() > 0
-                        && !chooseCategory.equals("")
+                        && !("").equals(chooseCategory)
                         && modify_goods_price.getText().toString().length() > 0) {
                     tv_modify_goods_upload.setEnabled(true);
                 } else {

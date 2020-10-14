@@ -11,6 +11,15 @@ public class PublishItemDataBean {
     private String pic1;
     private String pic1Url;
     private String price;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getCreate_time() {
         return create_time;

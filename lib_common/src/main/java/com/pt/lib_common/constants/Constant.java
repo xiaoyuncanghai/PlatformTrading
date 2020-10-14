@@ -30,4 +30,5 @@ public interface Constant {
     int KEY_FROM_NEAR_REQUEST = 1011;
     int KEY_FROM_PUBLISH_LIST_REQUEST = 1012;
     int KEY_MODIFY_DETAIL_REQUEST = 1013;
+    int KEY_MODIFY_FROM_PUBLISH_LIST = 1014;
 }

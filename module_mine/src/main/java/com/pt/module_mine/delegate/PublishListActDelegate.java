@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
+import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
 import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
 import com.pt.lib_common.constants.Constant;
@@ -94,10 +95,25 @@ public class PublishListActDelegate extends AppDelegate {
 
             if (view.getId() == R.id.publish_item_modify) {
                 //修改
+                String goods_id = publishList.get(position).getId();
+                ModifyInfoDataBean infoData = new ModifyInfoDataBean();
+                infoData.setUserType(publishList.get(position).getGoodsType());
+                infoData.setTitle(publishList.get(position).getTitle());
+                infoData.setDescription(publishList.get(position).getDescription());
+                //infoData.setCategory(publishList.get(position).getC);
+                infoData.setPrice(publishList.get(position).getPrice());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
+                ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
+                        .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
+                        .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
+                        Constant.KEY_MODIFY_FROM_PUBLISH_LIST);
             }
 
             if (view.getId() == R.id.publish_item_delete) {
                 //删除
+                String goods_id = publishList.get(position).getId();
+                deleteGoods(position, goods_id);
             }
         });
 
@@ -114,8 +130,36 @@ public class PublishListActDelegate extends AppDelegate {
     }
 
     /**
+     * 删除商品
+     *
+     * @param goods_id
+     */
+    private void deleteGoods(int position, String goods_id) {
+        GoodsOffShelfRequestBean requestBean = new GoodsOffShelfRequestBean();
+        requestBean.setId(goods_id);
+        EasyHttp.post(HttpConstant.API_DELETE_GOODS).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
+                        if (jsonBean.getCode() == 0) {
+                            publishList.remove(position);
+                            adapter.notifyItemRemoved(position);
+                        }
+                    }
+                });
+    }
+
+    /**
      * 上架操作
-     *  @param goods_id
+     *
+     * @param goods_id
      * @param position
      * @param publish_item_onSale
      */
@@ -197,6 +241,7 @@ public class PublishListActDelegate extends AppDelegate {
                                     PublishItemDataBean dataBean = new PublishItemDataBean();
                                     dataBean.setTitle(recordsBean.getTitle());
                                     dataBean.setDescription(recordsBean.getDescription());
+                                    //dataBean.setCategory(recordsBean.get);
                                     dataBean.setGoodsStatus(recordsBean.getGoodsStatus());
                                     dataBean.setGoodsStatusDes(recordsBean.getGoodsStatusDes());
                                     dataBean.setGoodsType(recordsBean.getGoodsType());
@@ -243,7 +288,14 @@ public class PublishListActDelegate extends AppDelegate {
             publishList.remove(need_position);
             adapter.notifyItemRemoved(need_position);
         }
+
+        if (requestCode == Constant.KEY_MODIFY_FROM_PUBLISH_LIST && resultCode == getActivity().RESULT_OK) {
+            publishList.clear();
+            requestList();
+        }
     }
+
+
 }
 
 
