@@ -73,13 +73,24 @@ public class OrderCategoryActDelegate extends AppDelegate {
             }
         });
         srl_order_category.autoRefresh();
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        /*adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String product_id = categoryItemList.get(position).getId();
                 ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                         .withString(Constant.KEY_GOODS_ID, product_id)
                         .navigation();
+            }
+        });*/
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.category_item_tv_see) {
+                    String product_id = categoryItemList.get(position).getId();
+                    ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
+                            .withString(Constant.KEY_GOODS_ID, product_id)
+                            .navigation();
+                }
             }
         });
     }

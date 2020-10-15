@@ -31,7 +31,6 @@ public class CategoryListAdapter extends BaseQuickAdapter<CategoryItemDateBean, 
         TextView category_item_title = helper.getView(R.id.category_item_title);
         TextView category_item_price = helper.getView(R.id.category_item_price);
         TextView category_item_description = helper.getView(R.id.category_item_description);
-        TextView category_item_tv_see = helper.getView(R.id.category_item_tv_see);
 
         Glide.with(context).load(item.getPicUrl())
                 .placeholder(R.drawable.default_error)
@@ -41,5 +40,6 @@ public class CategoryListAdapter extends BaseQuickAdapter<CategoryItemDateBean, 
         category_item_title.setText(item.getTitle());
         category_item_description.setText(item.getTitle());
         category_item_price.setText("￥:" + item.getPrice());
+        helper.addOnClickListener(R.id.category_item_tv_see);
     }
 }
