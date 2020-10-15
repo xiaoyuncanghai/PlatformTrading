@@ -362,7 +362,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
-                                        .withInt(Constant.ORDER_USER_TYPE, 1)
+                                        .withInt(Constant.ORDER_USER_TYPE, 2)
                                         .navigation();
                                 getActivity().finish();
                             } else if (order.getCode() == 401) {
@@ -395,7 +395,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                             if (order.getCode() == 0) {
                                 ARouter.getInstance().build(ARouterPath.ORDER_DETAIL)
                                         .withString(Constant.KEY_ORDER_ID, order.getData())
-                                        .withInt(Constant.ORDER_USER_TYPE, 2)
+                                        .withInt(Constant.ORDER_USER_TYPE, 1)
                                         .navigation();
                                 getActivity().finish();
                             } else if (order.getCode() == 401) {

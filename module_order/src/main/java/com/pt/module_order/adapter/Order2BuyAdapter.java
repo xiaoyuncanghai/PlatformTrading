@@ -49,6 +49,7 @@ public class Order2BuyAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHo
         order_buy_item_price.setText("￥:" + item.getPrice());
 
         if (item.getOrderStatus() == 0) {
+            order_buy_item_cancel_status.setVisibility(View.GONE);
             if (user_type == 1) {
                 order_buy_item_status.setVisibility(View.GONE);
                 order_buy_item_confirm.setVisibility(View.VISIBLE);
@@ -65,6 +66,7 @@ public class Order2BuyAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHo
                 order_buy_item_cancel.setVisibility(View.VISIBLE);
             }
         } else if (item.getOrderStatus() == 10) {
+            order_buy_item_cancel_status.setVisibility(View.GONE);
             if (user_type == 3) {
                 order_buy_item_status.setVisibility(View.GONE);
                 //资金状态
@@ -79,10 +81,10 @@ public class Order2BuyAdapter extends BaseQuickAdapter<OrderItemBean, BaseViewHo
         } else if (item.getOrderStatus() == -10) {
             order_buy_item_cancel_status.setVisibility(View.VISIBLE);
             order_buy_item_status.setVisibility(View.GONE);
-            //order_buy_item_status.setText(item.getOrderStatusDes());
             order_buy_item_confirm.setVisibility(View.GONE);
             order_buy_item_cancel.setVisibility(View.GONE);
         } else if (item.getOrderStatus() == 20) {
+            order_buy_item_cancel_status.setVisibility(View.GONE);
             order_buy_item_status.setVisibility(View.VISIBLE);
             order_buy_item_status.setText(item.getOrderStatusDes());
             order_buy_item_confirm.setVisibility(View.GONE);

@@ -100,7 +100,6 @@ public class OrderDetailActDelegate extends AppDelegate {
         order_detail_content_time = get(R.id.order_detail_content_time);
         order_detail_content_price = get(R.id.order_detail_content_price);
         ll_order_detail_log_info = get(R.id.ll_order_detail_log_info);
-        //order_detail_log_info_content = get(R.id.order_detail_log_info_content);
         rcv_order_detail_log_info_content = get(R.id.rcv_order_detail_log_info_content);
         rcv_order_detail_log_info_content.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new OrderDetailLogAdapter(getActivity(), R.layout.order_detail_log_item, logList);
@@ -225,7 +224,6 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                     @Override
                     public void onSuccess(String s) {
-                        LogUtils.d("detail s = " + s);
                         OrderDetailJsonBean jsonBean = new Gson().fromJson(s, OrderDetailJsonBean.class);
                         if (jsonBean.getCode() == 0 && jsonBean.getData() != null) {
                             if (jsonBean.getData().getOrderStatusDes() != null
@@ -244,7 +242,7 @@ public class OrderDetailActDelegate extends AppDelegate {
                             if (jsonBean.getData().getFunderPhone() != null
                                     && !("".equals(jsonBean.getData().getFunderPhone()))) {
                                 order_detail_funder_phone.setVisibility(View.VISIBLE);
-                                order_detail_funder_phone.setText("资方电话: "+jsonBean.getData().getFunderPhone());
+                                order_detail_funder_phone.setText("资方电话: " + jsonBean.getData().getFunderPhone());
                             } else {
                                 order_detail_funder_phone.setVisibility(View.GONE);
                             }
@@ -252,14 +250,14 @@ public class OrderDetailActDelegate extends AppDelegate {
                             if (jsonBean.getData().getApplyFunderUserPhone() != null
                                     && !("".equals(jsonBean.getData().getApplyFunderUserPhone()))) {
                                 order_detail_money_apply_person_phone.setVisibility(View.VISIBLE);
-                                order_detail_money_apply_person_phone.setText(jsonBean.getData().getApplyFunderUserPhone());
+                                order_detail_money_apply_person_phone.setText("资金申请人: " + jsonBean.getData().getApplyFunderUserPhone());
                             } else {
                                 order_detail_money_apply_person_phone.setVisibility(View.GONE);
                             }
                             if (jsonBean.getData().getApplyFunderDate() != null
                                     && !("".equals(jsonBean.getData().getApplyFunderDate()))) {
                                 order_detail_money_apply_time.setVisibility(View.VISIBLE);
-                                order_detail_money_apply_time.setText(jsonBean.getData().getApplyFunderDate());
+                                order_detail_money_apply_time.setText("资金申请时间: " + jsonBean.getData().getApplyFunderDate());
                             } else {
                                 order_detail_money_apply_time.setVisibility(View.GONE);
                             }
@@ -272,7 +270,7 @@ public class OrderDetailActDelegate extends AppDelegate {
                             order_detail_content_title.setText(jsonBean.getData().getTitle());
                             order_detail_content_description.setText(jsonBean.getData().getDescription());
                             order_detail_content_time.setText(jsonBean.getData().getCreateTime());
-                            order_detail_content_price.setText("￥"+jsonBean.getData().getPrice());
+                            order_detail_content_price.setText("￥" + jsonBean.getData().getPrice());
                             if (jsonBean.getData().getOrderLogList() != null && jsonBean.getData().getOrderLogList().size() > 0) {
                                 ll_order_detail_log_info.setVisibility(View.VISIBLE);
                                 logList.clear();
@@ -296,11 +294,13 @@ public class OrderDetailActDelegate extends AppDelegate {
                                     order_apply.setVisibility(View.GONE);
                                     order_cancel.setVisibility(View.GONE);
                                 } else if (jsonBean.getData().getOrderStatus() == 10) {
-                                    order_cancel.setVisibility(View.GONE);
+                                    order_cancel.setVisibility(View.VISIBLE);
+                                    order_cancel.setText("取消订单");
                                     order_apply.setVisibility(View.GONE);
                                 } else if (jsonBean.getData().getOrderStatus() == 20) {
-                                    order_cancel.setVisibility(View.GONE);
+                                    order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.GONE);
+                                    order_cancel.setText("取消订单");
                                 }
                             } else if (user_type == 2) {
                                 //卖的情况, 显示取消
@@ -309,9 +309,18 @@ public class OrderDetailActDelegate extends AppDelegate {
                                     order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.GONE);
                                     order_cancel.setText("取消订单");
-                                } else {
+                                } else if (jsonBean.getData().getOrderStatus() == -10) {
                                     order_cancel.setVisibility(View.GONE);
                                     order_apply.setVisibility(View.GONE);
+                                } else if (jsonBean.getData().getOrderStatus() == 10) {
+                                    order_cancel.setVisibility(View.VISIBLE);
+                                    order_apply.setVisibility(View.GONE);
+                                    order_cancel.setText("取消订单");
+                                } else if (jsonBean.getData().getOrderStatus() == 20) {
+                                    //资金方已经同意,卖出的情况依然可以取消订单
+                                    order_cancel.setVisibility(View.VISIBLE);
+                                    order_apply.setVisibility(View.GONE);
+                                    order_cancel.setText("取消订单");
                                 }
 
                             } else if (user_type == 3) {
@@ -321,9 +330,14 @@ public class OrderDetailActDelegate extends AppDelegate {
                                     order_apply.setVisibility(View.VISIBLE);
                                     order_cancel.setText("取消订单");
                                     order_apply.setText("同意申请");
-                                } else {
+                                } else if (jsonBean.getData().getOrderStatus() == -10){
                                     order_cancel.setVisibility(View.GONE);
                                     order_apply.setVisibility(View.GONE);
+                                } else if (jsonBean.getData().getOrderStatus() == 20) {
+                                    //资金方已经确认
+                                    order_cancel.setVisibility(View.VISIBLE);
+                                    order_apply.setVisibility(View.GONE);
+                                    order_cancel.setText("取消订单");
                                 }
                             }
 
