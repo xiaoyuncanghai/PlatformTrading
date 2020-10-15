@@ -45,15 +45,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActDelegate extends AppDelegate {
 
     private SmartRefreshLayout srl_login_acc;
-    private TextView tv_acc;
     private XEditText et_acc;
     private TextView tv_del_acc;
-    private TextView tv_pwd;
     private EditText et_pwd;
-    private TextView tv_show_pwd;
     private TextView tv_send_code;
     private Button bt_login;
     private Typeface typeface;
+    private TextView tv_login_title;
 
     @Override
     public int getRootLayoutId() {
@@ -69,28 +67,22 @@ public class LoginActDelegate extends AppDelegate {
 
     private void initView() {
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "iconfont/iconfont.ttf");
+        tv_login_title = get(R.id.tv_login_title);
         srl_login_acc = get(R.id.srl_login_acc);
-        tv_acc = get(R.id.tv_acc);
         et_acc = get(R.id.et_acc);
         tv_del_acc = get(R.id.tv_del_acc);
-        tv_pwd = get(R.id.tv_pwd);
         et_pwd = get(R.id.et_pwd);
         tv_send_code = get(R.id.tv_send_code);
         bt_login = get(R.id.bt_login);
 
         et_acc.setPattern(new int[]{3, 4, 4}, " ");
-
         tv_del_acc.setTypeface(typeface);
         tv_del_acc.setText("\ue7bf");
         tv_send_code.setTextColor(getActivity().getResources().getColorStateList(R.color.color_slt_send_code));
-
         et_acc.setInputType(InputType.TYPE_CLASS_PHONE);
         et_pwd.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tv_acc.setText("手机号");
-        tv_pwd.setText("验证码");
         et_acc.setHint("请输入手机号");
         et_pwd.setHint("请输入验证码");
-
         String phoneText = SPHelper.getString("phone", "", true);
         if (!TextUtils.isEmpty(phoneText)) {
             et_acc.setText(phoneText);

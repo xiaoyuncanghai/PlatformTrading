@@ -2,20 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_login_title"
+        android:text="登录"
+        android:background="@color/white"
+        android:textStyle="bold"
+        android:paddingTop="@dimen/size_85dp"
+        android:paddingStart="@dimen/size_15dp"
+        android:textSize="26sp"
+        android:textColor="@color/gray_33"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_actionbar"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_status_bar"></include>
-
-        <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>
-
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/activity_phone_login" />
 </LinearLayout>

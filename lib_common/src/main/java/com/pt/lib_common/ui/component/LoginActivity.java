@@ -18,11 +18,6 @@ public class LoginActivity extends ActivityPresenter<LoginActDelegate> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initHeader();
-    }
-
-    public void initHeader() {
-        setTitle("登录");
     }
 
     @Override
