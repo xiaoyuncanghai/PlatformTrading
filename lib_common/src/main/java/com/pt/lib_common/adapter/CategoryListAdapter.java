@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.pt.lib_common.R;
@@ -25,15 +27,19 @@ public class CategoryListAdapter extends BaseQuickAdapter<CategoryItemDateBean, 
 
     @Override
     protected void convert(BaseViewHolder helper, CategoryItemDateBean item) {
-        ImageView publish_item_image = helper.getView(R.id.category_item_image);
-        TextView publish_item_title = helper.getView(R.id.category_item_title);
-        TextView publish_item_price = helper.getView(R.id.category_item_price);
+        ImageView category_item_image = helper.getView(R.id.category_item_image);
+        TextView category_item_title = helper.getView(R.id.category_item_title);
+        TextView category_item_price = helper.getView(R.id.category_item_price);
+        TextView category_item_description = helper.getView(R.id.category_item_description);
+        TextView category_item_tv_see = helper.getView(R.id.category_item_tv_see);
 
-        publish_item_title.setText(item.getTitle());
-        publish_item_price.setText(item.getPrice());
         Glide.with(context).load(item.getPicUrl())
-                .placeholder(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
-                .error(com.pt.lib_common.R.drawable.ic_common_happy_yuu1_cat1)
-                .into(publish_item_image);
+                .placeholder(R.drawable.default_error)
+                .error(R.drawable.default_error)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(4)))
+                .into(category_item_image);
+        category_item_title.setText(item.getTitle());
+        category_item_description.setText(item.getTitle());
+        category_item_price.setText("￥:" + item.getPrice());
     }
 }

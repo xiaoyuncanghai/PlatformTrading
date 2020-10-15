@@ -7,6 +7,15 @@ public class CategoryItemDateBean {
     private String picUrl;
     private int status;
     private String id;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getId() {
         return id;

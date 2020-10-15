@@ -111,6 +111,7 @@ public class OrderCategoryActDelegate extends AppDelegate {
                                 for (CategoryListJsonBean.DataBean.RecordsBean json : jsonBean.getData().getRecords()) {
                                     CategoryItemDateBean categoryItem = new CategoryItemDateBean();
                                     categoryItem.setTitle(json.getTitle());
+                                    categoryItem.setDescription(json.getDescription());
                                     categoryItem.setId(json.getId());
                                     categoryItem.setPrice(json.getPrice());
                                     categoryItem.setPic(json.getPic1());
