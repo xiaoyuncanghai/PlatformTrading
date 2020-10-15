@@ -19,4 +19,5 @@ public class ARouterPath {
     public static final String ORDER_DETAIL = "/order/detail/act";
     public static final String PUBLISH_STATUS = "/status/publish/act";
     public static final String ALL_SEARCH_PATH = "/all/search/person";
+    public static final String WEB_VIEW_PATH = "/web/show/privacy";
 }

@@ -11,6 +11,11 @@
 
     <style name="AppTheme" parent="Base.AppTheme" />
 
+    <style name="AvonProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:color">@color/colorAccent</item>
+        <item name="android:progressDrawable">@drawable/progress_drawable</item>
+    </style>
+
     <style name="check_box_style" parent="@android:style/Widget.CompoundButton.CheckBox" >
         <item name="android:button">@drawable/login_agree_checkboxselector</item>
     </style>

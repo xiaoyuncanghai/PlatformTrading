@@ -84,8 +84,8 @@
                     android:layout_width="1dp"
                     android:layout_height="@dimen/size_25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/size_5dp"
-                    android:layout_marginEnd="@dimen/size_5dp"
+                    android:layout_marginStart="@dimen/size_10dp"
+                    android:layout_marginEnd="@dimen/size_10dp"
                     android:background="@color/gray_EE" />
 
                 <RelativeLayout
@@ -135,25 +135,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
                     android:text="同意一点网用户协议"
                     android:textColor="@color/bg_999999"
                     android:textSize="@dimen/size_15dp" />
-
-
             </LinearLayout>
 
             <Button
                 android:id="@+id/bt_login"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/size_30dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/selector_btn"
                 android:enabled="false"
                 android:text="登录"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

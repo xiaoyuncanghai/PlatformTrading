@@ -95,8 +95,14 @@ public class LoginActDelegate extends AppDelegate {
         }
     }
 
-
     private void initEvent() {
+        check_box_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(ARouterPath.WEB_VIEW_PATH).navigation();
+            }
+        });
+
         srl_login_acc.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -108,7 +114,6 @@ public class LoginActDelegate extends AppDelegate {
                 refreshlayout.finishRefresh(0);
             }
         });
-
 
         et_acc.addTextChangedListener(new TextWatcher() {
             @Override
@@ -249,7 +254,8 @@ public class LoginActDelegate extends AppDelegate {
                                     getActivity().finish();
                                 } else {
                                     Snackbar.make(srl_login_acc, smsLoginJsonBean.getMessage(), Snackbar.LENGTH_SHORT).show();
-                                }                            }
+                                }
+                            }
                         });
             }
         });
