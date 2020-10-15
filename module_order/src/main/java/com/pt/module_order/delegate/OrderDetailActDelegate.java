@@ -5,10 +5,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
@@ -23,12 +31,19 @@ import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.module_order.R;
+import com.pt.module_order.adapter.OrderDetailLogAdapter;
 import com.pt.module_order.bean.json.ApplyFunderJsonBean;
 import com.pt.module_order.bean.json.OrderDetailJsonBean;
 import com.pt.module_order.bean.rquest.ApplyFunderRequestBean;
 import com.pt.module_order.bean.rquest.OrderDetailRequestBean;
 import com.pt.module_order.bean.rquest.OrderMoneyRequestBean;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Cookie;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;
@@ -38,22 +53,30 @@ import static com.pt.lib_common.constants.Constant.KEY_ORDER_ID;
 import static com.pt.lib_common.constants.Constant.ORDER_USER_TYPE;
 
 public class OrderDetailActDelegate extends AppDelegate {
-
-    private TextView order_detail_price;
-    private TextView order_detail_name;
-    private TextView order_detail_phone;
-    private ImageView order_detail_img1;
-    private ImageView order_detail_img2;
-    private ImageView order_detail_img3;
-    private TextView order_detail_status;
     private String order_id;
     private int user_type;
-    private TextView order_cancel;
-    private TextView order_apply;
-    private TextView order_detail_title;
-    private TextView order_detail_description;
-    private TextView order_detail_type_des;
     private String phoneNumber;
+
+    private TextView order_detail_status;
+    private TextView order_detail_title;
+    private TextView order_detail_price;
+    private TextView order_detail_type_des;
+    private TextView order_detail_user_phone;
+    private TextView order_detail_funder_phone;
+    private TextView order_detail_money_apply_person_phone;
+    private TextView order_detail_money_apply_time;
+    private ImageView order_detail_content_image;
+    private TextView order_detail_content_title;
+    private TextView order_detail_content_description;
+    private TextView order_detail_content_time;
+    private TextView order_detail_content_price;
+    //private TextView order_detail_log_info_content;
+    private TextView order_apply;
+    private TextView order_cancel;
+    private LinearLayout ll_order_detail_log_info;
+    private RecyclerView rcv_order_detail_log_info_content;
+    private List<String> logList = new ArrayList<>();
+    private OrderDetailLogAdapter adapter;
 
     @Override
     public int getRootLayoutId() {
@@ -63,31 +86,41 @@ public class OrderDetailActDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
-        order_detail_title = get(R.id.order_detail_title);
-        order_detail_description = get(R.id.order_detail_description);
-        order_detail_price = get(R.id.order_detail_price);
-        order_detail_name = get(R.id.order_detail_name);
-        order_detail_phone = get(R.id.order_detail_phone);
-        order_detail_img1 = get(R.id.order_detail_img1);
-        order_detail_img2 = get(R.id.order_detail_img2);
-        order_detail_img3 = get(R.id.order_detail_img3);
-        order_detail_type_des = get(R.id.order_detail_type_des);
         order_detail_status = get(R.id.order_detail_status);
-        order_cancel = get(R.id.order_cancel);
+        order_detail_title = get(R.id.order_detail_title);
+        order_detail_price = get(R.id.order_detail_price);
+        order_detail_type_des = get(R.id.order_detail_type_des);
+        order_detail_user_phone = get(R.id.order_detail_user_phone);
+        order_detail_funder_phone = get(R.id.order_detail_funder_phone);
+        order_detail_money_apply_person_phone = get(R.id.order_detail_money_apply_person_phone);
+        order_detail_money_apply_time = get(R.id.order_detail_money_apply_time);
+        order_detail_content_image = get(R.id.order_detail_content_image);
+        order_detail_content_title = get(R.id.order_detail_content_title);
+        order_detail_content_description = get(R.id.order_detail_content_description);
+        order_detail_content_time = get(R.id.order_detail_content_time);
+        order_detail_content_price = get(R.id.order_detail_content_price);
+        ll_order_detail_log_info = get(R.id.ll_order_detail_log_info);
+        //order_detail_log_info_content = get(R.id.order_detail_log_info_content);
+        rcv_order_detail_log_info_content = get(R.id.rcv_order_detail_log_info_content);
+        rcv_order_detail_log_info_content.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new OrderDetailLogAdapter(getActivity(), R.layout.order_detail_log_item, logList);
+        rcv_order_detail_log_info_content.setAdapter(adapter);
+        rcv_order_detail_log_info_content.setItemAnimator(new DefaultItemAnimator());
         order_apply = get(R.id.order_apply);
+        order_cancel = get(R.id.order_cancel);
         order_id = getActivity().getIntent().getStringExtra(KEY_ORDER_ID);
         //获取当前的类型
         user_type = getActivity().getIntent().getIntExtra(ORDER_USER_TYPE, 1);
         requestOrderDetail();
 
-        order_detail_phone.setOnClickListener(new View.OnClickListener() {
+        /*order_detail_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + phoneNumber));
                 getActivity().startActivity(intent);
             }
-        });
+        });*/
 
         order_apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,50 +225,72 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                     @Override
                     public void onSuccess(String s) {
+                        LogUtils.d("detail s = " + s);
                         OrderDetailJsonBean jsonBean = new Gson().fromJson(s, OrderDetailJsonBean.class);
                         if (jsonBean.getCode() == 0 && jsonBean.getData() != null) {
-                            order_detail_title.setText(jsonBean.getData().getTitle());
-                            order_detail_description.setText("商品描述: " + jsonBean.getData().getDescription());
-                            order_detail_price.setText("价格: ￥" + jsonBean.getData().getPrice());
-                            order_detail_name.setText("姓名:" + jsonBean.getData().getPerson());
-                            order_detail_phone.setText("电话: " + jsonBean.getData().getPhone());
-                            order_detail_type_des.setText(jsonBean.getData().getOrderTypeDes());
-                            order_detail_status.setText(jsonBean.getData().getOrderStatusDes());
-                            if (!jsonBean.getData().getPic1Url().equals("")) {
-                                order_detail_img1.setVisibility(View.VISIBLE);
-                                Glide.with(getActivity())
-                                        .load(jsonBean.getData().getPic1Url())
-                                        .placeholder(R.drawable.ic_place_holder)
-                                        .centerCrop()
-                                        .error(R.drawable.ic_place_holder).into(order_detail_img1);
+                            if (jsonBean.getData().getOrderStatusDes() != null
+                                    && !("".equals(jsonBean.getData().getOrderStatusDes()))) {
+                                order_detail_status.setVisibility(View.VISIBLE);
+                                order_detail_status.setText(jsonBean.getData().getOrderStatusDes());
+                            } else {
+                                order_detail_status.setVisibility(View.GONE);
+                            }
+                            //订单号
+                            order_detail_title.setText("订单号: " + jsonBean.getData().getSn());
+                            order_detail_price.setText("订单金额: ￥" + jsonBean.getData().getPrice());
+                            order_detail_type_des.setText("订单类型: " + jsonBean.getData().getOrderTypeDes());
+
+                            order_detail_user_phone.setText("联系人: " + jsonBean.getData().getPerson() + "  " + jsonBean.getData().getPhone());
+                            if (jsonBean.getData().getFunderPhone() != null
+                                    && !("".equals(jsonBean.getData().getFunderPhone()))) {
+                                order_detail_funder_phone.setVisibility(View.VISIBLE);
+                                order_detail_funder_phone.setText("资方电话: "+jsonBean.getData().getFunderPhone());
+                            } else {
+                                order_detail_funder_phone.setVisibility(View.GONE);
                             }
 
-                            if (!jsonBean.getData().getPic2Url().equals("")) {
-                                order_detail_img2.setVisibility(View.VISIBLE);
-                                Glide.with(getActivity())
-                                        .load(jsonBean.getData().getPic2Url())
-                                        .placeholder(R.drawable.ic_place_holder)
-                                        .centerCrop()
-                                        .error(R.drawable.ic_place_holder).into(order_detail_img2);
+                            if (jsonBean.getData().getApplyFunderUserPhone() != null
+                                    && !("".equals(jsonBean.getData().getApplyFunderUserPhone()))) {
+                                order_detail_money_apply_person_phone.setVisibility(View.VISIBLE);
+                                order_detail_money_apply_person_phone.setText(jsonBean.getData().getApplyFunderUserPhone());
+                            } else {
+                                order_detail_money_apply_person_phone.setVisibility(View.GONE);
                             }
-
-                            if (!jsonBean.getData().getPic3Url().equals("")) {
-                                order_detail_img3.setVisibility(View.VISIBLE);
-                                Glide.with(getActivity())
-                                        .load(jsonBean.getData().getPic3Url())
-                                        .placeholder(R.drawable.ic_place_holder)
-                                        .centerCrop()
-                                        .error(R.drawable.ic_place_holder).into(order_detail_img3);
+                            if (jsonBean.getData().getApplyFunderDate() != null
+                                    && !("".equals(jsonBean.getData().getApplyFunderDate()))) {
+                                order_detail_money_apply_time.setVisibility(View.VISIBLE);
+                                order_detail_money_apply_time.setText(jsonBean.getData().getApplyFunderDate());
+                            } else {
+                                order_detail_money_apply_time.setVisibility(View.GONE);
+                            }
+                            Glide.with(getActivity())
+                                    .load(jsonBean.getData().getPic1Url())
+                                    .placeholder(R.drawable.default_error)
+                                    .error(R.drawable.default_error)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(4)))
+                                    .into(order_detail_content_image);
+                            order_detail_content_title.setText(jsonBean.getData().getTitle());
+                            order_detail_content_description.setText(jsonBean.getData().getDescription());
+                            order_detail_content_time.setText(jsonBean.getData().getCreateTime());
+                            order_detail_content_price.setText("￥"+jsonBean.getData().getPrice());
+                            if (jsonBean.getData().getOrderLogList() != null && jsonBean.getData().getOrderLogList().size() > 0) {
+                                ll_order_detail_log_info.setVisibility(View.VISIBLE);
+                                logList.clear();
+                                for (String log : jsonBean.getData().getOrderLogList()) {
+                                    logList.add(log);
+                                }
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                ll_order_detail_log_info.setVisibility(View.GONE);
                             }
 
                             if (user_type == 1) {
                                 //买入的情况
-                                order_detail_phone.setEnabled(false);
                                 if (jsonBean.getData().getOrderStatus() == 0) {
                                     //取消和申请资金方
                                     order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.VISIBLE);
-                                    order_cancel.setText("取消");
+                                    order_cancel.setText("取消订单");
                                     order_apply.setText("申请资金");
                                 } else if (jsonBean.getData().getOrderStatus() == -10) {
                                     order_apply.setVisibility(View.GONE);
@@ -249,7 +304,6 @@ public class OrderDetailActDelegate extends AppDelegate {
                                 }
                             } else if (user_type == 2) {
                                 //卖的情况, 显示取消
-                                order_detail_phone.setEnabled(true);
                                 phoneNumber = jsonBean.getData().getPhone();
                                 if (jsonBean.getData().getOrderStatus() == 0) {
                                     order_cancel.setVisibility(View.VISIBLE);
@@ -262,12 +316,11 @@ public class OrderDetailActDelegate extends AppDelegate {
 
                             } else if (user_type == 3) {
                                 //资金方
-                                order_detail_phone.setEnabled(false);
                                 if (jsonBean.getData().getOrderStatus() == 10) {
                                     order_cancel.setVisibility(View.VISIBLE);
                                     order_apply.setVisibility(View.VISIBLE);
-                                    order_cancel.setText("取消");
-                                    order_apply.setText("确认");
+                                    order_cancel.setText("取消订单");
+                                    order_apply.setText("同意申请");
                                 } else {
                                     order_cancel.setVisibility(View.GONE);
                                     order_apply.setVisibility(View.GONE);

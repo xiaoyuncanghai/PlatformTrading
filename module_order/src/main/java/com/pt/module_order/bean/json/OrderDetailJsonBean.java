@@ -7,7 +7,7 @@ public class OrderDetailJsonBean {
     /**
      * message : null
      * code : 0
-     * data : {"id":446,"linkId":0,"sn":"D20091416132866811","gid":477,"title":"联想电脑","description":"18年买的联想电脑，想换新的，原价7600","price":5000,"cateId1":14,"cateId2":0,"cateName1":"IT/互联网/通信/电子","cateName2":"","pic1":"storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"orderTypeDes":"买入订单","person":"王","phone":"1320000000","buyerPhone":"15927623715","sellerPhone":"15311976613","funderPhone":"15337255569","orderStatus":-10,"orderStatusDes":"已取消","createTime":"2020-09-14 16:13:28","orderLogList":["2020-09-14 17:06:13 资金方拒绝","2020-09-14 16:16:45 用户(联系方式：15927623715)申请资金方","2020-09-14 16:13:28 创建订单"]}
+     * data : {"id":504,"linkId":0,"sn":"D20101022343070324","gid":548,"title":"阿里了","description":"考虑","price":100,"cateId1":14,"cateId2":0,"cateName1":"一点公益","cateName2":"","pic1":"E863231A-9CE5-4B01-B2C5-183507F1406D.jpg","pic2":"","pic3":"","pic4":"","pic5":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/E863231A-9CE5-4B01-B2C5-183507F1406D.jpg","pic2Url":"","pic3Url":"","pic4Url":"","pic5Url":"","goodsType":2,"orderTypeDes":"交易出售商品","person":"123","phone":"15997832593","buyerPhone":"15927623715","sellerPhone":"15311976613","applyFunderUserPhone":null,"applyFunderDate":null,"funderPhone":"","orderStatus":-10,"orderStatusDes":"已取消","createTime":"2020-10-10 22:34:30","orderLogList":["2020-10-14 14:01:38 买家取消订单","2020-10-10 22:34:30 创建订单"]}
      * success : true
      */
 
@@ -50,49 +50,51 @@ public class OrderDetailJsonBean {
 
     public static class DataBean {
         /**
-         * id : 446
+         * id : 504
          * linkId : 0
-         * sn : D20091416132866811
-         * gid : 477
-         * title : 联想电脑
-         * description : 18年买的联想电脑，想换新的，原价7600
-         * price : 5000
+         * sn : D20101022343070324
+         * gid : 548
+         * title : 阿里了
+         * description : 考虑
+         * price : 100
          * cateId1 : 14
          * cateId2 : 0
-         * cateName1 : IT/互联网/通信/电子
+         * cateName1 : 一点公益
          * cateName2 :
-         * pic1 : storageemulated0DCIMCameraIMG_20200913_153149.jpg
+         * pic1 : E863231A-9CE5-4B01-B2C5-183507F1406D.jpg
          * pic2 :
          * pic3 :
          * pic4 :
          * pic5 :
-         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200913_153149.jpg
+         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/E863231A-9CE5-4B01-B2C5-183507F1406D.jpg
          * pic2Url :
          * pic3Url :
          * pic4Url :
          * pic5Url :
          * goodsType : 2
-         * orderTypeDes : 买入订单
-         * person : 王
-         * phone : 1320000000
+         * orderTypeDes : 交易出售商品
+         * person : 123
+         * phone : 15997832593
          * buyerPhone : 15927623715
          * sellerPhone : 15311976613
-         * funderPhone : 15337255569
+         * applyFunderUserPhone : null
+         * applyFunderDate : null
+         * funderPhone :
          * orderStatus : -10
          * orderStatusDes : 已取消
-         * createTime : 2020-09-14 16:13:28
-         * orderLogList : ["2020-09-14 17:06:13 资金方拒绝","2020-09-14 16:16:45 用户(联系方式：15927623715)申请资金方","2020-09-14 16:13:28 创建订单"]
+         * createTime : 2020-10-10 22:34:30
+         * orderLogList : ["2020-10-14 14:01:38 买家取消订单","2020-10-10 22:34:30 创建订单"]
          */
 
-        private int id;
+        private String id;
         private int linkId;
         private String sn;
-        private int gid;
+        private String gid;
         private String title;
         private String description;
-        private int price;
-        private int cateId1;
-        private int cateId2;
+        private String price;
+        private String cateId1;
+        private String cateId2;
         private String cateName1;
         private String cateName2;
         private String pic1;
@@ -111,17 +113,19 @@ public class OrderDetailJsonBean {
         private String phone;
         private String buyerPhone;
         private String sellerPhone;
+        private String applyFunderUserPhone;
+        private String applyFunderDate;
         private String funderPhone;
         private int orderStatus;
         private String orderStatusDes;
         private String createTime;
         private List<String> orderLogList;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -141,11 +145,11 @@ public class OrderDetailJsonBean {
             this.sn = sn;
         }
 
-        public int getGid() {
+        public String getGid() {
             return gid;
         }
 
-        public void setGid(int gid) {
+        public void setGid(String gid) {
             this.gid = gid;
         }
 
@@ -165,27 +169,27 @@ public class OrderDetailJsonBean {
             this.description = description;
         }
 
-        public int getPrice() {
+        public String getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(String price) {
             this.price = price;
         }
 
-        public int getCateId1() {
+        public String getCateId1() {
             return cateId1;
         }
 
-        public void setCateId1(int cateId1) {
+        public void setCateId1(String cateId1) {
             this.cateId1 = cateId1;
         }
 
-        public int getCateId2() {
+        public String getCateId2() {
             return cateId2;
         }
 
-        public void setCateId2(int cateId2) {
+        public void setCateId2(String cateId2) {
             this.cateId2 = cateId2;
         }
 
@@ -331,6 +335,22 @@ public class OrderDetailJsonBean {
 
         public void setSellerPhone(String sellerPhone) {
             this.sellerPhone = sellerPhone;
+        }
+
+        public String getApplyFunderUserPhone() {
+            return applyFunderUserPhone;
+        }
+
+        public void setApplyFunderUserPhone(String applyFunderUserPhone) {
+            this.applyFunderUserPhone = applyFunderUserPhone;
+        }
+
+        public String getApplyFunderDate() {
+            return applyFunderDate;
+        }
+
+        public void setApplyFunderDate(String applyFunderDate) {
+            this.applyFunderDate = applyFunderDate;
         }
 
         public String getFunderPhone() {
