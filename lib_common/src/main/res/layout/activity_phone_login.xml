@@ -115,6 +115,33 @@
                 android:layout_marginEnd="@dimen/size_10dp"
                 android:background="@color/gray_EE" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_35dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/check_box_choose"
+                    style="@style/check_box_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:checked="true" />
+
+                <TextView
+                    android:id="@+id/check_box_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="同意一点网用户协议"
+                    android:textColor="@color/bg_999999"
+                    android:textSize="@dimen/size_15dp" />
+
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/bt_login"
                 android:layout_width="match_parent"

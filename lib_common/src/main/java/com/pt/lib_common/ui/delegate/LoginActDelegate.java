@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,6 +54,8 @@ public class LoginActDelegate extends AppDelegate {
     private Button bt_login;
     private Typeface typeface;
     private TextView tv_login_title;
+    private CheckBox check_box_choose;
+    private TextView check_box_content;
 
     @Override
     public int getRootLayoutId() {
@@ -74,6 +78,8 @@ public class LoginActDelegate extends AppDelegate {
         et_pwd = get(R.id.et_pwd);
         tv_send_code = get(R.id.tv_send_code);
         bt_login = get(R.id.bt_login);
+        check_box_choose = get(R.id.check_box_choose);
+        check_box_content = get(R.id.check_box_content);
 
         et_acc.setPattern(new int[]{3, 4, 4}, " ");
         tv_del_acc.setTypeface(typeface);
@@ -117,7 +123,9 @@ public class LoginActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_acc.getText().toString().length() > 0 && et_pwd.getText().toString().length() > 0) {
+                if (et_acc.getText().toString().length() > 0
+                        && et_pwd.getText().toString().length() > 0
+                        && check_box_choose.isChecked()) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);
@@ -138,7 +146,22 @@ public class LoginActDelegate extends AppDelegate {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_acc.getText().toString().length() > 0 && et_pwd.getText().toString().length() > 0) {
+                if (et_acc.getText().toString().length() > 0
+                        && et_pwd.getText().toString().length() > 0
+                        && check_box_choose.isChecked()) {
+                    bt_login.setEnabled(true);
+                } else {
+                    bt_login.setEnabled(false);
+                }
+            }
+        });
+
+        check_box_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (et_acc.getText().toString().length() > 0
+                        && et_pwd.getText().toString().length() > 0
+                        && isChecked) {
                     bt_login.setEnabled(true);
                 } else {
                     bt_login.setEnabled(false);

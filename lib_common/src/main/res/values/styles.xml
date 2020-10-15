@@ -11,6 +11,10 @@
 
     <style name="AppTheme" parent="Base.AppTheme" />
 
+    <style name="check_box_style" parent="@android:style/Widget.CompoundButton.CheckBox" >
+        <item name="android:button">@drawable/login_agree_checkboxselector</item>
+    </style>
+
     <!--无ActionBar的AppTheme-->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
