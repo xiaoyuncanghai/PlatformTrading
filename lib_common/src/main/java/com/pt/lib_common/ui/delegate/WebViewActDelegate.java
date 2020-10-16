@@ -41,7 +41,8 @@ public class WebViewActDelegate extends AppDelegate {
         webSetting.setDomStorageEnabled(true);
         webSetting.setJavaScriptEnabled(true);
         webSetting.setGeolocationEnabled(true);
-        webview_content.loadUrl("file:///android_asset/index.html");
+        //webview_content.loadUrl("file:///android_asset/index.html");
+        webview_content.loadUrl("http://120.76.139.208:3355/bmw-bg/sys/terms.do");
         CookieSyncManager.createInstance(this.getActivity());
         CookieSyncManager.getInstance().sync();
     }

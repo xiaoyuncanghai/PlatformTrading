@@ -25,12 +25,8 @@
 
     <WebView
         android:id="@+id/webview_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webview_ll_layout" />
-
+        android:layout_weight="1" />
 
 </LinearLayout>
