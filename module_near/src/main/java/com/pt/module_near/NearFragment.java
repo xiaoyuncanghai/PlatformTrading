@@ -1,15 +1,11 @@
 package com.pt.module_near;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_near.delegate.NearFragmentDelegate;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class NearFragment extends FragmentPresenter<NearFragmentDelegate> {
 

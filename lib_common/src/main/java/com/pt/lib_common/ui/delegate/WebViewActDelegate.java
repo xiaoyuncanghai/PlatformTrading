@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import com.pt.lib_common.R;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.tencent.smtt.sdk.CookieSyncManager;
-import com.tencent.smtt.utils.TbsLog;
 
 public class WebViewActDelegate extends AppDelegate {
 

@@ -1,7 +1,6 @@
 package com.pt.module_order.delegate;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,12 +36,9 @@ import com.pt.module_order.bean.rquest.ApplyFunderRequestBean;
 import com.pt.module_order.bean.rquest.OrderDetailRequestBean;
 import com.pt.module_order.bean.rquest.OrderMoneyRequestBean;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Cookie;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pt.lib_common.constants.Constant.CHOOSE_FUND_ITEM;

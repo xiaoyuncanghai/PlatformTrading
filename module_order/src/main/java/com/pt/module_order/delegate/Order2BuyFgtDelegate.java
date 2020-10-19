@@ -38,8 +38,6 @@ import java.util.ArrayList;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.pt.lib_common.constants.Constant.KEY_ORDER_FUNDER;
-
 public class Order2BuyFgtDelegate extends AppDelegate {
 
     public SmartRefreshLayout srl_order_buy;

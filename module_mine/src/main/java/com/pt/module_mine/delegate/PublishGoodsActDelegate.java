@@ -41,7 +41,6 @@ import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
 import com.pt.module_mine.adpter.ContentItemListener;
 import com.pt.module_mine.adpter.PhotoAdapter;
-import com.pt.module_mine.adpter.RecyclerItemClickListener;
 import com.pt.module_mine.bean.CategoryDatebean;
 import com.pt.module_mine.bean.ImageBean;
 import com.pt.module_mine.bean.json.CategoryJsonBean;
@@ -55,7 +54,6 @@ import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 

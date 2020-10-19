@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apkfuns.logutils.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.pt.module_mine.R;

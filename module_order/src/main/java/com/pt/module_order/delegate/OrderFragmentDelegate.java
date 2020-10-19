@@ -16,7 +16,6 @@ import com.pt.module_order.R;
 import com.pt.module_order.fragment.Order2BuyFragment;
 import com.pt.module_order.fragment.Order3SaleFragment;
 import com.pt.module_order.fragment.Order4MoneyFragment;
-import com.pt.module_order.fragment.OrderFragment;
 
 import java.util.ArrayList;
 import java.util.List;

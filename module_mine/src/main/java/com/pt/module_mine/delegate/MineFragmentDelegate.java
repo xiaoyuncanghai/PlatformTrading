@@ -20,7 +20,6 @@ import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
 import com.pt.lib_common.rxEasyhttp.exception.ApiException;
 import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
-import com.pt.lib_common.util.StatusBarUtil;
 import com.pt.lib_common.util.ToastUtils;
 import com.pt.lib_common.util.Utils;
 import com.pt.module_mine.R;

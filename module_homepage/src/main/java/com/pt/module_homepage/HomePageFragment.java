@@ -1,10 +1,6 @@
 package com.pt.module_homepage;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 
 import com.pt.lib_common.themvp.presenter.FragmentPresenter;
 import com.pt.module_homepage.delegate.HomePageFragmentDelegate;

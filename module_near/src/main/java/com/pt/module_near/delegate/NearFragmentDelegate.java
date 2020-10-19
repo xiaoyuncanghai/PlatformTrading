@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -24,7 +23,6 @@ import com.pt.lib_common.themvp.view.AppDelegate;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.util.Utils;
 import com.pt.lib_common.view.citychoose.db.DBManager;
-import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.module_near.R;
 import com.pt.module_near.adapter.NearAdapter;
 import com.pt.module_near.bean.data.NearItemDataBean;
@@ -34,12 +32,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
