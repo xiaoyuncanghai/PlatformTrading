@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.base.BaseApplication;
+import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
 import com.pt.lib_common.rxEasyhttp.EasyHttp;
 import com.pt.lib_common.rxEasyhttp.callback.SimpleCallBack;
@@ -372,17 +373,20 @@ public class PublishGoodsActDelegate extends AppDelegate {
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
-                            getActivity().finish();
+                            ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 1)
+                                    .navigation();
                         } else if (jsonBean.getCode() == 401) {
                             //accesstoekn过期
                             Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
                             SPHelper.putString("token", "", true);
                             SPHelper.putString("phone", "", true);
                             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
-                            getActivity().finish();
                         } else {
                             Snackbar.make(getRootView(), "发布失败", Snackbar.LENGTH_SHORT).show();
+                            ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 2)
+                                    .navigation();
                         }
+                        getActivity().finish();
                     }
                 });
     }

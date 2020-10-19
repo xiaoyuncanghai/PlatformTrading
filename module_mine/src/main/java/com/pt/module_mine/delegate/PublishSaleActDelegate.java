@@ -412,13 +412,13 @@ public class PublishSaleActDelegate extends AppDelegate {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();
                             ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 1)
                                     .navigation();
+                            getActivity().finish();
                         } else if (jsonBean.getCode() == 401) {
                             //accesstoekn过期
                             Snackbar.make(getRootView(), "登录已经过期, 请重新登录", Snackbar.LENGTH_SHORT).show();
                             SPHelper.putString("token", "", true);
                             SPHelper.putString("phone", "", true);
                             ARouter.getInstance().build(ARouterPath.PHONE_LOGIN_PATH).navigation();
-                            getActivity().finish();
                         } else {
                             Snackbar.make(getRootView(), "发布失败", Snackbar.LENGTH_SHORT).show();
                             ARouter.getInstance().build(ARouterPath.PUBLISH_STATUS).withInt(Constant.KEY_PUBLISH_STATUS, 2)

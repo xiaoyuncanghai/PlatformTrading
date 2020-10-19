@@ -201,6 +201,7 @@ public class NearFragmentDelegate extends AppDelegate {
 
     public void refreshDeleteData() {
         if (need_position != -1) {
+            Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
             nearItemDataBeans.remove(need_position);
             nearAdapter.notifyItemRemoved(need_position);
         }

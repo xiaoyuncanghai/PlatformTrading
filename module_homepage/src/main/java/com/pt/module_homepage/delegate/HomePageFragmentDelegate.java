@@ -376,6 +376,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
     public void refreshDeleteData() {
         if (need_position != -1) {
             //表示存在删除
+            Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
             homePageItemList.remove(need_position);
             homePageAdapter.notifyItemRemoved(need_position);
         }

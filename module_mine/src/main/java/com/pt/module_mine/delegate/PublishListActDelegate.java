@@ -149,6 +149,7 @@ public class PublishListActDelegate extends AppDelegate {
                     public void onSuccess(String s) {
                         GoodsOffShelfJsonBean jsonBean = new Gson().fromJson(s, GoodsOffShelfJsonBean.class);
                         if (jsonBean.getCode() == 0) {
+                            Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
                             publishList.remove(position);
                             adapter.notifyItemRemoved(position);
                         }
