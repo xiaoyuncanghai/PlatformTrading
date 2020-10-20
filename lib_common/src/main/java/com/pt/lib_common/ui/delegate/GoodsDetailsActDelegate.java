@@ -114,6 +114,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                         .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
                         Constant.KEY_MODIFY_DETAIL_REQUEST);
                 order_modified.setEnabled(true);
+                getActivity().finish();
             }
         });
 

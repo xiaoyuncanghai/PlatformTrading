@@ -17,12 +17,12 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/ll_content"
@@ -200,14 +200,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/loading"
+                    android:text="加载中..."
                     android:textColor="@color/cp_color_gray_deep"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="@+id/avon_spinner"
-                    app:layout_constraintStart_toStartOf="@+id/avon_spinner"
-                    app:layout_constraintTop_toBottomOf="@+id/avon_spinner" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loading_pb" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </RelativeLayout>
+        </FrameLayout>
     </ScrollView>
 </LinearLayout>

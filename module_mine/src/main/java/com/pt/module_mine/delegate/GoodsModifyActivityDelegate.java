@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,6 +88,9 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private String chooseCategory;
     private ListDialog listDialog;
+    private ArrayList<ImageDataBean> imageDataBeans = new ArrayList<>();
+    private ArrayList<ImageDataBean> imageDataBeanLocals = new ArrayList<>();
+    private ConstraintLayout loading_coo;
 
     @Override
     public int getRootLayoutId() {
@@ -103,6 +107,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
         modify_goods_price = get(R.id.modify_goods_price);
         modify_goods_location = get(R.id.modify_goods_location);
         tv_modify_goods_upload = get(R.id.tv_modify_goods_upload);
+        loading_coo = get(R.id.loading_coo);
         id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
         adapter = new ImageModifyAdapter(getActivity(), imageDataBeans);
         rcv_modify_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
@@ -120,52 +125,46 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
      * 点击事件
      */
     private void initClickEvent() {
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.iv_close) {
-                    imageDataBeans.remove(position);
-                    adapter.notifyDataSetChanged();
-                }
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.iv_close) {
+                imageDataBeans.remove(position);
+                adapter.notifyDataSetChanged();
             }
         });
 
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (adapter.getItemViewType(position) == ImageDataBean.NO_IMAGE) {
-                    //添加图片
-                    RxPermissions rxPermissions = new RxPermissions(getActivity());
-                    rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
-                            new Observer<Boolean>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-                                }
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            if (adapter.getItemViewType(position) == ImageDataBean.NO_IMAGE) {
+                //添加图片
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(
+                        new Observer<Boolean>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
 
-                                @Override
-                                public void onNext(Boolean aBoolean) {
-                                    if (aBoolean) {
-                                        startAction();
-                                    } else {
-                                        Toast.makeText(getActivity(), R.string.permission_request_denied,
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
+                            @Override
+                            public void onNext(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    startAction();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.permission_request_denied,
+                                            Toast.LENGTH_LONG)
+                                            .show();
                                 }
                             }
-                    );
-                }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        }
+                );
             }
         });
 
@@ -298,7 +297,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
         tv_modify_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_modify_goods_upload.setEnabled(false);
+                loading_coo.setVisibility(View.VISIBLE);
                 if (imageDataBeanLocals != null && imageDataBeans.size() > 0) {
                     for (int i = 0; i < imageDataBeanLocals.size(); i++) {
                         String picturePath = imageDataBeanLocals.get(i).getImagePath();
@@ -307,12 +306,10 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
                             @Override
                             public void onProgress(int position, long currentSize, long totalSize) {
                                 int progress = (int) (100 * currentSize / totalSize);
-                                LogUtils.d("Lion. progress = " + progress);
                             }
 
                             @Override
                             public void onSuccess(int position, String imageUrl) {
-                                LogUtils.d("Lion, position = " + position + " imageUrl = " + imageUrl);
                                 Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
                                 while (position == imageDataBeanLocals.size() - 1) {
                                     requestCreateGoods();
@@ -321,7 +318,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
 
                             @Override
                             public void onFailure(int position) {
-                                tv_modify_goods_upload.setEnabled(true);
+                                loading_coo.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -362,13 +359,13 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        tv_modify_goods_upload.setEnabled(true);
+                        loading_coo.setVisibility(View.GONE);
                         Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String s) {
-                        tv_modify_goods_upload.setEnabled(true);
+                        loading_coo.setVisibility(View.GONE);
                         ModifyGoodsJsonBean jsonBean = new Gson().fromJson(s, ModifyGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "修改商品成功", Snackbar.LENGTH_SHORT).show();
@@ -415,6 +412,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
 
     /**
      * 拿到整体数据
+     *
      * @return: ModifyInfoDataBean数据对象
      */
     private ModifyInfoDataBean getDataFromIntent() {
@@ -480,8 +478,6 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
         return new OssService(oss, editBucketName);
     }
 
-    private ArrayList<ImageDataBean> imageDataBeans = new  ArrayList<>();
-    private ArrayList<ImageDataBean> imageDataBeanLocals = new ArrayList<>();
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constant.KEY_REQUEST_CODE_CHOOSE_PHOTO && resultCode == getActivity().RESULT_OK) {
             imageDataBeanLocals.clear();

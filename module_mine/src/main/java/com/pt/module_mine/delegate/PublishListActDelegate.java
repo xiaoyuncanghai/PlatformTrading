@@ -15,7 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.bean.databean.ModifyInfoDataBean;
+import com.pt.lib_common.bean.jsonbean.GoodsDetatilJsonBean;
 import com.pt.lib_common.bean.jsonbean.GoodsOffShelfJsonBean;
+import com.pt.lib_common.bean.requestBean.GoodsDetailRequestBean;
 import com.pt.lib_common.bean.requestBean.GoodsOffShelfRequestBean;
 import com.pt.lib_common.constants.Constant;
 import com.pt.lib_common.constants.HttpConstant;
@@ -46,6 +48,7 @@ public class PublishListActDelegate extends AppDelegate {
     private ArrayList<PublishItemDataBean> publishListTemp = new ArrayList<PublishItemDataBean>();
     private int cpage = 1;
     private int need_position = -1;
+    private ModifyInfoDataBean infoData;
 
     @Override
     public int getRootLayoutId() {
@@ -96,7 +99,16 @@ public class PublishListActDelegate extends AppDelegate {
             if (view.getId() == R.id.publish_item_modify) {
                 //修改
                 String goods_id = publishList.get(position).getId();
-                ModifyInfoDataBean infoData = new ModifyInfoDataBean();
+                requestDetails(goods_id);
+                if ( infoData!= null ) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
+                    ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
+                            .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
+                            .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
+                            Constant.KEY_MODIFY_DETAIL_REQUEST);
+                }
+                /*ModifyInfoDataBean infoData = new ModifyInfoDataBean();
                 infoData.setUserType(publishList.get(position).getGoodsType());
                 infoData.setTitle(publishList.get(position).getTitle());
                 infoData.setDescription(publishList.get(position).getDescription());
@@ -107,7 +119,7 @@ public class PublishListActDelegate extends AppDelegate {
                 ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
                         .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
                         .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
-                        Constant.KEY_MODIFY_FROM_PUBLISH_LIST);
+                        Constant.KEY_MODIFY_FROM_PUBLISH_LIST);*/
             }
 
             if (view.getId() == R.id.publish_item_delete) {
@@ -125,6 +137,42 @@ public class PublishListActDelegate extends AppDelegate {
                 ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                         .withString(Constant.KEY_GOODS_ID, goods_id)
                         .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_REQUEST);
+            }
+        });
+    }
+
+    /**
+     * 请求详情
+     * @param goods_id
+     */
+    private void requestDetails(String goods_id) {
+        GoodsDetailRequestBean requestBean = new GoodsDetailRequestBean();
+        requestBean.setId(goods_id);
+        EasyHttp.post(HttpConstant.API_GOODS_DETAIL).headers("Content-Type", "application/json")
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(requestBean).execute(new SimpleCallBack<String>() {
+            @Override
+            public void onError(ApiException e) {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
+                if (detailJsonBean.getCode() == 0) {
+                    if (detailJsonBean.getData() != null) {
+                        infoData = new ModifyInfoDataBean();
+                        infoData.setTitle(detailJsonBean.getData().getTitle());
+                        infoData.setDescription(detailJsonBean.getData().getDescription());
+                        infoData.setCategory(detailJsonBean.getData().getCateName1());
+                        infoData.setCateId(detailJsonBean.getData().getCateId1());
+                        infoData.setPrice(detailJsonBean.getData().getPrice());
+                        infoData.setPic1Url(detailJsonBean.getData().getPic1Url());
+                        infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
+                        infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
+                        infoData.setLocation(detailJsonBean.getData().getCityCode());
+                    }
+                }
             }
         });
     }
@@ -159,7 +207,6 @@ public class PublishListActDelegate extends AppDelegate {
 
     /**
      * 上架操作
-     *
      * @param goods_id
      * @param position
      * @param publish_item_onSale
