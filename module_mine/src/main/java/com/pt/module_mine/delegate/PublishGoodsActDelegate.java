@@ -9,9 +9,11 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,7 +53,6 @@ import com.pt.module_mine.dialog.ListDialog;
 import com.pt.module_mine.oss.Config;
 import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -72,7 +73,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
     private TextView et_publish_goods_content;
     private RecyclerView rcv_publish_goods_image;
     private TextView publish_goods_cate;
-    private XEditText publish_goods_price;
+    private EditText publish_goods_price;
     private TextView publish_goods_location;
     private TextView tv_publish_goods_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
@@ -84,6 +85,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
     private String chooseCategory = "";
     private ListDialog listDialog;
     private PhotoAdapter photoAdapter;
+    private ConstraintLayout loading_coo;
 
     @Override
     public int getRootLayoutId() {
@@ -100,6 +102,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
         publish_goods_price = get(R.id.publish_goods_price);
         publish_goods_location = get(R.id.publish_goods_location);
         tv_publish_goods_upload = get(R.id.tv_publish_goods_upload);
+        loading_coo = get(R.id.loading_coo);
 
         photoAdapter = new PhotoAdapter(getActivity(), imageBeans);
         rcv_publish_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,
@@ -295,6 +298,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
         tv_publish_goods_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loading_coo.setVisibility(View.VISIBLE);
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
@@ -317,6 +321,7 @@ public class PublishGoodsActDelegate extends AppDelegate {
 
                             @Override
                             public void onFailure(int position) {
+                                loading_coo.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -366,10 +371,12 @@ public class PublishGoodsActDelegate extends AppDelegate {
                     @Override
                     public void onError(ApiException e) {
                         Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        loading_coo.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        loading_coo.setVisibility(View.GONE);
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();

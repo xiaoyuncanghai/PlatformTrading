@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -53,7 +54,6 @@ import com.pt.module_mine.dialog.ListDialog;
 import com.pt.module_mine.oss.Config;
 import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -72,7 +72,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
     private EditText et_publish_sale_content;
     private RecyclerView rcv_publish_sale_image;
-    private XEditText publish_sale_price;
+    private EditText publish_sale_price;
     private TextView publish_sale_location;
     private TextView tv_publish_sale_upload;
     private static final int REQUEST_CODE_CHOOSE = 23;
@@ -87,6 +87,7 @@ public class PublishSaleActDelegate extends AppDelegate {
     private PhotoAdapter photoAdapter;
     private ArrayList<CategoryDatebean> categoryList = new ArrayList<>();
     private static final int MAX_PIC_NUM = 3;
+    private ConstraintLayout loading_coo;
 
     @Override
     public int getRootLayoutId() {
@@ -107,6 +108,7 @@ public class PublishSaleActDelegate extends AppDelegate {
         publish_sale_location = get(R.id.publish_sale_location);
         tv_publish_sale_upload = get(R.id.tv_publish_sale_upload);
         publish_sale_cate = get(R.id.publish_sale_cate);
+        loading_coo = get(R.id.loading_coo);
         photoAdapter = new PhotoAdapter(getActivity(), imageBeans);
         rcv_publish_sale_image.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
         rcv_publish_sale_image.setAdapter(photoAdapter);
@@ -327,7 +329,7 @@ public class PublishSaleActDelegate extends AppDelegate {
         tv_publish_sale_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_publish_sale_upload.setEnabled(false);
+                loading_coo.setVisibility(View.VISIBLE);
                 if (imageBeans != null && imageBeans.size() > 0) {
                     for (int i = 0; i < imageBeans.size(); i++) {
                         String picturePath = imageBeans.get(i).getImagePath();
@@ -351,7 +353,7 @@ public class PublishSaleActDelegate extends AppDelegate {
 
                             @Override
                             public void onFailure(int position) {
-                                tv_publish_sale_upload.setEnabled(true);
+                                loading_coo.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -400,13 +402,13 @@ public class PublishSaleActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        tv_publish_sale_upload.setEnabled(true);
+                        loading_coo.setVisibility(View.GONE);
                         Snackbar.make(getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String s) {
-                        tv_publish_sale_upload.setEnabled(true);
+                        loading_coo.setVisibility(View.GONE);
                         CreateGoodsJsonBean jsonBean = new Gson().fromJson(s, CreateGoodsJsonBean.class);
                         if (jsonBean.getCode() == 0) {
                             Snackbar.make(getRootView(), "发布成功", Snackbar.LENGTH_SHORT).show();

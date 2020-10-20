@@ -65,7 +65,6 @@ public class OrderDetailActDelegate extends AppDelegate {
     private TextView order_detail_content_description;
     private TextView order_detail_content_time;
     private TextView order_detail_content_price;
-    //private TextView order_detail_log_info_content;
     private TextView order_apply;
     private TextView order_cancel;
     private LinearLayout ll_order_detail_log_info;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/size_20dp"
+    android:layout_marginEnd="@dimen/size_20dp"
+    android:background="@drawable/goods_detail_img_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:gravity="center"
+        android:text="提示"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/text_size_18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/size_30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/suggest_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/size_25dp"
+            android:layout_marginEnd="@dimen/size_25dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingStart="@dimen/size_5dp"
+            android:text="确定是使用XXXXXXXXX"
+            android:textColor="@color/gray_33"
+            android:textColorHint="@color/thirdText"
+            android:textSize="@dimen/text_size_15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/size_25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/confirm_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_weight="1"
+            android:background="@color/gray_blue"
+            android:gravity="center"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="确定 "
+            android:textColor="@color/primaryText"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/cancel_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_weight="1"
+            android:background="@color/gray_f6"
+            android:gravity="center"
+            android:paddingStart="@dimen/size_20dp"
+            android:text="取消 "
+            android:textColor="@color/primaryText"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>
