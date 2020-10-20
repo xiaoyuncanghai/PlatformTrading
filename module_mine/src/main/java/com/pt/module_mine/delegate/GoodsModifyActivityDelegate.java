@@ -24,8 +24,6 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.apkfuns.logutils.LogUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.pt.lib_common.base.ARouterPath;
@@ -56,7 +54,6 @@ import com.pt.module_mine.dialog.ListDialog;
 import com.pt.module_mine.oss.Config;
 import com.pt.module_mine.oss.service.OssService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.xw.repo.XEditText;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -76,7 +73,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
     private EditText et_modify_goods_content;
     private RecyclerView rcv_modify_goods_image;
     private TextView modify_goods_cate;
-    private XEditText modify_goods_price;
+    private EditText modify_goods_price;
     private TextView modify_goods_location;
     private TextView tv_modify_goods_upload;
     private String id;
@@ -298,7 +295,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
             @Override
             public void onClick(View v) {
                 loading_coo.setVisibility(View.VISIBLE);
-                if (imageDataBeanLocals != null && imageDataBeans.size() > 0) {
+                if (imageDataBeanLocals != null && imageDataBeanLocals.size() > 0) {
                     for (int i = 0; i < imageDataBeanLocals.size(); i++) {
                         String picturePath = imageDataBeanLocals.get(i).getImagePath();
                         String pictureName = imageDataBeanLocals.get(i).getImageName();
