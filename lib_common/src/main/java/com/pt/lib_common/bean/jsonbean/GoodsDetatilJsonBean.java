@@ -1,12 +1,14 @@
 package com.pt.lib_common.bean.jsonbean;
 
+import android.widget.ScrollView;
+
 public class GoodsDetatilJsonBean {
 
 
     /**
      * message : null
      * code : 0
-     * data : {"id":489,"sn":"20091422345964676","title":"可乐","description":"非常可乐","price":5,"cateId1":24,"cateName1":"旅游/酒店/餐饮/休闲","pic1":"storageemulated0DCIMCameraIMG_20200914_223304.jpg","pic2":"","pic3":"","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200914_223304.jpg","pic2Url":"","pic3Url":"","pic4":"","pic4Url":"","pic5":"","pic5Url":"","goodsType":2,"goodsStatus":1,"goodsStatusDes":"上架","violationReason":"","releaseTime":"2020-09-14 22:35:07","updateTime":"2020-09-14 22:35:00","createUserPhone":"15311976613","createTime":"2020-09-14 22:35:00"}
+     * data : {"id":596,"sn":"20101911013764616","title":"123","description":"123456","price":123,"cateId1":14,"cateName1":"一点公益","pic1":"storageemulated0PicturesScreenshotsScreenshot_20201019_103335_com.pt.platformtrading_location.jpg","pic2":"storageemulated0PicturesScreenshotsScreenshot_20201019_103412_com.pt.platformtrading_location.jpg","pic3":"storageemulated0PicturesScreenshotsScreenshot_20201019_104228_com.huawei.calendar.jpg","pic1Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_103335_com.pt.platformtrading_location.jpg","pic2Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_103412_com.pt.platformtrading_location.jpg","pic3Url":"http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_104228_com.huawei.calendar.jpg","pic4":"","pic4Url":"","pic5":"","pic5Url":"","goodsType":2,"goodsStatus":1,"goodsStatusDes":"上架","violationReason":"","releaseTime":null,"updateTime":"2020-10-19 11:01:37","createUserPhone":"15927623715","createTime":"2020-10-19 11:01:37","cityCode":"420100"}
      * success : true
      */
 
@@ -49,19 +51,19 @@ public class GoodsDetatilJsonBean {
 
     public static class DataBean {
         /**
-         * id : 489
-         * sn : 20091422345964676
-         * title : 可乐
-         * description : 非常可乐
-         * price : 5
-         * cateId1 : 24
-         * cateName1 : 旅游/酒店/餐饮/休闲
-         * pic1 : storageemulated0DCIMCameraIMG_20200914_223304.jpg
-         * pic2 :
-         * pic3 :
-         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0DCIMCameraIMG_20200914_223304.jpg
-         * pic2Url :
-         * pic3Url :
+         * id : 596
+         * sn : 20101911013764616
+         * title : 123
+         * description : 123456
+         * price : 123.0
+         * cateId1 : 14
+         * cateName1 : 一点公益
+         * pic1 : storageemulated0PicturesScreenshotsScreenshot_20201019_103335_com.pt.platformtrading_location.jpg
+         * pic2 : storageemulated0PicturesScreenshotsScreenshot_20201019_103412_com.pt.platformtrading_location.jpg
+         * pic3 : storageemulated0PicturesScreenshotsScreenshot_20201019_104228_com.huawei.calendar.jpg
+         * pic1Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_103335_com.pt.platformtrading_location.jpg
+         * pic2Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_103412_com.pt.platformtrading_location.jpg
+         * pic3Url : http://baimawang168.oss-cn-shenzhen.aliyuncs.com/pic/storageemulated0PicturesScreenshotsScreenshot_20201019_104228_com.huawei.calendar.jpg
          * pic4 :
          * pic4Url :
          * pic5 :
@@ -70,10 +72,11 @@ public class GoodsDetatilJsonBean {
          * goodsStatus : 1
          * goodsStatusDes : 上架
          * violationReason :
-         * releaseTime : 2020-09-14 22:35:07
-         * updateTime : 2020-09-14 22:35:00
-         * createUserPhone : 15311976613
-         * createTime : 2020-09-14 22:35:00
+         * releaseTime : null
+         * updateTime : 2020-10-19 11:01:37
+         * createUserPhone : 15927623715
+         * createTime : 2020-10-19 11:01:37
+         * cityCode : 420100
          */
 
         private String id;
@@ -97,10 +100,11 @@ public class GoodsDetatilJsonBean {
         private int goodsStatus;
         private String goodsStatusDes;
         private String violationReason;
-        private String releaseTime;
+        private Object releaseTime;
         private String updateTime;
         private String createUserPhone;
         private String createTime;
+        private String cityCode;
 
         public String getId() {
             return id;
@@ -270,11 +274,11 @@ public class GoodsDetatilJsonBean {
             this.violationReason = violationReason;
         }
 
-        public String getReleaseTime() {
+        public Object getReleaseTime() {
             return releaseTime;
         }
 
-        public void setReleaseTime(String releaseTime) {
+        public void setReleaseTime(Object releaseTime) {
             this.releaseTime = releaseTime;
         }
 
@@ -300,6 +304,14 @@ public class GoodsDetatilJsonBean {
 
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
+        }
+
+        public String getCityCode() {
+            return cityCode;
+        }
+
+        public void setCityCode(String cityCode) {
+            this.cityCode = cityCode;
         }
     }
 }

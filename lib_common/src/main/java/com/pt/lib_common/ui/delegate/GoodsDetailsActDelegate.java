@@ -545,6 +545,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                                 infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
                                 picItem.setPic3Url(detailJsonBean.getData().getPic3Url());
                                 infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
+                                infoData.setLocation(detailJsonBean.getData().getCityCode());
                                 detailList.add(picItem);
                                 goodsDetailAdapter.notifyDataSetChanged();
                             } else {

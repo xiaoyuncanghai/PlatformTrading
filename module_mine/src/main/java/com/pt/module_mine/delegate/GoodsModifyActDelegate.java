@@ -39,6 +39,7 @@ import com.pt.lib_common.util.GifSizeFilter;
 import com.pt.lib_common.util.SPHelper;
 import com.pt.lib_common.view.citychoose.CityPicker;
 import com.pt.lib_common.view.citychoose.adapter.OnPickListener;
+import com.pt.lib_common.view.citychoose.db.DBManager;
 import com.pt.lib_common.view.citychoose.model.City;
 import com.pt.module_mine.R;
 import com.pt.module_mine.adpter.ContentAdapter;
@@ -84,8 +85,11 @@ public class GoodsModifyActDelegate extends AppDelegate {
     private ModifyInfoDataBean info;
     private String cityCode = BaseApplication.getInstance().getCity().getCityCode();
     private String chooseCategory = "";
+    private String pic1Url = "";
+    private String pic2Url = "";
+    private String pic3Url = "";
     private ListDialog listDialog;
-    private int usrType;
+    //private int usrType;
     private PhotoAdapter photoAdapter;
     private static final int MAX_PIC_NUM = 3;
 
@@ -122,12 +126,20 @@ public class GoodsModifyActDelegate extends AppDelegate {
 
     private void requestInitData() {
         if (info != null) {
+            chooseCategory = info.getCateId();
+            cityCode = info.getLocation();
+
+            pic1Url = info.getPic1Url();
+            pic2Url = info.getPic2Url();
+            pic3Url = info.getPic3Url();
+
             et_modify_goods_title.setText(info.getTitle());
             et_modify_goods_content.setText(info.getDescription());
             modify_goods_cate.setText(info.getCategory());
             modify_goods_price.setText(info.getPrice());
-            usrType = info.getUserType();
-            chooseCategory = info.getCateId();
+            if (!"".equals(info.getLocation())) {
+                modify_goods_location.setText(new DBManager(getActivity()).searchCityByCode(info.getLocation()).getName());
+            }
         }
         if (et_modify_goods_title.getText().toString().length() > 0
                 && et_modify_goods_content.getText().toString().length() > 0

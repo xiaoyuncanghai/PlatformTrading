@@ -5,7 +5,6 @@ import android.net.Uri;
 public class ImageBean {
     private String imagePath;
     private String imageName;
-
     public String getImageName() {
         return imageName;
     }
