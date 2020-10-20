@@ -10,12 +10,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pt.lib_common.base.ARouterPath;
 import com.pt.lib_common.themvp.presenter.ActivityPresenter;
 import com.pt.module_mine.delegate.GoodsModifyActDelegate;
+import com.pt.module_mine.delegate.GoodsModifyActivityDelegate;
 
 @Route(path = ARouterPath.GOODS_MODIFY)
-public class GoodsModifyActivity extends ActivityPresenter<GoodsModifyActDelegate> {
+public class GoodsModifyActivity extends ActivityPresenter<GoodsModifyActivityDelegate> {
     @Override
-    protected Class<GoodsModifyActDelegate> getDelegateClass() {
-        return GoodsModifyActDelegate.class;
+    protected Class<GoodsModifyActivityDelegate> getDelegateClass() {
+        return GoodsModifyActivityDelegate.class;
     }
 
     @Override

@@ -8,8 +8,7 @@ public class ModifyInfoDataBean implements Serializable {
     private String pic1Url;
     private String pic2Url;
     private String pic3Url;
-    private String category
-            ;
+    private String category;
     private String price;
     private String location;
     private int userType;
