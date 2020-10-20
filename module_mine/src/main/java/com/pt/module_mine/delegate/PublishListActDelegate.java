@@ -96,11 +96,10 @@ public class PublishListActDelegate extends AppDelegate {
                 }
             }
 
-            if (view.getId() == R.id.publish_item_modify) {
-                //修改
-                String goods_id = publishList.get(position).getId();
+            if (view.getId() == R.id.publish_item_modify ) {
+               String goods_id = publishList.get(position).getId();
                 requestDetails(goods_id);
-                if ( infoData!= null ) {
+                if ( infoData!= null) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
                     ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
@@ -108,18 +107,6 @@ public class PublishListActDelegate extends AppDelegate {
                             .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
                             Constant.KEY_MODIFY_DETAIL_REQUEST);
                 }
-                /*ModifyInfoDataBean infoData = new ModifyInfoDataBean();
-                infoData.setUserType(publishList.get(position).getGoodsType());
-                infoData.setTitle(publishList.get(position).getTitle());
-                infoData.setDescription(publishList.get(position).getDescription());
-                //infoData.setCategory(publishList.get(position).getC);
-                infoData.setPrice(publishList.get(position).getPrice());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
-                ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
-                        .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
-                        .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
-                        Constant.KEY_MODIFY_FROM_PUBLISH_LIST);*/
             }
 
             if (view.getId() == R.id.publish_item_delete) {
