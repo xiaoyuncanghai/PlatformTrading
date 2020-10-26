@@ -103,6 +103,7 @@ public class PublishListActDelegate extends AppDelegate {
             }
 
             if (view.getId() == R.id.publish_item_modify) {
+                loading_coo.setVisibility(View.VISIBLE);
                 String goods_id = publishList.get(position).getId();
                 requestDetails(goods_id);
             }
@@ -166,12 +167,12 @@ public class PublishListActDelegate extends AppDelegate {
                 .upObject(requestBean).execute(new SimpleCallBack<String>() {
             @Override
             public void onError(ApiException e) {
-                //loading_coo.setVisibility(View.GONE);
+                loading_coo.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(String s) {
-                //loading_coo.setVisibility(View.GONE);
+                loading_coo.setVisibility(View.GONE);
                 GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
                 if (detailJsonBean.getCode() == 0) {
                     if (detailJsonBean.getData() != null) {

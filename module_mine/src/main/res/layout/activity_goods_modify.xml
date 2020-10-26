@@ -6,7 +6,7 @@
     android:background="@color/common_bg"
     android:orientation="vertical">
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_actionbar"
@@ -15,7 +15,7 @@
         <include layout="@layout/layout_status_bar"></include>
 
         <include layout="@layout/layout_actionbar"></include>
-    </LinearLayout>-->
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
