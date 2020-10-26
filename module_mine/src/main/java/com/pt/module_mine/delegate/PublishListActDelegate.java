@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,7 @@ public class PublishListActDelegate extends AppDelegate {
     private int cpage = 1;
     private int need_position = -1;
     private ModifyInfoDataBean infoData;
+    private ConstraintLayout loading_coo;
 
     @Override
     public int getRootLayoutId() {
@@ -60,6 +62,7 @@ public class PublishListActDelegate extends AppDelegate {
         super.initWidget(savedInstanceState);
         srl_mine_publish_list = get(R.id.srl_mine_publish_list);
         rcv_mine_publish_list = get(R.id.rcv_mine_publish_list);
+        loading_coo = get(R.id.loading_coo);
 
         rcv_mine_publish_list.setLayoutManager(new GridLayoutManager(this.getActivity(), 1,
                 GridLayoutManager.VERTICAL, false));
@@ -96,17 +99,10 @@ public class PublishListActDelegate extends AppDelegate {
                 }
             }
 
-            if (view.getId() == R.id.publish_item_modify ) {
-               String goods_id = publishList.get(position).getId();
+            if (view.getId() == R.id.publish_item_modify) {
+                //loading_coo.setVisibility(View.VISIBLE);
+                String goods_id = publishList.get(position).getId();
                 requestDetails(goods_id);
-                if ( infoData!= null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
-                    ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
-                            .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
-                            .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
-                            Constant.KEY_MODIFY_DETAIL_REQUEST);
-                }
             }
 
             if (view.getId() == R.id.publish_item_delete) {
@@ -123,13 +119,14 @@ public class PublishListActDelegate extends AppDelegate {
                 String goods_id = publishList.get(position).getId();
                 ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                         .withString(Constant.KEY_GOODS_ID, goods_id)
-                        .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_REQUEST);
+                        .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_DELETE_REQUEST);
             }
         });
     }
 
     /**
      * 请求详情
+     *
      * @param goods_id
      */
     private void requestDetails(String goods_id) {
@@ -140,11 +137,12 @@ public class PublishListActDelegate extends AppDelegate {
                 .upObject(requestBean).execute(new SimpleCallBack<String>() {
             @Override
             public void onError(ApiException e) {
-
+                //loading_coo.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(String s) {
+                //loading_coo.setVisibility(View.GONE);
                 GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
                 if (detailJsonBean.getCode() == 0) {
                     if (detailJsonBean.getData() != null) {
@@ -158,6 +156,13 @@ public class PublishListActDelegate extends AppDelegate {
                         infoData.setPic2Url(detailJsonBean.getData().getPic2Url());
                         infoData.setPic3Url(detailJsonBean.getData().getPic3Url());
                         infoData.setLocation(detailJsonBean.getData().getCityCode());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constant.KEY_MODIFY_INFO, infoData);
+                        ARouter.getInstance().build(ARouterPath.GOODS_MODIFY)
+                                .withBundle(Constant.KEY_MODIFY_INFO_SERIALIZABLE, bundle)
+                                .withString(Constant.KEY_GOODS_ID, goods_id).navigation(getActivity(),
+                                Constant.KEY_MODIFY_FROM_PUBLISH_LIST);
+
                     }
                 }
             }
@@ -194,6 +199,7 @@ public class PublishListActDelegate extends AppDelegate {
 
     /**
      * 上架操作
+     *
      * @param goods_id
      * @param position
      * @param publish_item_onSale
@@ -318,7 +324,7 @@ public class PublishListActDelegate extends AppDelegate {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constant.KEY_FROM_PUBLISH_LIST_REQUEST && resultCode == getActivity().RESULT_OK
+        if (requestCode == Constant.KEY_FROM_PUBLISH_LIST_DELETE_REQUEST && resultCode == getActivity().RESULT_OK
                 && need_position != -1) {
             publishList.remove(need_position);
             adapter.notifyItemRemoved(need_position);
@@ -329,8 +335,6 @@ public class PublishListActDelegate extends AppDelegate {
             requestList();
         }
     }
-
-
 }
 
 

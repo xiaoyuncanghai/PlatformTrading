@@ -156,7 +156,7 @@ public class HomePageFragmentDelegate extends AppDelegate {
                     String product_id = homePageItemList.get(position).getPromote_id();
                     ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                             .withString(Constant.KEY_GOODS_ID, product_id)
-                            .navigation(getActivity(), Constant.KEY_FROM_HOMEPAGE_REQUEST);
+                            .navigation(getActivity(), Constant.KEY_FROM_HOMEPAGE_DELETE_REQUEST);
                 }
             }
         });
@@ -375,7 +375,6 @@ public class HomePageFragmentDelegate extends AppDelegate {
 
     public void refreshDeleteData() {
         if (need_position != -1) {
-            //表示存在删除
             Snackbar.make(getRootView(), "删除成功", Snackbar.LENGTH_SHORT).show();
             homePageItemList.remove(need_position);
             homePageAdapter.notifyItemRemoved(need_position);

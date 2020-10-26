@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +65,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     private TextView order_exchange;
     private XEditText input_name;
     private XEditText input_phone;
+    private ConstraintLayout loading_coo;
 
     @Override
     public int getRootLayoutId() {
@@ -73,6 +75,8 @@ public class GoodsDetailsActDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
+        loading_coo = get(R.id.loading_coo);
+        loading_coo.setVisibility(View.VISIBLE);
         goods_id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
         srl_order_detail = get(R.id.srl_order_detail);
         rcv_order_detail = get(R.id.rcv_order_detail);
@@ -426,11 +430,13 @@ public class GoodsDetailsActDelegate extends AppDelegate {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        Snackbar.make(getRootView(), "获取数据失败,请稍后重试...", Snackbar.LENGTH_SHORT).show();
+                        loading_coo.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onSuccess(String s) {
+                        loading_coo.setVisibility(View.GONE);
                         GoodsDetatilJsonBean detailJsonBean = new Gson().fromJson(s, GoodsDetatilJsonBean.class);
                         if (detailJsonBean.getCode() == 0) {
                             if (detailJsonBean.getData() != null) {

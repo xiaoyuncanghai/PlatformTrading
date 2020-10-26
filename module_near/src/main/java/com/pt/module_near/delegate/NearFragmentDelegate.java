@@ -116,7 +116,7 @@ public class NearFragmentDelegate extends AppDelegate {
                 String product_id = nearItemDataBeans.get(position).getId();
                 ARouter.getInstance().build(ARouterPath.GOODS_DETAIL)
                         .withString(Constant.KEY_GOODS_ID, product_id)
-                        .navigation(getActivity(), Constant.KEY_FROM_NEAR_REQUEST);
+                        .navigation(getActivity(), Constant.KEY_FROM_NEAR_DELETE_REQUEST);
             }
         });
     }

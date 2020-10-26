@@ -303,13 +303,13 @@ public class MainActivity extends ActivityPresenter<MainActDelegate> {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case Constant.KEY_FROM_NEAR_REQUEST:
+            case Constant.KEY_FROM_NEAR_DELETE_REQUEST:
                 if (resultCode == RESULT_OK) {
                     viewDelegate.getNearFragment().refreshDeleteData();
                 }
                 break;
 
-            case Constant.KEY_FROM_HOMEPAGE_REQUEST:
+            case Constant.KEY_FROM_HOMEPAGE_DELETE_REQUEST:
                 if (resultCode == RESULT_OK) {
                     viewDelegate.getHomepageFragment().refreshDeleteData();
                 }

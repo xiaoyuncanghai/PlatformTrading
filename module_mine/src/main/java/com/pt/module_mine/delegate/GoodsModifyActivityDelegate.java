@@ -243,6 +243,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
                 }
             }
         });
+
         et_modify_goods_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -308,7 +309,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
                             @Override
                             public void onSuccess(int position, String imageUrl) {
                                 Snackbar.make(getRootView(), "图片上传成功", Snackbar.LENGTH_SHORT).show();
-                                while (position == imageDataBeanLocals.size() - 1) {
+                                if (position == imageDataBeanLocals.size() - 1) {
                                     requestCreateGoods();
                                 }
                             }
