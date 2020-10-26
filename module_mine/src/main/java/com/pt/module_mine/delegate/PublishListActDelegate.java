@@ -1,10 +1,13 @@
 package com.pt.module_mine.delegate;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -100,7 +103,6 @@ public class PublishListActDelegate extends AppDelegate {
             }
 
             if (view.getId() == R.id.publish_item_modify) {
-                //loading_coo.setVisibility(View.VISIBLE);
                 String goods_id = publishList.get(position).getId();
                 requestDetails(goods_id);
             }
@@ -108,7 +110,8 @@ public class PublishListActDelegate extends AppDelegate {
             if (view.getId() == R.id.publish_item_delete) {
                 //删除
                 String goods_id = publishList.get(position).getId();
-                deleteGoods(position, goods_id);
+                showDeleteDialog(position, goods_id);
+
             }
         });
 
@@ -122,6 +125,32 @@ public class PublishListActDelegate extends AppDelegate {
                         .navigation(getActivity(), Constant.KEY_FROM_PUBLISH_LIST_DELETE_REQUEST);
             }
         });
+    }
+
+    private void showDeleteDialog(int position, String goods_id) {
+        View view = LayoutInflater.from(getActivity()).inflate(com.pt.lib_common.R.layout.dilog_delete, null);
+        final Dialog dialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setCancelable(true)
+                .create();
+        dialog.show();
+        TextView cancel = view.findViewById(com.pt.lib_common.R.id.delete_cancel);
+        TextView confirm = view.findViewById(com.pt.lib_common.R.id.delete_confirm);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //删除
+                deleteGoods(position, goods_id);
+                dialog.dismiss();
+            }
+        });
+
     }
 
     /**

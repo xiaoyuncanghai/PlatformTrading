@@ -97,6 +97,7 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
     @Override
     public void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
+        loading_coo = get(R.id.loading_coo);
         et_modify_goods_title = get(R.id.et_modify_goods_title);
         et_modify_goods_content = get(R.id.et_modify_goods_content);
         rcv_modify_goods_image = get(R.id.rcv_modify_goods_image);
@@ -104,7 +105,6 @@ public class GoodsModifyActivityDelegate extends AppDelegate {
         modify_goods_price = get(R.id.modify_goods_price);
         modify_goods_location = get(R.id.modify_goods_location);
         tv_modify_goods_upload = get(R.id.tv_modify_goods_upload);
-        loading_coo = get(R.id.loading_coo);
         id = getActivity().getIntent().getStringExtra(Constant.KEY_GOODS_ID);
         adapter = new ImageModifyAdapter(getActivity(), imageDataBeans);
         rcv_modify_goods_image.setLayoutManager(new GridLayoutManager(this.getActivity(), 3,

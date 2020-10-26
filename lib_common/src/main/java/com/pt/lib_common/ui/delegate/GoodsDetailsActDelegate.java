@@ -134,8 +134,7 @@ public class GoodsDetailsActDelegate extends AppDelegate {
         order_delete_or_transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order_delete_or_transaction.setEnabled(false);
-                deleteGoods();
+                showDeleteDialog();
             }
         });
 
@@ -144,6 +143,30 @@ public class GoodsDetailsActDelegate extends AppDelegate {
             public void onClick(View v) {
                 order_exchange.setEnabled(false);
                 showDialog();
+            }
+        });
+    }
+
+    private void showDeleteDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dilog_delete, null);
+        final Dialog dialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setCancelable(true)
+                .create();
+        dialog.show();
+        TextView cancel = view.findViewById(R.id.delete_cancel);
+        TextView confirm = view.findViewById(R.id.delete_confirm);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteGoods();
+                dialog.dismiss();
             }
         });
     }
